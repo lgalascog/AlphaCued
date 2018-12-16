@@ -16,8 +16,12 @@ switch computername
         P.screen.rate         = myres.hz;
         P.screen.size         = [28.8 16.2]; %screen size in centimeters.
         P.screen.viewdist     = 55; % distance between subject and monitor
-
-    case 'BUSCH02'
+        
+        P.setup.isEEG         = 0;
+        P.setup.skipsync      = 1;
+        P.setup.useCLUT       = 0;
+        P.setup.CLUTfile      = 'inverse_CLUT 26 April 2012, 16-48.mat';
+        case 'BUSCH02'
         
         thescreen = max(Screen('Screens'));
         myres = Screen('Resolution', thescreen);
@@ -29,6 +33,10 @@ switch computername
         P.screen.size         = [36 27]; %screen size in centimeters.
         P.screen.viewdist     = 55; % distance between subject and monitor
         
+        P.setup.isEEG         = 0;
+        P.setup.skipsync      = 1;
+        P.setup.useCLUT       = 0;
+        P.setup.CLUTfile      = 'inverse_CLUT 26 April 2012, 16-48.mat';
 end 
 
 %% ------------------------------------------------------------------------
@@ -67,7 +75,7 @@ P.grating_detection_res = 1*[323 323];
 P.grating_detection_phase = 0;
 P.grating_detection_sc = 40.0;
 P.grating_detection_freq = .03;
-P.grating_detection_tilt = 0;
+P.grating_detection_tilt = 50; % Should be determined by a staircase
 P.grating_detection_contrast = 100.0;
 P.grating_detection_aspectratio = 1.0;
 
@@ -76,7 +84,7 @@ P.grating_tilt_res = 1*[323 323];
 P.grating_tilt_phase = 0;
 P.grating_tilt_sc = 50.0;
 P.grating_tilt_freq = .1;
-P.grating_tilt_tilt = 0;
+P.grating_tilt_tilt = 50; % Should be determined by a staircase
 P.grating_tilt_contrast = 100.0;
 P.grating_tilt_aspectratio = 1.0;
 
