@@ -35,9 +35,9 @@ Screen('Flip', myWindow);
 WaitSecs('UntilTime', INFO.P.paradigm_blank)
 
 % Display the cue
-Alea_Var = rand
+Alea_Var_1 = rand
 
-if Alea_Var < 0.5
+if Alea_Var_1 < 0.5
     Screen ('FillRect', myWindow,INFO.P.stim.target_color,INFO.P.stim.target_positions_1)
     Screen('FillRect', myWindow, INFO.P.stim.fixation_square_color, INFO.P.stim.fixation_square_position);
     Screen('Flip', myWindow);
@@ -138,6 +138,28 @@ Screen('DrawTexture', myWindow, gabortex, [], [], INFO.P.grating_detection_tilt,
 
 Screen('Flip', myWindow);
  
+
+% Display the post cue
+Alea_Var_2 = rand
+if Alea_Var_2 < 0.75
+    Alea_Var_2 = Alea_Var_1 %Dans 75% des cas, on prend la même cue que pre-cue
+end
+
+if Alea_Var_2 < 0.5
+    Screen ('FillRect', myWindow,INFO.P.stim.target_color,INFO.P.stim.target_positions_1)
+    Screen('FillRect', myWindow, INFO.P.stim.fixation_square_color, INFO.P.stim.fixation_square_position);
+    Screen('Flip', myWindow);
+    'Left'
+else
+    Screen ('FillRect', myWindow,INFO.P.stim.target_color,INFO.P.stim.target_positions_2)
+    Screen('FillRect', myWindow, INFO.P.stim.fixation_square_color, INFO.P.stim.fixation_square_position);
+    Screen('Flip', myWindow);
+    'right'
+end
+
+
+WaitSecs('UntilTime', INFO.P.paradigm_responscue+INFO.P.paradigm_delay)
+
 %% Questions
 % Which question first
 Alea_Var = rand
