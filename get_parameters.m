@@ -39,12 +39,19 @@ switch computername
         P.setup.CLUTfile      = 'inverse_CLUT 26 April 2012, 16-48.mat';
 end 
 
+
+
 %% ------------------------------------------------------------------------
 %  Parameters of the screen.
 %  Calculate size of a pixel in visual angles.
 % ------------------------------------------------------------------------
 P.screen.cx = round(P.screen.width/2); % x coordinate of screen center
 P.screen.cy = round(P.screen.height/2); % y coordinate of screen center
+
+%% ------------------------------------------------------------------------
+% Select th number of trials
+%% ------------------------------------------------------------------------
+P.number_trials = 1
 
 %% -----------------------------------------------------------------------
 % Parameters of the display and stimuli
