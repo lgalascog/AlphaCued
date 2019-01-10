@@ -96,9 +96,9 @@ P.grating_tilt_contrast = 100.0;
 P.grating_tilt_aspectratio = 1.0;
 
 % Gratings positions
-P.radius = 10
-P.angles_right = [20 -20 -40 -60 -80]
-P.angles_left = [160 200 220 240 260]
+P.radius = 10 % Distance between the center of the screen and the grating
+P.angles_right = [20 -20 -40 -60 -80] % Angles in degree for the right grating 
+P.angles_left = [160 200 220 240 260] % Angles in degree for the left grating 
 
 % P.grating_cx_R_1 = P.screen.cx+200*cos(0.1)
 % P.grating_cy_R_1 = P.screen.cy+200*sin(0.1)

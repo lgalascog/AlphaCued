@@ -63,12 +63,12 @@ while counter < Number_of_trials
     
     %% Create discrimination  (detection probes)
     
-    % Select one right position
+    % Select one right position (between all possible angles)
     nX = numel(INFO.P.angles_right);
     idx = randperm(1);
     angle_tilt_right = INFO.P.angles_right(idx(1:1))
     
-    % Select one left position
+    % Select one left position (between all possible angles)
     nX = numel(INFO.P.angles_left);
     idx = randperm(1);
     angle_tilt_left = INFO.P.angles_left(idx(1:1))
@@ -76,8 +76,14 @@ while counter < Number_of_trials
     % Put a grating on the right side
     %gabortex = CreateProceduralGabor(myWindow, INFO.P.screen.cx,...
     %INFO.P.screen.cy, [], [0.5 0.5 0.5 0.0]);
-    gabortex = CreateProceduralGabor(myWindow, INFO.P.screen.cx+INFO.P.radius*cos(angle_right*pi/180),...
-        INFO.P.screen.cy+INFO.P.radius*sin(angle_tilt_right*pi/180), [], [0.5 0.5 0.5 0.0]);
+    gabortex = CreateProceduralGabor(myWindow, INFO.P.screen.cx+INFO.P.radius*cos(angle_right*pi/180),... 
+        % INFO.P.screen.cx : center of the screen on the X axis  
+        % INFO.P.radius*cos(angle_right*pi/180) : r*cos(t)
+        % Correspond to this mathematical formula : x = x0 + r*cos(t) (r = radius and t = angle in radius)
+        INFO.P.screen.cy+INFO.P.radius*sin(angle_right*pi/180), [], [0.5 0.5 0.5 0.0]);
+        % INFO.P.screen.cy : center of the screen on the Y axis 
+        % INFO.P.radius*sin(angle_right*pi/180) : r*sin(t)
+        % Correspond to this mathematical formula : x = x0 + r*cos(t) (r = radius and t = angle in radius)
     Screen('DrawTexture', myWindow, gabortex, [], [], INFO.P.grating_tilt_tilt, [], [], [], [], kPsychDontDoRotation,...
         [INFO.P.grating_tilt_phase+180, INFO.P.grating_tilt_freq, INFO.P.grating_tilt_sc,...
         INFO.P.grating_tilt_contrast, INFO.P.grating_tilt_aspectratio, 0, 0, 0]);
@@ -231,7 +237,7 @@ while counter < Number_of_trials
     end
     
     trials = make_trials_struct(n_trials, Reaction_time_gabor_left, Key_pressed_gabor_left, Reaction_time_gabor_right, Key_pressed_gabor_right, Reaction_time_tilt_gabor, Key_pressed_tilt_gabor);
-    
+    % I need to this part :data recording
     counter = counter+1
     
 end
