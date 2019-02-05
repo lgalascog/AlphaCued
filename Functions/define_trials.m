@@ -4,35 +4,31 @@
 % 2 response-cue
 % 2 possible question sequences
 
-for irepeat = 1:P.paradigm.n_trials
-    for iprobes = 1:length(%%%%%%)
-        for iattention = 1:P.stim.set_size
-            for isequence = 1:size(P.stim.target_color,1)                
-                itrial = itrial + 1;
-                randorientations = Shuffle(orientations);
-                
-                T(itrial).probes = iprobes
-                T(itrial).iattention = iattention;
-                T(itrial). = P.paradigm.soa(isoa);
-                T(itrial).orientations = randorientations(1:P.stim.set_size);                
-                T(itrial).target_color = P.stim.target_color(icontrast,:);
-                
-                T(itrial).button = [];
-                T(itrial).correct = [];
-                T(itrial).rt = [];
-                T(itrial).t_trial_on = [];
-                T(itrial).t_display_on = [];
-                T(itrial).t_display_off = [];
-                T(itrial).t_feedback_on = [];
-                T(itrial).dur_display = [];
-                T(itrial).t_cue_on = [];
+for irepeat = 1:INFO.P.paradigm.n_trials %???
+    for ipre_cue = 1:INFO.P.paradigm.pre_cue
+        for iprobes = 1:INFO.P.paradigm.probes
+            for iattention = 1:INFO.P.paradigm.attention
+                for iresponse_cue = 1:INFO.P.paradigm.response_cue
+                    for iquestion = 1:INFO.P.paradigm.questions
+                        itrial = itrial + 1;
+
+                        T(itrial).pre_cue = ipre_cue % 50% trials precue left and 50% right
+                        T(itrial).probes = iprobes 
+                        T(itrial).attention = iattention; %Not finished
+                        T(itrial).response_cue = %???
+                        T(itrial).questions = iquestions
+                        
+                        T(itrial).button = [];
+                        T(itrial).correct = [];
+                        T(itrial).rt = [];
+                    end
+                end
             end
         end
     end
 end
 
 INFO.T = Shuffle(T);
-
-
-
+        
+        
 %% Done.
