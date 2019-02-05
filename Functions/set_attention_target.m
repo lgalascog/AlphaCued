@@ -1,6 +1,5 @@
 % Set attention target
 
-
 if INFO.P. =1
 % Put a grating on the right side
 gabortex = CreateProceduralGabor(myWindow, INFO.P.screen.cx+INFO.P.radius*cos(angle_right*pi/180),...

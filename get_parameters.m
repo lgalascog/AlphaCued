@@ -49,6 +49,16 @@ P.screen.cx = round(P.screen.width/2); % x coordinate of screen center
 P.screen.cy = round(P.screen.height/2); % y coordinate of screen center
 
 %% ------------------------------------------------------------------------
+% Paradigm : number of possibilities per stimulis
+%% ------------------------------------------------------------------------
+P.paradigm.n_trials = 2 %Je sais pas du tout ce que ça veut dire donc c'est pas la bonne valeur !
+P.paradigm.pre_cue = 2
+P.paradigm.probes = 4
+P.paradigm.attention = 4
+P.paradigm.response_cue = 2
+P.paradigm.questions = 2
+
+%% ------------------------------------------------------------------------
 % Select th number of trials
 %% ------------------------------------------------------------------------
 P.number_trials = 1
