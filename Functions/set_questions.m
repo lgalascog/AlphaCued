@@ -1,8 +1,9 @@
+function [INFO] = set_questions(T, itrial)
 % Set the questions on the screen
 
 
 % Question about detection of the noisi gabor
-if % If left before right
+if INFO.T.pre_cue(itrial) == 1
     Detection_gabor_left = DrawFormattedText(myWindow, INFO.P.text_detection_left, 'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
     Screen('Flip', myWindow);
     [keyIsDown, timeSecs, keyCode ] = KbCheck;
@@ -25,7 +26,7 @@ if % If left before right
     end
     
     KbStrokeWait;
-else % If right before left
+else % If right before left INFO.T.pre_cue = 2
     Detection_gabor_right = DrawFormattedText(myWindow, INFO.P.text_detection_right, 'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
     Screen('Flip', myWindow);
     KbStrokeWait;

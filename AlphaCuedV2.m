@@ -32,7 +32,7 @@ end
 %% -----------------------------------------------------------------------
 % Define what do do on each trial.
 % ------------------------------------------------------------------------
-INFO = define_trials(INFO);
+INFO = define_trials_AlphaCued(INFO);
 
 
 %% -----------------------------------------------------------------------
@@ -43,15 +43,15 @@ Screen('Preference', 'SkipSyncTests', INFO.P.setup.skipsync);
 Screen('Resolution', INFO.P.screen.screen_num, INFO.P.screen.width, ...
     INFO.P.screen.height, INFO.P.screen.rate);
 
-[win, winrect] = PsychImaging('Openwindow', ...
+[myWindow, windowRect] = PsychImaging('Openwindow', ...
     INFO.P.screen.screen_num, INFO.P.stim.background_color);
 
-Priority(MaxPriority(win));
+Priority(MaxPriority(myWindow));
 
 if INFO.P.setup.useCLUT
     addpath('./CLUT');
     load(INFO.P.setup.CLUTfile);
-    Screen('LoadNormalizedGammaTable',win,inverseCLUT);
+    Screen('LoadNormalizedGammaTable',myWindow,inverseCLUT);
 end
 
 
@@ -59,4 +59,6 @@ end
 %%----------------------------------------------------------------------
 % Run across trials.
 %----------------------------------------------------------------------
-
+for itrial = 1:length(INFO.T)
+    [INFO] = one_trial_AlphaCued(INFO, itrial);
+end

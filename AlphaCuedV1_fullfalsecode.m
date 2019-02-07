@@ -42,12 +42,12 @@ while counter < Number_of_trials
     Alea_Var_1 = rand
     
     if Alea_Var_1 < 0.5
-        Screen ('FillRect', myWindow,INFO.P.stim.target_color,INFO.P.stim.target_positions_1)
+        Screen ('FillRect', myWindow,INFO.P.stim.target_color,INFO.P.stim.cue_positions_1)
         Screen('FillRect', myWindow, INFO.P.stim.fixation_square_color, INFO.P.stim.fixation_square_position);
         Screen('Flip', myWindow);
         'Left'
     else
-        Screen ('FillRect', myWindow,INFO.P.stim.target_color,INFO.P.stim.target_positions_2)
+        Screen ('FillRect', myWindow,INFO.P.stim.target_color,INFO.P.stim.cue_positions_2)
         Screen('FillRect', myWindow, INFO.P.stim.fixation_square_color, INFO.P.stim.fixation_square_position);
         Screen('Flip', myWindow);
         'right'
@@ -76,13 +76,7 @@ while counter < Number_of_trials
     % Put a grating on the right side
     %gabortex = CreateProceduralGabor(myWindow, INFO.P.screen.cx,INFO.P.screen.cy, [], [0.5 0.5 0.5 0.0]);
     gabortex = CreateProceduralGabor(myWindow, INFO.P.screen.cx+INFO.P.radius*cos(angle_right*pi/180),... 
-        % INFO.P.screen.cx : center of the screen on the X axis  
-        % INFO.P.radius*cos(angle_right*pi/180) : r*cos(t)
-        % Correspond to this mathematical formula : x = x0 + r*cos(t) (r = radius and t = angle in radius)
         INFO.P.screen.cy+INFO.P.radius*sin(angle_right*pi/180), [], [0.5 0.5 0.5 0.0]);
-        % INFO.P.screen.cy : center of the screen on the Y axis 
-        % INFO.P.radius*sin(angle_right*pi/180) : r*sin(t)
-        % Correspond to this mathematical formula : x = x0 + r*cos(t) (r = radius and t = angle in radius)
     Screen('DrawTexture', myWindow, gabortex, [], [], INFO.P.grating_tilt_tilt, [], [], [], [], kPsychDontDoRotation,...
         [INFO.P.grating_tilt_phase+180, INFO.P.grating_tilt_freq, INFO.P.grating_tilt_sc,...
         INFO.P.grating_tilt_contrast, INFO.P.grating_tilt_aspectratio, 0, 0, 0]);
@@ -239,7 +233,7 @@ while counter < Number_of_trials
     counter = counter+1
     
 end
-save([indir 'M2/Alpha_Cued_Lateralization/Results/' num2str(name) '/log_files/Reaction_time_s' num2str(name) '.mat'], '');
+%save([indir 'M2/Alpha_Cued_Lateralization/Results/' num2str(name) '/log_files/Reaction_time_s' num2str(name) '.mat'], '');
 KbStrokeWait;
 sca;
 

@@ -1,4 +1,3 @@
-function [INFO] = set_response_cue(INFO, itrial)
 %Set response cue
 
 %Find pre_position
@@ -29,4 +28,3 @@ else %If pre_cue =/= response_cue
         Screen('Flip', myWindow);
         'Left'
     end
-end

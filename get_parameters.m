@@ -21,7 +21,8 @@ switch computername
         P.setup.skipsync      = 1;
         P.setup.useCLUT       = 0;
         P.setup.CLUTfile      = 'inverse_CLUT 26 April 2012, 16-48.mat';
-        case 'BUSCH02'
+        
+    case 'BUSCH03'
         
         thescreen = max(Screen('Screens'));
         myres = Screen('Resolution', thescreen);
@@ -37,7 +38,24 @@ switch computername
         P.setup.skipsync      = 1;
         P.setup.useCLUT       = 0;
         P.setup.CLUTfile      = 'inverse_CLUT 26 April 2012, 16-48.mat';
-end 
+        
+        case 'BUSCH02'
+        
+        thescreen = max(Screen('Screens'));
+        myres = Screen('Resolution', thescreen);
+        
+        P.screen.screen_num   = 0 %thescreen;%max(nscreens); 0 is you have only one screen (like a laptop) 1 or 2 if you have multiple screens one is usually the matlab screen
+        P.screen.width        = myres.width;
+        P.screen.height       = myres.height;
+        P.screen.rate         = myres.hz;
+        P.screen.size         = [36 27]; %screen size in centimeters.
+        P.screen.viewdist     = 55; % distance between subject and monitor
+        
+        P.setup.isEEG         = 0;
+        P.setup.skipsync      = 1;
+        P.setup.useCLUT       = 0;
+        P.setup.CLUTfile      = 'inverse_CLUT 26 April 2012, 16-48.mat';
+end
 
 
 
@@ -75,8 +93,8 @@ P.stim.fixation_square_position = CenterRectOnPointd(P.stim.fixation_square_size
 
 P.stim.target_color = [255 255 255];
 P.stim.target_size = [0 0 50 10];
-P.stim.target_positions_1 = CenterRectOnPointd(P.stim.target_size, P.screen.cx-100, P.screen.cy);
-P.stim.target_positions_2 = CenterRectOnPointd(P.stim.target_size, P.screen.cy+500, P.screen.cy);
+P.stim.cue_positions_1 = CenterRectOnPointd(P.stim.target_size, P.screen.cx-100, P.screen.cy);
+P.stim.cue_positions_2 = CenterRectOnPointd(P.stim.target_size, P.screen.cy+500, P.screen.cy);
 
 P.target_left_positions =1; %valeur test  % 5 possible positions
 P.target_right_positions =1; %valeur test  % 5 possible positions
@@ -87,26 +105,27 @@ P.text_tilt = 'The grating was clockwise or counterclockwise ?';
  
 
 
-% Gratings detection task
+% Gratings detection task (probe)
 P.grating_detection_res = 1*[323 323];
 P.grating_detection_phase = 0;
 P.grating_detection_sc = 40.0;
 P.grating_detection_freq = .03;
-P.grating_detection_tilt = 50; % Should be determined by a staircase
+P.grating_detection_tilt = 0; % Should be determined by a staircase
 P.grating_detection_contrast = 100.0;
 P.grating_detection_aspectratio = 1.0;
 
-% Gratings tilt discrimination task
+% Gratings tilt discrimination task (attention)
 P.grating_tilt_res = 1*[323 323];
 P.grating_tilt_phase = 0;
-P.grating_tilt_sc = 50.0;
-P.grating_tilt_freq = .1;
-P.grating_tilt_tilt = 50; % Should be determined by a staircase
+P.grating_tilt_sc = 40.0;
+P.grating_tilt_freq = .03;
+P.grating_tilt_tilt_clock = 45;
+P.grating_tilt_tilt_cantclock = 315;% Should be determined by a staircase
 P.grating_tilt_contrast = 100.0;
 P.grating_tilt_aspectratio = 1.0;
 
 % Gratings positions
-P.radius = 10 % Distance between the center of the screen and the grating
+P.radius = 2 % Distance between the center of the screen and the grating
 P.angles_right = [20 -20 -40 -60 -80] % Angles in degree for the right grating 
 P.angles_left = [160 200 220 240 260] % Angles in degree for the left grating 
 
@@ -123,11 +142,11 @@ P.angles_left = [160 200 220 240 260] % Angles in degree for the left grating
 %  -----------------------------------------------------------------------
 
 P.paradigm_blank = 500;
-P.paradigm_precue = 100;
+P.paradigm_precue = 120;
 P.paradigm_delay = 1500;
 P.paradigm_detection = 100;
 P.paradigm_tilt = 20;
-P.paradigm_responscue = 500;
+P.paradigm_responscue = 120;
 P.paradigm_delay = 500;
 P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
 P.paradigm_ITI = 2000;
