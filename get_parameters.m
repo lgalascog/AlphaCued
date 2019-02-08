@@ -108,26 +108,71 @@ P.text_tilt = 'The grating was clockwise or counterclockwise ?';
 % Gratings detection task (probe)
 P.grating_detection_res = 1*[323 323];
 P.grating_detection_phase = 0;
-P.grating_detection_sc = 40.0;
-P.grating_detection_freq = .03;
+P.grating_detection_sc = 10.0;
+P.grating_detection_freq = .1;
 P.grating_detection_tilt = 0; % Should be determined by a staircase
 P.grating_detection_contrast = 100.0;
 P.grating_detection_aspectratio = 1.0;
+P.grating_detection_width = 100
+P.grating_detection_height = 100
 
 % Gratings tilt discrimination task (attention)
 P.grating_tilt_res = 1*[323 323];
 P.grating_tilt_phase = 0;
-P.grating_tilt_sc = 40.0;
-P.grating_tilt_freq = .03;
+P.grating_tilt_sc = 10.0;
+P.grating_tilt_freq = .1;
 P.grating_tilt_tilt_clock = 45;
 P.grating_tilt_tilt_cantclock = 315;% Should be determined by a staircase
 P.grating_tilt_contrast = 100.0;
 P.grating_tilt_aspectratio = 1.0;
+P.grating_tilt_width = 100
+P.grating_tilt_height = 100
 
 % Gratings positions
-P.radius = 2 % Distance between the center of the screen and the grating
-P.angles_right = [20 -20 -40 -60 -80] % Angles in degree for the right grating 
-P.angles_left = [160 200 220 240 260] % Angles in degree for the left grating 
+P.radius = 400 % Distance between the center of the screen and the grating
+P.angles_right = [350 10 30 50 70] % Angles in degree for the right grating 
+P.angles_left = [190 170 150 130 110] % Angles in degree for the left grating 
+
+position_right_x_1 = P.screen.cx + P.radius*cos(P.angles_right(1)*pi/180) 
+position_right_x_2 = P.screen.cx + P.radius*cos(P.angles_right(2)*pi/180) 
+position_right_x_3 = P.screen.cx + P.radius*cos(P.angles_right(3)*pi/180) 
+position_right_x_4 = P.screen.cx + P.radius*cos(P.angles_right(4)*pi/180) 
+position_right_x_5 = P.screen.cx + P.radius*cos(P.angles_right(5)*pi/180) 
+
+position_right_y_1 = P.screen.cy + P.radius*sin(P.angles_right(1)*pi/180) 
+position_right_y_2 = P.screen.cy + P.radius*sin(P.angles_right(2)*pi/180) 
+position_right_y_3 = P.screen.cy + P.radius*sin(P.angles_right(3)*pi/180) 
+position_right_y_4 = P.screen.cy + P.radius*sin(P.angles_right(4)*pi/180)  
+position_right_y_5 = P.screen.cy + P.radius*sin(P.angles_right(5)*pi/180)  
+
+
+position_left_x_1 = P.screen.cx + P.radius*cos(P.angles_left(1)*pi/180) 
+position_left_x_2 = P.screen.cx + P.radius*cos(P.angles_left(2)*pi/180) 
+position_left_x_3 = P.screen.cx + P.radius*cos(P.angles_left(3)*pi/180) 
+position_left_x_4 = P.screen.cx + P.radius*cos(P.angles_left(4)*pi/180) 
+position_left_x_5 = P.screen.cx + P.radius*cos(P.angles_left(5)*pi/180) 
+
+position_left_y_1 = P.screen.cy + P.radius*sin(P.angles_left(1)*pi/180) 
+position_left_y_2 = P.screen.cy + P.radius*sin(P.angles_left(2)*pi/180) 
+position_left_y_3 = P.screen.cy + P.radius*sin(P.angles_left(3)*pi/180) 
+position_left_y_4 = P.screen.cy + P.radius*sin(P.angles_left(4)*pi/180)  
+position_left_y_5 = P.screen.cy + P.radius*sin(P.angles_left(5)*pi/180)  
+
+% Coordinates
+P.rects_right_1 = [position_right_x_1-P.grating_tilt_width/2;position_right_y_1-P.grating_tilt_height/2;position_right_x_1+P.grating_tilt_width/2;position_right_y_1+P.grating_tilt_height/2]
+P.rects_right_2 = [position_right_x_2-P.grating_tilt_width/2;position_right_y_2-P.grating_tilt_height/2;position_right_x_2+P.grating_tilt_width/2;position_right_y_2+P.grating_tilt_height/2]
+P.rects_right_3 = [position_right_x_3-P.grating_tilt_width/2;position_right_y_3-P.grating_tilt_height/2;position_right_x_3+P.grating_tilt_width/2;position_right_y_3+P.grating_tilt_height/2]
+P.rects_right_4 = [position_right_x_4-P.grating_tilt_width/2;position_right_y_4-P.grating_tilt_height/2;position_right_x_4+P.grating_tilt_width/2;position_right_y_4+P.grating_tilt_height/2]
+P.rects_right_5 = [position_right_x_5-P.grating_tilt_width/2;position_right_y_5-P.grating_tilt_height/2;position_right_x_5+P.grating_tilt_width/2;position_right_y_5+P.grating_tilt_height/2]
+
+P.rects_left_1 = [position_left_x_1-P.grating_tilt_width/2;position_left_y_1-P.grating_tilt_height/2;position_left_x_1+P.grating_tilt_width/2;position_left_y_1+P.grating_tilt_height/2]
+P.rects_left_2 = [position_left_x_2-P.grating_tilt_width/2;position_left_y_2-P.grating_tilt_height/2;position_left_x_2+P.grating_tilt_width/2;position_left_y_2+P.grating_tilt_height/2]
+P.rects_left_3 = [position_left_x_3-P.grating_tilt_width/2;position_left_y_3-P.grating_tilt_height/2;position_left_x_3+P.grating_tilt_width/2;position_left_y_3+P.grating_tilt_height/2]
+P.rects_left_4 = [position_left_x_4-P.grating_tilt_width/2;position_left_y_4-P.grating_tilt_height/2;position_left_x_4+P.grating_tilt_width/2;position_left_y_4+P.grating_tilt_height/2]
+P.rects_left_5 = [position_left_x_5-P.grating_tilt_width/2;position_left_y_5-P.grating_tilt_height/2;position_left_x_5+P.grating_tilt_width/2;position_left_y_5+P.grating_tilt_height/2]
+
+P.rects_right = [P.rects_right_1 P.rects_right_2 P.rects_right_3 P.rects_right_4 P.rects_right_5]
+P.rects_left = [P.rects_left_1 P.rects_left_2 P.rects_left_3 P.rects_left_4 P.rects_left_5]
 
 % P.grating_cx_R_1 = P.screen.cx+200*cos(0.1)
 % P.grating_cy_R_1 = P.screen.cy+200*sin(0.1)

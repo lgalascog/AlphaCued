@@ -15,7 +15,7 @@ for irepeat = 1:INFO.P.paradigm.n_trials %???
                         
                         T(itrial).pre_cue = ipre_cue % 50% trials precue left and 50% right
                         T(itrial).probes = iprobes
-                        T(itrial).attention = iattention; %Not finished
+                        T(itrial).attention = iattention;
                         T(itrial).response_cue =iresponse_cue %? 80% of the time = i.pre_cue but how to do that ?
                         T(itrial).questions = iquestions
                         

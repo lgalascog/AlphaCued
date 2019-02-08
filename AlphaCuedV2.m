@@ -43,8 +43,8 @@ Screen('Preference', 'SkipSyncTests', INFO.P.setup.skipsync);
 Screen('Resolution', INFO.P.screen.screen_num, INFO.P.screen.width, ...
     INFO.P.screen.height, INFO.P.screen.rate);
 
-[myWindow, windowRect] = PsychImaging('Openwindow', ...
-    INFO.P.screen.screen_num, INFO.P.stim.background_color);
+%[myWindow, windowRect] = PsychImaging('Openwindow', ...
+    %INFO.P.screen.screen_num, INFO.P.stim.background_color);
 
 Priority(MaxPriority(myWindow));
 
