@@ -42,7 +42,7 @@ while counter < Number_of_trials
     Alea_Var_1 = rand
     
     if Alea_Var_1 < 0.5
-        Screen ('FillRect', myWindow,INFO.P.stim.target_color,INFO.P.stim.cue_positions_1)
+        Screen ('FillRect', myWindow,INFO.P.stim.cue_color,INFO.P.stim.cue_positions_1)
         Screen('FillRect', myWindow, INFO.P.stim.fixation_square_color, INFO.P.stim.fixation_square_position);
         Screen('Flip', myWindow);
         'Left'

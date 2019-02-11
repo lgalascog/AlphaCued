@@ -194,25 +194,17 @@ P.rects_left = [P.rects_left_1 P.rects_left_2 P.rects_left_3 P.rects_left_4 P.re
 % Parameters of the procedure & timing
 %  -----------------------------------------------------------------------
 
-% P.paradigm_blank = 0.500;
-% P.paradigm_precue = 0.120;
-% P.paradigm_delay = 1.500;
-% P.paradigm_detection = 0.100;
-% P.paradigm_tilt = 0.200;
-% P.paradigm_responscue = 0.120;
-% P.paradigm_delay = 0.500;
-% P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
-% P.paradigm_ITI = 2.000;
-
-P.paradigm_blank = 2
-P.paradigm_precue =2
-P.paradigm_delay = 2
-P.paradigm_detection = 2
-P.paradigm_tilt =2
-P.paradigm_responscue = 2
-P.paradigm_delay = 2
+P.paradigm_blank = 500;
+P.paradigm_precue = 120;
+P.paradigm_delay = 1500;
+P.paradigm_detection = 100;
+P.paradigm_tilt = 20;
+P.paradigm_responscue = 120;
+P.paradigm_delay = 500;
 P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
-P.paradigm_ITI = 2
+P.paradigm_ITI = 2000;
+
+
 
 %% ------------------------------------------------------------------------
 %  Define relevant buttons
@@ -225,7 +217,5 @@ P.keys.no = KbName('N');
 
 P.location_right_probes = []
 P.location_left_probes = []
-P.location_right_attention = []
-P.location_left_attention = []
 
 

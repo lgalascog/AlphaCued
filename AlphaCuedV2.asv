@@ -70,16 +70,10 @@ end
 for itrial = 1:length(INFO.T)
     rand_position_right = randperm(5,2) %select 2 DIFFERENTS positions for the probes and the attention target
     rand_position_left = randperm(5,2)
-    location_right_probes = INFO.P.rects_right(:,rand_position_right(1))
-    location_left_probes = INFO.P.rects_left(:,rand_position_left(1))
-    INFO.P(1).location_right_probes = location_right_probes
-    INFO.P(1).location_left_probes = location_left_probes
-    
-    location_right_attention = INFO.P.rects_right(:,rand_position_right(2))
-    location_left_attention = INFO.P.rects_left(:,rand_position_left(2))
-    INFO.P(1).location_right_attention = location_right_attention
-    INFO.P(1).location_left_attention = location_left_attention
-    
-    
-    [INFO] = one_trial_AlphaCued(myWindow,INFO, itrial);
+    INFO.P.rects_right(1)
+    location_right_probes = INFO.P.rects_right(rand_position_right(1))
+    location_left_probes = INFO.P.rects_left(rand_position_left(1))
+
+    Variable_test = INFO.T(itrial,1).pre_cue 
+    [INFO] = one_trial_AlphaCued(INFO, itrial);
 end

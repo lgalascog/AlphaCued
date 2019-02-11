@@ -1,9 +1,9 @@
-function [INFO] = set_questions(T, itrial)
+function [INFO] = set_questions(myWindow, INFO, itrial)
 % Set the questions on the screen
 
 
 % Question about detection of the noisi gabor
-if INFO.T.pre_cue(itrial) == 1
+if INFO.T(itrial,5).questions == 1
     Detection_gabor_left = DrawFormattedText(myWindow, INFO.P.text_detection_left, 'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
     Screen('Flip', myWindow);
     [keyIsDown, timeSecs, keyCode ] = KbCheck;
