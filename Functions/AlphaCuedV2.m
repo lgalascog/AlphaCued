@@ -19,24 +19,6 @@ if IsOctave && exist('graphics_toolkit')
 end
 
 
-%% ------------------------------------------------------------------------
-% Test if logfile exists for this subject.
-% If yes, confirm to overwrite or quit.
-% ------------------------------------------------------------------------
-switch name
-    case 'test'
-        isQuit = 0;
-        % logfile will be automatically overwritten 
-    otherwise
-        isQuit = test_logfile(INFO);
-end
-
-if isQuit
-    CloseAndCleanup(P)
-    return
-end
-
-
 
 %% -----------------------------------------------------------------------
 % Define what do do on each trial.

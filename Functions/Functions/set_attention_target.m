@@ -1,7 +1,7 @@
 function [INFO] = set_attention_target(myWindow,gabortex,INFO,itrial)
 % Set attention target
 
-if INFO.T(itrial,3).attention == 1 %Left and Right clock
+if INFO.T(itrial).attention == 1 %Left and Right clock
     
     
     % Put a grating on the right side
@@ -21,7 +21,7 @@ if INFO.T(itrial,3).attention == 1 %Left and Right clock
     
 end
 
-if INFO.T(itrial,3).attention == 2 %Left : clock and Right : cantclock
+if INFO.T(itrial).attention == 2 %Left : clock and Right : cantclock
     
     % Put a grating on the right side
     Screen('DrawTexture', myWindow, gabortex, [], [INFO.P.location_right_attention], INFO.P.grating_tilt_tilt_cantclock, [], [], [], [], kPsychDontDoRotation,...
@@ -38,7 +38,7 @@ if INFO.T(itrial,3).attention == 2 %Left : clock and Right : cantclock
     
 end
 
-if INFO.T(itrial,3).attention == 3 %Left and Right : cantclock
+if INFO.T(itrial).attention == 3 %Left and Right : cantclock
     
     % Put a grating on the right side
     Screen('DrawTexture', myWindow, gabortex, [], [INFO.P.location_right_attention], INFO.P.grating_tilt_tilt_cantclock, [], [], [], [], kPsychDontDoRotation,...
@@ -53,7 +53,7 @@ if INFO.T(itrial,3).attention == 3 %Left and Right : cantclock
     Screen('Flip', myWindow);
 end
 
-if INFO.T(itrial,3).attention == 4 %Left : cantclock and Right : clock
+if INFO.T(itrial).attention == 4 %Left : cantclock and Right : clock
     
     % Put a grating on the right side
     gabortex = CreateProceduralGabor(myWindow, INFO.P.grating_tilt_width,INFO.P.grating_tilt_height, [], [0.5 0.5 0.5 0.0]);
