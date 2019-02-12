@@ -1,12 +1,14 @@
 function [INFO] = one_trial_AlphaCued(myWindow, INFO, itrial)
 
-% Select two positions for each side of the screen
-% rand_position_right = randperm(5,2) %select 2 DIFFERENTS positions for the probes and the attention target
-% rand_position_left = randperm(5,2)
 
 % Run one trial
 
+% --------------------------------------------------------
+% Prestimulus interval
+% --------------------------------------------------------
+DrawScreen_with_fixation_square(myWindow,INFO)
 
+WaitSecs(INFO.P.paradigm_blank)
 
 
 % --------------------------------------------------------
@@ -66,12 +68,6 @@ set_questions(myWindow, INFO, itrial)
 % --------------------------------------------------------
 % End of the trial
 % --------------------------------------------------------
-DrawScreen_with_fixation_square
-WaitSecs('UntilTime', INFO.P.paradigm_ITI)
+DrawScreen_with_fixation_square(myWindow,INFO)
+WaitSecs(INFO.P.paradigm_ITI)
 
-% --------------------------------------------------------
-% Prestimulus interval
-% --------------------------------------------------------
-DrawScreen_with_fixation_square
-
-WaitSecs('UntilTime', INFO.P.paradigm_blank)

@@ -9,7 +9,7 @@ for irepeat = 1:INFO.P.paradigm.n_trials; %???
     for ipre_cue = 1:INFO.P.paradigm.pre_cue;
         for iprobes = 1:INFO.P.paradigm.probes;
             for iattention = 1:INFO.P.paradigm.attention;
-                for iresponse_cue = 1:INFO.P.paradigm.response_cue;
+                for iresponse_cue = [1 1 1 1 2];
                     for iquestions = 1:INFO.P.paradigm.questions;
                         itrial = itrial + 1;
                         
@@ -19,8 +19,10 @@ for irepeat = 1:INFO.P.paradigm.n_trials; %???
                         T(itrial).response_cue =iresponse_cue ;%? 80% of the time = i.pre_cue but how to do that ?
                         T(itrial).questions = iquestions;
                         
-                        T(itrial).button = [];
-                        T(itrial).correct = [];
+                        T(itrial).button_probes_1 = [];
+                        T(itrial).button_probes_2 = []
+                        T(itrial).button_attention = []
+                        T(itrial).correct_attention = [];
                         T(itrial).rt = [];
                     end
                 end
@@ -28,6 +30,8 @@ for irepeat = 1:INFO.P.paradigm.n_trials; %???
         end
     end
 end
+
+
 
 INFO.T = Shuffle(T);
 

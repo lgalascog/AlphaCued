@@ -14,10 +14,10 @@ if INFO.T(itrial).questions == 1
     responded = 0
     while responded == 0
         [keyIsDown, timeSecs, keyCode ] = KbCheck;
-        if any(keyCode(acceptedKeys))
+        if keyIsDown
             RT =  timeSecs - startSecs
             Report = str2num(KbName(find(keyCode)));
-            responded = 1;
+            responded = responded+1;
         end
     end
     KbStrokeWait;
@@ -32,7 +32,7 @@ if INFO.T(itrial).questions == 1
     responded = 0
     while responded == 0
         [keyIsDown, timeSecs, keyCode ] = KbCheck;
-        if any(keyCode(acceptedKeys))
+        if keyIsDown
             RT =  timeSecs - startSecs
             Report = str2num(KbName(find(keyCode)));
             responded = 1;
@@ -53,7 +53,7 @@ else % If right before left INFO.T.pre_cue = 2
     responded = 0
     while responded == 0
         [keyIsDown, timeSecs, keyCode ] = KbCheck;
-        if any(keyCode(acceptedKeys))
+        if keyIsDown
             RT =  timeSecs - startSecs
             Report = str2num(KbName(find(keyCode)));
             responded = 1;
@@ -72,7 +72,7 @@ else % If right before left INFO.T.pre_cue = 2
     responded = 0
     while responded == 0
         [keyIsDown, timeSecs, keyCode ] = KbCheck;
-        if any(keyCode(acceptedKeys))
+        if keyIsDown
             RT =  timeSecs - startSecs
             Report = str2num(KbName(find(keyCode)));
             responded = 1;
@@ -93,7 +93,7 @@ startSecs = GetSecs;
 responded = 0
 while responded == 0
     [keyIsDown, timeSecs, keyCode ] = KbCheck;
-    if any(keyCode(acceptedKeys))
+    if keyIsDown
         RT =  timeSecs - startSecs
         Report = str2num(KbName(find(keyCode)));
         responded = 1;

@@ -100,16 +100,16 @@ P.stim.cue_center_position_1_y = P.screen.cy
 P.stim.cue_rects_1 = [P.stim.cue_center_position_1_x-P.stim.cue_width/2; P.stim.cue_center_position_1_y-P.stim.cue_heith/2; P.stim.cue_center_position_1_x+P.stim.cue_width/2; P.stim.cue_center_position_1_y+P.stim.cue_heith/2]
 P.stim.cue_center_position_2_x = P.screen.cx+100
 P.stim.cue_center_position_2_y = P.screen.cy
-P.stim.cue_rects_2 = [P.stim.cue_center_position_2_x-P.stim.cue_width/2; P.stim.cue_center_position_2_y-P.stim.cue_heith/2; P.stim.cue_center_position_2_x+P.stim.cue_width; P.stim.cue_center_position_2_y+P.stim.cue_heith/2]
+P.stim.cue_rects_2 = [P.stim.cue_center_position_2_x-P.stim.cue_width/2; P.stim.cue_center_position_2_y-P.stim.cue_heith/2; P.stim.cue_center_position_2_x+P.stim.cue_width/2; P.stim.cue_center_position_2_y+P.stim.cue_heith/2]
 
 % P.stim.cue_size = [0 0 50 10];
 % P.stim.cue_positions_1 = CenterRectOnPointd(P.stim.cue_size, P.screen.cx-100, P.screen.cy);
 % P.stim.cue_positions_2 = CenterRectOnPointd(P.stim.cue_size, P.screen.cy+500, P.screen.cy);
 
 
-P.text_detection_right = 'Did you see a grating on the left side of the screen';
-P.text_detection_left = 'Did you see a grating on the right side of the screen';
-P.text_tilt = 'The grating was clockwise or counterclockwise ?';
+P.text_detection_right = 'Did you see a grating on the left side of the screen? (Y/N)';
+P.text_detection_left = 'Did you see a grating on the right side of the screen? (Y/N)';
+P.text_tilt = 'The grating was clockwise or counterclockwise? (Arrows)';
  
 
 
@@ -194,25 +194,25 @@ P.rects_left = [P.rects_left_1 P.rects_left_2 P.rects_left_3 P.rects_left_4 P.re
 % Parameters of the procedure & timing
 %  -----------------------------------------------------------------------
 
-% P.paradigm_blank = 0.500;
-% P.paradigm_precue = 0.120;
-% P.paradigm_delay = 1.500;
-% P.paradigm_detection = 0.100;
-% P.paradigm_tilt = 0.200;
-% P.paradigm_responscue = 0.120;
-% P.paradigm_delay = 0.500;
-% P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
-% P.paradigm_ITI = 2.000;
-
-P.paradigm_blank = 2
-P.paradigm_precue =2
-P.paradigm_delay = 2
-P.paradigm_detection = 2
-P.paradigm_tilt =2
-P.paradigm_responscue = 2
-P.paradigm_delay = 2
+P.paradigm_blank = 0.500;
+P.paradigm_precue = 0.120;
+P.paradigm_delay = 1.500;
+P.paradigm_detection = 0.100;
+P.paradigm_tilt = 0.200;
+P.paradigm_responscue = 0.120;
+P.paradigm_delay = 0.500;
 P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
-P.paradigm_ITI = 2
+P.paradigm_ITI = 2.000;
+
+% P.paradigm_blank = 3
+% P.paradigm_precue =1
+% P.paradigm_delay = 1
+% P.paradigm_detection = 1
+% P.paradigm_tilt =1
+% P.paradigm_responscue = 1
+% P.paradigm_delay = 1
+% P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
+% P.paradigm_ITI = 1
 
 %% ------------------------------------------------------------------------
 %  Define relevant buttons
