@@ -20,10 +20,11 @@ for irepeat = 1:INFO.P.paradigm.n_trials; %???
                         T(itrial).questions = iquestions;
                         
                         T(itrial).button_probes_1 = [];
+                        T(itrial).RT_1 = [];
                         T(itrial).button_probes_2 = []
+                        T(itrial).RT_2 = [];
                         T(itrial).button_attention = []
-                        T(itrial).correct_attention = [];
-                        T(itrial).rt = [];
+                        T(itrial).RT_3 = [];
                     end
                 end
             end

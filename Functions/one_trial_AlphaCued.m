@@ -63,7 +63,14 @@ WaitSecs(INFO.P.paradigm_responscue+INFO.P.paradigm_delay)
 % --------------------------------------------------------
 % questions
 % --------------------------------------------------------
-set_questions(myWindow, INFO, itrial)
+[responseKey1, responseKey2, responseKey3,RT1,RT2,RT3, INFO] = set_questions(myWindow, INFO, itrial)
+
+INFO.T(itrial).button_probes_1 = responseKey1
+INFO.T(itrial).RT_1 = RT1
+INFO.T(itrial).button_probes_2 = responseKey2
+INFO.T(itrial).RT_2 = RT2
+INFO.T(itrial).button_attention = responseKey3
+INFO.T(itrial).RT_3 = RT3
 
 % --------------------------------------------------------
 % End of the trial

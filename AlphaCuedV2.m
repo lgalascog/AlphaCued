@@ -5,7 +5,7 @@ addpath('./Functions');
 name  ='test';
 
 INFO.name              = name;
-INFO.logfilename       = ['Logfiles' filesep name '_Logfile.mat'];
+INFO.logfilename       = ['Alpha_Cued_Lateralization/Logfiles/' name '_Logfile.mat'];
 INFO.P = get_parameters;
 
 
@@ -37,13 +37,14 @@ end
 %%----------------------------------------------------------------------
 % Run across trials.
 %----------------------------------------------------------------------
+HideCursor
 for itrial = 1:length(INFO.T)
     rand_position_right = randperm(5,2) %select 2 DIFFERENTS positions for the probes and the attention target
     rand_position_left = randperm(5,2)
     location_right_probes = INFO.P.rects_right(:,rand_position_right(1))
     location_left_probes = INFO.P.rects_left(:,rand_position_left(1))
     INFO.P(1).location_right_probes = location_right_probes
-    INFO.P(1).location_left_probes = location_left_@@@@@@@yprobes
+    INFO.P(1).location_left_probes = location_left_probes
     
     location_right_attention = INFO.P.rects_right(:,rand_position_right(2))
     location_left_attention = INFO.P.rects_left(:,rand_position_left(2))
@@ -52,4 +53,9 @@ for itrial = 1:length(INFO.T)
     
     
     [INFO] = one_trial_AlphaCued(myWindow,INFO, itrial);
+   
 end
+save(INFO.logfilename, 'INFO');
+
+Screen('CloseAll');
+ShowCursor;
