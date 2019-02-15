@@ -19,12 +19,16 @@ for irepeat = 1:INFO.P.paradigm.n_trials; %???
                         T(itrial).response_cue =iresponse_cue ;%? 80% of the time = i.pre_cue but how to do that ?
                         T(itrial).questions = iquestions;
                         
-                        T(itrial).button_probes_1 = [];
-                        T(itrial).RT_1 = [];
-                        T(itrial).button_probes_2 = []
-                        T(itrial).RT_2 = [];
+                        T(itrial).Contrast_probes = [];
+                        T(itrial).Contrast_attention = [];
+                        T(itrial).button_probes_right = [];
+                        T(itrial).RT_right = [];
+                        T(itrial).button_probes_left = []
+                        T(itrial).RT_left = [];
                         T(itrial).button_attention = []
-                        T(itrial).RT_3 = [];
+                        T(itrial).RT_attention = [];
+                        T(itrial).Correct_probes = []
+                        T(itrial).Correct_attention = []
                     end
                 end
             end

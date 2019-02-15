@@ -69,7 +69,7 @@ P.screen.cy = round(P.screen.height/2); % y coordinate of screen center
 %% ------------------------------------------------------------------------
 % Paradigm : number of possibilities per stimulis
 %% ------------------------------------------------------------------------
-P.paradigm.n_trials = 2; %Je sais pas du tout ce que ça veut dire donc c'est pas la bonne valeur !
+P.paradigm.n_trials = 1; %Je sais pas du tout ce que ça veut dire donc c'est pas la bonne valeur !
 P.paradigm.pre_cue = 2;
 P.paradigm.probes = 4;
 P.paradigm.attention = 4;
@@ -102,13 +102,9 @@ P.stim.cue_center_position_2_x = P.screen.cx+100
 P.stim.cue_center_position_2_y = P.screen.cy
 P.stim.cue_rects_2 = [P.stim.cue_center_position_2_x-P.stim.cue_width/2; P.stim.cue_center_position_2_y-P.stim.cue_heith/2; P.stim.cue_center_position_2_x+P.stim.cue_width/2; P.stim.cue_center_position_2_y+P.stim.cue_heith/2]
 
-% P.stim.cue_size = [0 0 50 10];
-% P.stim.cue_positions_1 = CenterRectOnPointd(P.stim.cue_size, P.screen.cx-100, P.screen.cy);
-% P.stim.cue_positions_2 = CenterRectOnPointd(P.stim.cue_size, P.screen.cy+500, P.screen.cy);
 
-
-P.text_detection_right = 'Did you see a grating on the left side of the screen? (Y/N)';
-P.text_detection_left = 'Did you see a grating on the right side of the screen? (Y/N)';
+P.text_detection_right = 'Did you see a grating on the right side of the screen? (Y/N)';
+P.text_detection_left = 'Did you see a grating on the left side of the screen? (Y/N)';
 P.text_tilt = 'The grating was clockwise or counterclockwise? (Arrows)';
  
 
@@ -129,8 +125,8 @@ P.grating_tilt_res = 1*[323 323];
 P.grating_tilt_phase = 0;
 P.grating_tilt_sc = 10.0;
 P.grating_tilt_freq = .1;
-P.grating_tilt_tilt_clock = 45;
-P.grating_tilt_tilt_cantclock = 315;% Should be determined by a staircase
+P.grating_tilt_tilt_clock = 350;
+P.grating_tilt_tilt_cantclock = 10;% Should be determined by a staircase
 P.grating_tilt_contrast = 100.0;
 P.grating_tilt_aspectratio = 1.0;
 P.grating_tilt_width = 100;
@@ -194,25 +190,25 @@ P.rects_left = [P.rects_left_1 P.rects_left_2 P.rects_left_3 P.rects_left_4 P.re
 % Parameters of the procedure & timing
 %  -----------------------------------------------------------------------
 
-P.paradigm_blank = 0.500;
-P.paradigm_precue = 0.120;
-P.paradigm_delay = 1.500;
-P.paradigm_detection = 0.100;
-P.paradigm_tilt = 0.200;
-P.paradigm_responscue = 0.120;
-P.paradigm_delay = 0.500;
-P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
-P.paradigm_ITI = 2.000;
-
-% P.paradigm_blank = 3
-% P.paradigm_precue =1
-% P.paradigm_delay = 1
-% P.paradigm_detection = 1
-% P.paradigm_tilt =1
-% P.paradigm_responscue = 1
-% P.paradigm_delay = 1
+% P.paradigm_blank = 0.500;
+% P.paradigm_precue = 0.120;
+% P.paradigm_delay = 1.500;
+% P.paradigm_detection = 0.100;
+% P.paradigm_tilt = 0.200;
+% P.paradigm_responscue = 0.120;
+% P.paradigm_delay = 0.500;
 % P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
-% P.paradigm_ITI = 1
+% P.paradigm_ITI = 2.000;
+
+P.paradigm_blank = 1
+P.paradigm_precue =2
+P.paradigm_delay = 0
+P.paradigm_detection = 3
+P.paradigm_tilt =0.5
+P.paradigm_responscue = 3
+P.paradigm_delay = 1
+P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
+P.paradigm_ITI = 1
 
 %% ------------------------------------------------------------------------
 %  Define relevant buttons
@@ -228,4 +224,16 @@ P.location_left_probes = []
 P.location_right_attention = []
 P.location_left_attention = []
 
+% ------------------------------------------------------------------------
+% Parameters of the Quest
+% ------------------------------------------------------------------------
+% Three parameters:
+% 1: detection yes/no
+% 2: discrimination 2AFC
+P.Quest_Guess      = log10([0.2 0.2]);
+P.Quest_Std        = [3 3];       % a priori standard deviation of the guess. manual suggests to be generous here
+P.Quest_pThreshold = [0.5 0.85];  % threshold criterior for response = 1
+P.Quest_beta       = [3.5 3.5];   % slope of psychometric function
+P.Quest_delta      = [0.05 0.05]; % p of response = 0 for visible stimuli
+P.Quest_gamma      = [0 0.5];     % chance level (for invisible stimuli)
 
