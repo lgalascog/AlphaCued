@@ -18,24 +18,24 @@ INFO = define_trials_AlphaCued(INFO);
 % Initiate Quest.
 % ------------------------------------------------------------------------        
 % Yes/No detection task
-Q(1) = QuestCreate(INFO.P.Quest_Guess(1), ...
+INFO.Q(1) = QuestCreate(INFO.P.Quest_Guess(1), ...
             INFO.P.Quest_Std(1), ...
             INFO.P.Quest_pThreshold(1), ...
             INFO.P.Quest_beta(1), ...
             INFO.P.Quest_delta(1), ...
             INFO.P.Quest_gamma(1));
-Q(1).normalizePdf = 1;        
-Q(1) = QuestRecompute(Q(1)); 
+INFO.Q(1).normalizePdf = 1;        
+INFO.Q(1) = QuestRecompute(INFO.Q(1)); 
 
 % 2AFC discrimination task
-Q(2) = QuestCreate(INFO.P.Quest_Guess(2), ...
+INFO.Q(2) = QuestCreate(INFO.P.Quest_Guess(2), ...
             INFO.P.Quest_Std(2), ...
             INFO.P.Quest_pThreshold(2), ...
             INFO.P.Quest_beta(2), ...
             INFO.P.Quest_delta(2), ...
             INFO.P.Quest_gamma(2));
-Q(2).normalizePdf = 1;        
-Q(2) = QuestRecompute(Q(2)); 
+INFO.Q(2).normalizePdf = 1;        
+INFO.Q(2) = QuestRecompute(INFO.Q(2)); 
 
 %% -----------------------------------------------------------------------
 % Open the display and set priority.
@@ -79,12 +79,12 @@ for itrial = 1:length(INFO.T)
     
     % Get Quest's recommendation for a contrast value.
     % Yes/No detection task
-    INFO.T(itrial).Contrast_probes = 10^QuestQuantile(Q(1));
+    INFO.T(itrial).Contrast_probes = 10^QuestQuantile(INFO.Q(1));
     if INFO.T(itrial).Contrast_probes > 1
         INFO.T(itrial).Contrast_probes = 1;
     end
     % 2AFC discrimination task
-    INFO.T(itrial).Contrast_attention = 10^QuestQuantile(Q(2));
+    INFO.T(itrial).Contrast_attention = 10^QuestQuantile(INFO.Q(2));
     if INFO.T(itrial).Contrast_attention > 1
         INFO.T(itrial).Contrast_attention = 1;
     end
@@ -93,13 +93,15 @@ for itrial = 1:length(INFO.T)
    
     % Update Quest
     % Yes/No detection task
-    Q(1) = QuestUpdate(Q(1), log10(INFO.T(itrial).Contrast_probes), INFO.T(itrial).Correct_probes);
-    INFO.T(itrial).ThresholdEstimate = QuestMean(Q(1));
-    INFO.T(itrial).ThresholdSD       = QuestSd(Q(1));
+    INFO.Q(1) = QuestUpdate(INFO.Q(1), log10(INFO.T(itrial).Contrast_probes), INFO.T(itrial).Correct_probes);
+    INFO.T(itrial).ThresholdEstimate = QuestMean(INFO.Q(1));
+    INFO.T(itrial).ThresholdSD       = QuestSd(INFO.Q(1));
     % 2AFC discrimination task
-    Q(2) = QuestUpdate(Q(2), log10(INFO.T(itrial).Contrast_attention), INFO.T(itrial).Correct_attention);
-    INFO.T(itrial).ThresholdEstimate = QuestMean(Q(2));
-    INFO.T(itrial).ThresholdSD       = QuestSd(Q(2));
+    INFO.Q(2) = QuestUpdate(INFO.Q(2), log10(INFO.T(itrial).Contrast_attention), INFO.T(itrial).Correct_attention);
+    INFO.T(itrial).ThresholdEstimate = QuestMean(INFO.Q(2));
+    INFO.T(itrial).ThresholdSD       = QuestSd(INFO.Q(2));
+    
+    save(INFO.logfilename, 'INFO');  
 end
 
 

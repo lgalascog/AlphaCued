@@ -5,12 +5,12 @@ function INFO = define_trials(INFO)
 % 2 response-cue
 % 2 possible questions sequences
 itrial = 0;
-for irepeat = 1:INFO.P.paradigm.n_trials; %???
-    for ipre_cue = 1:INFO.P.paradigm.pre_cue;
-        for iprobes = 1:INFO.P.paradigm.probes;
-            for iattention = 1:INFO.P.paradigm.attention;
+for irepeat = 1 %:INFO.P.paradigm.n_trials; %???
+    for ipre_cue = 1 %:INFO.P.paradigm.pre_cue;
+        for iprobes = 1 %:INFO.P.paradigm.probes;
+            for iattention = 1 %:INFO.P.paradigm.attention;
                 for iresponse_cue = [1 1 1 1 2];
-                    for iquestions = 1:INFO.P.paradigm.questions;
+                    for iquestions = 1 %:INFO.P.paradigm.questions;
                         itrial = itrial + 1;
                         
                         T(itrial).pre_cue = ipre_cue ;% 50% trials precue left and 50% right
