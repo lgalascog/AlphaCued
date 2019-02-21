@@ -86,7 +86,6 @@ P.number_trials = 1;
 % ------------------------------------------------------------------------
 
 P.stim.background_color = [128 128 128];
-
 P.stim.fixation_square_color = [255 255 255]; 
 P.stim.fixation_width = 10
 P.stim.fixation_heith = 10
@@ -103,22 +102,23 @@ P.stim.cue_center_position_2_y = P.screen.cy
 P.stim.cue_rects_2 = [P.stim.cue_center_position_2_x-P.stim.cue_width/2; P.stim.cue_center_position_2_y-P.stim.cue_heith/2; P.stim.cue_center_position_2_x+P.stim.cue_width/2; P.stim.cue_center_position_2_y+P.stim.cue_heith/2]
 
 
-P.text_detection_right = 'Did you see a grating on the right side of the screen? (Y/N)';
-P.text_detection_left = 'Did you see a grating on the left side of the screen? (Y/N)';
+P.text_detection_right = 'Right? (Y/N)';
+P.text_detection_left = 'Left? (Y/N)';
 P.text_tilt = 'The grating was clockwise or counterclockwise? (Arrows)';
  
 
 
 % Gratings detection task (probe)
-P.grating_detection_res = 1*[323 323];
-P.grating_detection_phase = 0;
-P.grating_detection_sc = 10.0;
-P.grating_detection_freq = .1;
-P.grating_detection_tilt = 0; % Should be determined by a staircase
-P.grating_detection_contrast = 100.0;
-P.grating_detection_aspectratio = 1.0;
-P.grating_detection_width = 100
-P.grating_detection_height = 100
+% P.grating_detection_res = 1*[323 323];
+% P.grating_detection_phase = 0;
+% P.grating_detection_sc = 10.0;
+% P.grating_detection_freq = .1;
+% P.grating_detection_tilt = 0; % Should be determined by a staircase
+% P.grating_detection_contrast = 100.0;
+% P.grating_detection_aspectratio = 1.0;
+% P.grating_detection_width = 100
+% P.grating_detection_height = 100
+P.circle_detection_size = 20
 
 % Gratings tilt discrimination task (attention)
 P.grating_tilt_res = 1*[323 323];
@@ -162,6 +162,21 @@ position_left_y_3 = P.screen.cy + P.radius*sin(P.angles_left(3)*pi/180) ;
 position_left_y_4 = P.screen.cy + P.radius*sin(P.angles_left(4)*pi/180) ;
 position_left_y_5 = P.screen.cy + P.radius*sin(P.angles_left(5)*pi/180) ; 
 
+P.center_right_1 = [position_right_x_1;position_right_y_1];
+P.center_right_2 = [position_right_x_2;position_right_y_2];
+P.center_right_3 = [position_right_x_3;position_right_y_3];
+P.center_right_4 = [position_right_x_4;position_right_y_4];
+P.center_right_5 = [position_right_x_5;position_right_y_5];
+
+P.center_left_1 = [position_left_x_1;position_left_y_1];
+P.center_left_2 = [position_left_x_2;position_left_y_2];
+P.center_left_3 = [position_left_x_3;position_left_y_3];
+P.center_left_4 = [position_left_x_4;position_left_y_4];
+P.center_left_5 = [position_left_x_5;position_left_y_5];
+
+P.center_right = [P.center_right_1 P.center_right_2 P.center_right_3 P.center_right_4 P.center_right_5];
+P.center_left = [P.center_left_1 P.center_left_2 P.center_left_3 P.center_left_4 P.center_left_5];
+
 % Coordinates
 P.rects_right_1 = [position_right_x_1-P.grating_tilt_width/2;position_right_y_1-P.grating_tilt_height/2;position_right_x_1+P.grating_tilt_width/2;position_right_y_1+P.grating_tilt_height/2];
 P.rects_right_2 = [position_right_x_2-P.grating_tilt_width/2;position_right_y_2-P.grating_tilt_height/2;position_right_x_2+P.grating_tilt_width/2;position_right_y_2+P.grating_tilt_height/2];
@@ -190,25 +205,26 @@ P.rects_left = [P.rects_left_1 P.rects_left_2 P.rects_left_3 P.rects_left_4 P.re
 % Parameters of the procedure & timing
 %  -----------------------------------------------------------------------
 
-% P.paradigm_blank = 0.500;
-% P.paradigm_precue = 0.120;
-% P.paradigm_delay = 1.500;
-% P.paradigm_detection = 0.100;
-% P.paradigm_tilt = 0.200;
-% P.paradigm_responscue = 0.120;
-% P.paradigm_delay = 0.500;
-% P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
-% P.paradigm_ITI = 2.000;
-
-P.paradigm_blank = 1
-P.paradigm_precue =2
-P.paradigm_delay = 0
-P.paradigm_detection = 3
-P.paradigm_tilt =0.5
-P.paradigm_responscue = 3
-P.paradigm_delay = 1
+P.paradigm_blank = 0.500;
+P.paradigm_precue = 0.120;
+P.paradigm_delay = 2.500;
+P.paradigm_detection = 0.100;
+P.paradigm_delay2 = 0.500
+P.paradigm_tilt = 0.200;
+P.paradigm_responscue = 0.120;
+P.paradigm_delay = 0.500;
 P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
-P.paradigm_ITI = 1
+P.paradigm_ITI = 2.000;
+
+% P.paradigm_blank = 1
+% P.paradigm_precue =2
+% P.paradigm_delay = 0
+% P.paradigm_detection = 3
+% P.paradigm_tilt =0.5
+% P.paradigm_responscue = 3
+% P.paradigm_delay = 1
+% P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
+% P.paradigm_ITI = 1
 
 %% ------------------------------------------------------------------------
 %  Define relevant buttons

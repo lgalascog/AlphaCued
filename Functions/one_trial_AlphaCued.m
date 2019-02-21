@@ -20,19 +20,20 @@ WaitSecs(INFO.P.paradigm_precue)
 % --------------------------------------------------------
 % Delay
 % --------------------------------------------------------
-WaitSecs('UntilTime', INFO.P.paradigm_delay)
+WaitSecs(INFO.P.paradigm_delay)
 
 % --------------------------------------------------------
 % probe target
 % --------------------------------------------------------
-gabortex = CreateProceduralGabor(myWindow, INFO.P.grating_detection_width,INFO.P.grating_detection_height, [], [0.5 0.5 0.5 0.0]);
-set_probe_target(myWindow,gabortex,INFO,itrial)
+set_probe_target(myWindow,INFO,itrial)
 WaitSecs(INFO.P.paradigm_detection)
 
-
+DrawScreen_with_fixation_square(myWindow,INFO)
+WaitSecs(INFO.P.paradigm_delay2)
 % --------------------------------------------------------
 % attention target
 % --------------------------------------------------------
+gabortex = CreateProceduralGabor(myWindow, INFO.P.grating_tilt_width,INFO.P.grating_tilt_height, [], [0.5 0.5 0.5 0.0]);
 set_attention_target(myWindow,gabortex,INFO,itrial)
 WaitSecs(INFO.P.paradigm_tilt)
 
@@ -53,8 +54,9 @@ INFO.T(itrial).RT_left = RTLeft
 INFO.T(itrial).button_attention = responseKeyAttention
 INFO.T(itrial).RT_attention = RTAttention
 
-[INFO, Correct_probes, Correct_attention] = response_validity (INFO, itrial)
-INFO.T(itrial).Correct_probes = Correct_probes
+[INFO, Correct_probes_right,Correct_probes_left, Correct_attention] = response_validity (INFO, itrial)
+INFO.T(itrial).Correct_probes_right = Correct_probes_right
+INFO.T(itrial).Correct_probes_left = Correct_probes_left
 INFO.T(itrial).Correct_attention = Correct_attention
 
 

@@ -24,7 +24,7 @@ INFO.Q(1) = QuestCreate(INFO.P.Quest_Guess(1), ...
             INFO.P.Quest_beta(1), ...
             INFO.P.Quest_delta(1), ...
             INFO.P.Quest_gamma(1));
-INFO.Q(1).normalizePdf = 1;        
+INFO.Q(1).normalizePdf = 1;       
 INFO.Q(1) = QuestRecompute(INFO.Q(1)); 
 
 % 2AFC discrimination task
@@ -64,8 +64,8 @@ HideCursor
 for itrial = 1:length(INFO.T)
     rand_position_right = randperm(5,2) %select 2 DIFFERENTS positions for the probes and the attention target
     rand_position_left = randperm(5,2)
-    location_right_probes = INFO.P.rects_right(:,rand_position_right(1))
-    location_left_probes = INFO.P.rects_left(:,rand_position_left(1))
+    location_right_probes = INFO.P.center_right(:,rand_position_right(1))
+    location_left_probes = INFO.P.center_left(:,rand_position_left(1))
     INFO.P(1).location_right_probes = location_right_probes
     INFO.P(1).location_left_probes = location_left_probes
     
@@ -73,8 +73,6 @@ for itrial = 1:length(INFO.T)
     location_left_attention = INFO.P.rects_left(:,rand_position_left(2))
     INFO.P(1).location_right_attention = location_right_attention
     INFO.P(1).location_left_attention = location_left_attention
-    
-     
     
     
     % Get Quest's recommendation for a contrast value.
@@ -93,9 +91,20 @@ for itrial = 1:length(INFO.T)
    
     % Update Quest
     % Yes/No detection task
-    INFO.Q(1) = QuestUpdate(INFO.Q(1), log10(INFO.T(itrial).Contrast_probes), INFO.T(itrial).Correct_probes);
+    
+    if INFO.T(itrial).probes == 2 || INFO.T(itrial).probes == 3; 
+        INFO.Q(1) = QuestUpdate(INFO.Q(1), log10(INFO.T(itrial).Contrast_probes), INFO.T(itrial).Correct_probes_left);
+    end
+    
+    if INFO.T(itrial).probes == 1 || INFO.T(itrial).probes == 3;
+        INFO.Q(1) = QuestUpdate(INFO.Q(1), log10(INFO.T(itrial).Contrast_probes), INFO.T(itrial).Correct_probes_right);
+    end    
+        
     INFO.T(itrial).ThresholdEstimate = QuestMean(INFO.Q(1));
     INFO.T(itrial).ThresholdSD       = QuestSd(INFO.Q(1));
+    
+    
+    
     % 2AFC discrimination task
     INFO.Q(2) = QuestUpdate(INFO.Q(2), log10(INFO.T(itrial).Contrast_attention), INFO.T(itrial).Correct_attention);
     INFO.T(itrial).ThresholdEstimate = QuestMean(INFO.Q(2));
