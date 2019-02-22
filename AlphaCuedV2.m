@@ -2,7 +2,7 @@ clear
 close all
 addpath('./Functions');
 
-name  ='test';
+name  ='test2';
 
 INFO.name              = name;
 INFO.logfilename       = ['Alpha_Cued_Lateralization/Logfiles/' name '_Logfile.mat'];
@@ -106,7 +106,10 @@ for itrial = 1:length(INFO.T)
     
     
     % 2AFC discrimination task
-    INFO.Q(2) = QuestUpdate(INFO.Q(2), log10(INFO.T(itrial).Contrast_attention), INFO.T(itrial).Correct_attention);
+    if INFO.T(itrial).attention == 1 || INFO.T(itrial) == 2 ;
+        INFO.Q(2) = QuestUpdate(INFO.Q(2), log10(INFO.T(itrial).Contrast_attention), INFO.T(itrial).Correct_attention);
+    end
+    
     INFO.T(itrial).ThresholdEstimate = QuestMean(INFO.Q(2));
     INFO.T(itrial).ThresholdSD       = QuestSd(INFO.Q(2));
     

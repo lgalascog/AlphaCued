@@ -102,9 +102,9 @@ P.stim.cue_center_position_2_y = P.screen.cy
 P.stim.cue_rects_2 = [P.stim.cue_center_position_2_x-P.stim.cue_width/2; P.stim.cue_center_position_2_y-P.stim.cue_heith/2; P.stim.cue_center_position_2_x+P.stim.cue_width/2; P.stim.cue_center_position_2_y+P.stim.cue_heith/2]
 
 
-P.text_detection_right = 'Right? (Y/N)';
-P.text_detection_left = 'Left? (Y/N)';
-P.text_tilt = 'The grating was clockwise or counterclockwise? (Arrows)';
+P.text_detection_right = 'Right?';
+P.text_detection_left = 'Left?';
+P.text_tilt = 'The grating was clockwise or counterclockwise?';
  
 
 

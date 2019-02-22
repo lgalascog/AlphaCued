@@ -7,7 +7,7 @@ if INFO.T(itrial).questions == 1
     Screen('Flip', myWindow);
     startSecs1 = GetSecs;
     
-    RestrictKeysForKbCheck([KbName('y'), KbName('n')]);
+    RestrictKeysForKbCheck([KbName('UpArrow'), KbName('DownArrow')]);
     keyIsDown1 = 0;
     while keyIsDown1 == 0
         [keyIsDown1, timeSecs1, keyCode1 ] = KbCheck;
@@ -21,7 +21,7 @@ if INFO.T(itrial).questions == 1
     Screen('Flip', myWindow);
     startSecs2 = GetSecs;
     
-    RestrictKeysForKbCheck([KbName('n'), KbName('y')]);
+    RestrictKeysForKbCheck([KbName('UpArrow'), KbName('DownArrow')]);
     keyIsDown2 = 0;
     while keyIsDown2 == 0
         [keyIsDown2, timeSecs2, keyCode2 ] = KbCheck;
@@ -34,7 +34,7 @@ else % If right before left INFO.T.pre_cue = 2
     Detection_gabor_right = DrawFormattedText(myWindow, INFO.P.text_detection_right, 'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
     Screen('Flip', myWindow);
     startSecs1 = GetSecs;
-    RestrictKeysForKbCheck([KbName('y'), KbName('n')]);
+    RestrictKeysForKbCheck([KbName('UpArrow'), KbName('DownArrow')]);
     keyIsDown1 = 0;
     while keyIsDown1 == 0
         [keyIsDown1, timeSecs1, keyCode1 ] = KbCheck;
@@ -48,7 +48,7 @@ else % If right before left INFO.T.pre_cue = 2
     Screen('Flip', myWindow);
     startSecs2 = GetSecs;
     
-    RestrictKeysForKbCheck([KbName('y'), KbName('n')]);
+    RestrictKeysForKbCheck([KbName('UpArrow'), KbName('DownArrow')]);
     keyIsDown2 = 0;
     while keyIsDown2 == 0
         [keyIsDown2, timeSecs2, keyCode2 ] = KbCheck;
