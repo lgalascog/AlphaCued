@@ -87,9 +87,7 @@ P.number_trials = 1;
 
 P.stim.background_color = [128 128 128];
 P.stim.fixation_square_color = [255 255 255]; 
-P.stim.fixation_width = 10
-P.stim.fixation_heith = 10
-P.stim.fixation_rects = [P.screen.cx-P.stim.fixation_width/2; P.screen.cy-P.stim.fixation_heith/2; P.screen.cx+P.stim.fixation_width/2; P.screen.cy+P.stim.fixation_heith/2]
+P.stim.fixation_size = 15
 
 P.stim.cue_color = [255 255 255];
 P.stim.cue_width = 50
@@ -246,7 +244,7 @@ P.location_left_attention = []
 % Three parameters:
 % 1: detection yes/no
 % 2: discrimination 2AFC
-P.Quest_Guess      = log10([0.2 0.2]);
+P.Quest_Guess      = log10([0.35 0.35]);
 P.Quest_Std        = [3 3];       % a priori standard deviation of the guess. manual suggests to be generous here
 P.Quest_pThreshold = [0.5 0.85];  % threshold criterior for response = 1
 P.Quest_beta       = [3.5 3.5];   % slope of psychometric function

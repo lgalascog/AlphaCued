@@ -6,7 +6,7 @@ function [INFO] = one_trial_AlphaCued(myWindow, INFO, itrial)
 % --------------------------------------------------------
 % Prestimulus interval
 % --------------------------------------------------------
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
+my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, 10, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
 Screen('Flip', myWindow);
 WaitSecs(INFO.P.paradigm_blank)
 
@@ -19,8 +19,6 @@ WaitSecs(INFO.P.paradigm_precue)
 % --------------------------------------------------------
 % Delay
 % --------------------------------------------------------
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
-Screen('Flip', myWindow);
 WaitSecs(INFO.P.paradigm_delay)
 
 % --------------------------------------------------------
@@ -29,8 +27,7 @@ WaitSecs(INFO.P.paradigm_delay)
 set_probe_target(myWindow,INFO,itrial)
 WaitSecs(INFO.P.paradigm_detection)
 
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
-Screen('Flip', myWindow);
+DrawScreen_with_fixation_square(myWindow,INFO)
 WaitSecs(INFO.P.paradigm_delay2)
 % --------------------------------------------------------
 % attention target
@@ -48,8 +45,7 @@ WaitSecs(INFO.P.paradigm_tilt)
 % --------------------------------------------------------
 % delay
 % --------------------------------------------------------
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
-Screen('Flip', myWindow);
+DrawScreen_with_fixation_square(myWindow,INFO)
 WaitSecs(INFO.P.paradigm_delay)
 
 % --------------------------------------------------------
@@ -72,7 +68,6 @@ INFO.T(itrial).Correct_attention = Correct_attention
 % --------------------------------------------------------
 % End of the trial
 % --------------------------------------------------------
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
-Screen('Flip', myWindow);
+DrawScreen_with_fixation_square(myWindow,INFO)
 WaitSecs(INFO.P.paradigm_ITI)
 

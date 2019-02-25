@@ -106,7 +106,7 @@ for itrial = 1:length(INFO.T)
     
     
     % 2AFC discrimination task
-    if INFO.T(itrial).attention == 1 || INFO.T(itrial) == 2 ;
+    if INFO.T(itrial).attention == 1 || INFO.T(itrial).attention == 2 ;
         INFO.Q(2) = QuestUpdate(INFO.Q(2), log10(INFO.T(itrial).Contrast_attention), INFO.T(itrial).Correct_attention);
     end
     
