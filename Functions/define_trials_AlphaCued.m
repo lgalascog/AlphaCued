@@ -30,6 +30,8 @@ for irepeat = 1 :INFO.P.paradigm.n_trials; %???
                     T(itrial).Correct_probes_right = []
                     T(itrial).Correct_probes_left = []
                     T(itrial).Correct_attention = []
+                    
+                    T(itrial).GazeHasMovedOrEyeIsLost = []
                 end
                 %end
             end

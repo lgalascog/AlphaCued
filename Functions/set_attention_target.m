@@ -3,34 +3,33 @@ function [INFO] = set_attention_target(myWindow,gabortex,INFO,itrial)
 
 pre_cue_position = INFO.T(itrial).pre_cue
 
-
 if pre_cue_position == 1
     if INFO.T(itrial).attention == 1 % Gabor Left, clock
         Screen('DrawTexture', myWindow, gabortex, [], [INFO.P.location_left_attention], INFO.P.grating_tilt_tilt_clock, [], [], [], [], kPsychDontDoRotation,...
             [INFO.P.grating_tilt_phase+180, INFO.P.grating_tilt_freq, INFO.P.grating_tilt_sc,...
             INFO.T(itrial).Contrast_attention*100, INFO.P.grating_tilt_aspectratio, 0, 0, 0]);
-        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
+        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
         Screen('Flip', myWindow);
         
     elseif INFO.T(itrial).attention == 2 % Gabor Left, cantclock
         Screen('DrawTexture', myWindow, gabortex, [], [INFO.P.location_left_attention], INFO.P.grating_tilt_tilt_cantclock, [], [], [], [], kPsychDontDoRotation,...
             [INFO.P.grating_tilt_phase+180, INFO.P.grating_tilt_freq, INFO.P.grating_tilt_sc,...
             INFO.T(itrial).Contrast_attention*100, INFO.P.grating_tilt_aspectratio, 0, 0, 0]);
-        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
+        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
         Screen('Flip', myWindow);
         
     elseif INFO.T(itrial).attention == 3 % Gabor Right, clock
         Screen('DrawTexture', myWindow, gabortex, [], [INFO.P.location_right_attention], INFO.P.grating_tilt_tilt_clock, [], [], [], [], kPsychDontDoRotation,...
             [INFO.P.grating_tilt_phase+180, INFO.P.grating_tilt_freq, INFO.P.grating_tilt_sc,...
             INFO.T(itrial).Contrast_attention*100, INFO.P.grating_tilt_aspectratio, 0, 0, 0]);
-        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
+        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
         Screen('Flip', myWindow);
         
     elseif INFO.T(itrial).attention == 4 % Gabor Right, cantclock
         Screen('DrawTexture', myWindow, gabortex, [], [INFO.P.location_right_attention], INFO.P.grating_tilt_tilt_cantclock, [], [], [], [], kPsychDontDoRotation,...
             [INFO.P.grating_tilt_phase+180, INFO.P.grating_tilt_freq, INFO.P.grating_tilt_sc,...
             INFO.T(itrial).Contrast_attention*100, INFO.P.grating_tilt_aspectratio, 0, 0, 0]);
-        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
+        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
         Screen('Flip', myWindow);
     end
 end
@@ -40,28 +39,28 @@ if pre_cue_position == 2
         Screen('DrawTexture', myWindow, gabortex, [], [INFO.P.location_right_attention], INFO.P.grating_tilt_tilt_clock, [], [], [], [], kPsychDontDoRotation,...
             [INFO.P.grating_tilt_phase+180, INFO.P.grating_tilt_freq, INFO.P.grating_tilt_sc,...
             INFO.T(itrial).Contrast_attention*100, INFO.P.grating_tilt_aspectratio, 0, 0, 0]);
-        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
+        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
         Screen('Flip', myWindow);
         
     elseif INFO.T(itrial).attention == 2 % Gabor Right, cantclock
         Screen('DrawTexture', myWindow, gabortex, [], [INFO.P.location_right_attention], INFO.P.grating_tilt_tilt_cantclock, [], [], [], [], kPsychDontDoRotation,...
             [INFO.P.grating_tilt_phase+180, INFO.P.grating_tilt_freq, INFO.P.grating_tilt_sc,...
             INFO.T(itrial).Contrast_attention*100, INFO.P.grating_tilt_aspectratio, 0, 0, 0]);
-        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
+        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
         Screen('Flip', myWindow);
         
     elseif INFO.T(itrial).attention == 3 % Gabor Left, clock
         Screen('DrawTexture', myWindow, gabortex, [], [INFO.P.location_left_attention], INFO.P.grating_tilt_tilt_clock, [], [], [], [], kPsychDontDoRotation,...
             [INFO.P.grating_tilt_phase+180, INFO.P.grating_tilt_freq, INFO.P.grating_tilt_sc,...
             INFO.T(itrial).Contrast_attention*100, INFO.P.grating_tilt_aspectratio, 0, 0, 0]);
-        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
+        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
         Screen('Flip', myWindow);
         
     elseif INFO.T(itrial).attention == 4 % Gabor Left, cantclock
         Screen('DrawTexture', myWindow, gabortex, [], [INFO.P.location_left_attention], INFO.P.grating_tilt_tilt_cantclock, [], [], [], [], kPsychDontDoRotation,...
             [INFO.P.grating_tilt_phase+180, INFO.P.grating_tilt_freq, INFO.P.grating_tilt_sc,...
             INFO.T(itrial).Contrast_attention*100, INFO.P.grating_tilt_aspectratio, 0, 0, 0]);
-        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, 1)
+        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
         Screen('Flip', myWindow);
     end
 end

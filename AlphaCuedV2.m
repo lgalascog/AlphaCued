@@ -56,6 +56,37 @@ if INFO.P.setup.useCLUT
     Screen('LoadNormalizedGammaTable',myWindow,inverseCLUT);
 end
 
+%% -----------------------------------------------------------------------
+% First, Calibration Notification
+% -----------------------------------------------------------------------  
+
+if INFO.P.setup.isEYEtrack
+    ELtext = 'Eye tracking calibration.\n\n\n\nPlease press the spacebar to start.';
+    DrawFormattedText(myWindow, ELtext, 'center', 'center', [0 0 0], [], [], [], 1.5);
+    Screen('Flip', myWindow);
+    
+    % Wait for a button press (only matter if keyIsDown)
+    %RestrictKeysForKbCheck(P.Exp.ButtonsExperiment);
+    keyIsDown = 0;
+    while keyIsDown == 0
+        [keyIsDown, EndRT, keyCode] = KbCheck(0);
+    end
+    WaitSecs(INFO.P.WaitAfterButtonPress);
+end
+
+%% -----------------------------------------------------------------------
+% Initialize EyeTracker (incl. calibrate) & EEG
+% -----------------------------------------------------------------------
+
+if INFO.P.setup.isEEG
+    OpenTriggerPort;
+end
+
+if INFO.P.setup.isEYEtrack
+    % launch devices
+    SendTrigger(INFO.P.TriggerStartRecording,INFO.P.TriggerDuration);
+    [INFO,myWindow] = EyelinkStart(INFO, myWindow, ['AI_' name '.edf']);
+end
 
 %%----------------------------------------------------------------------
 % Run across trials.
@@ -84,10 +115,10 @@ for itrial = 1:length(INFO.T)
     % 2AFC discrimination task
     INFO.T(itrial).Contrast_attention = 10^QuestQuantile(INFO.Q(2));
     if INFO.T(itrial).Contrast_attention > 1
-        INFO.T(itrial).Contrast_attention = 1;
+       INFO.T(itrial).Contrast_attention = 1;
     end
     
-    [INFO] = one_trial_AlphaCued(myWindow,INFO, itrial);
+    [INFO, isQuit] = one_trial_AlphaCued(myWindow,INFO, itrial);
    
     % Update Quest
     % Yes/No detection task
@@ -113,9 +144,17 @@ for itrial = 1:length(INFO.T)
     INFO.T(itrial).ThresholdEstimate = QuestMean(INFO.Q(2));
     INFO.T(itrial).ThresholdSD       = QuestSd(INFO.Q(2));
     
-    save(INFO.logfilename, 'INFO');  
+    
+    save(INFO.logfilename, 'INFO');
+
+    
+
+
 end
 
+if INFO.P.setup.isEYEtrack
+    EyelinkStop(INFO.P);
+end
 
 Screen('CloseAll');
 ShowCursor;

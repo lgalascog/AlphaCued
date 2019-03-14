@@ -4,7 +4,7 @@
 %--------------------------------------------------------------------------
 clear all
 clc
-name = 'test'
+name = 'test2'
 
 INFO.name              = name;
 INFO.logfilename       = ['Alpha_Cued_Lateralization/Logfiles/' name '_Logfile.mat'];
@@ -14,6 +14,41 @@ INFO.T = struct2table(INFO.T);
 %--------------------------------------------------------------------------
 % Select correct trials
 %--------------------------------------------------------------------------
+
+%% Probes, Yes/No detection
+% select correct response (right and left both correct)
+correctprobesright = cell2mat(INFO.T.Correct_probes_right);
+correctprobesleft = cell2mat(INFO.T.Correct_probes_left);
+rows_probes_both = correctprobesright & correctprobesleft>0;
+INFO.R_Probes_both = INFO.T(rows_probes_both,:);
+
+% Cued trials
+cuedtrials =  cell2mat(INFO.R_Probes_both.attention);
+rows_probes_cued_trials = cuedtrials<3
+INFO.R_Probes_both_cued = INFO.R_Probes_both(rows_probes_cued_trials,:);
+
+% Uncued trials
+uncuedtrials =  cell2mat(INFO.R_Probes_both.attention);
+rows_probes_uncued_trials = uncuedtrials>2
+INFO.R_Probes_both_uncued = INFO.R_Probes_both(rows_probes_uncued_trials,:);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 % Probes, Yes/No detection
 correctprobes = cell2mat(INFO.T.Correct_probes);
