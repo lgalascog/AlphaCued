@@ -99,11 +99,11 @@ P.TriggerStopRecording  = 251;
 
 P.stim.background_color = [128 128 128];
 P.stim.fixation_square_color = [255 255 255]; 
-P.stim.fixation_size = 0.5 %(degree)
+P.stim.fixation_size = 0.3 %(degree)
 
 P.stim.cue_color = [255 255 255];
-P.stim.cue_width = 1.5 %(degree)
-P.stim.cue_heith = 0.3 %(degree)
+P.stim.cue_width = 1.3 %(degree)
+P.stim.cue_heith = 0.2 %(degree)
 P.stim.cue_center_position_1_x = P.screen.cx-100
 P.stim.cue_center_position_1_y = P.screen.cy
 P.stim.cue_rects_1 = [P.stim.cue_center_position_1_x-P.stim.cue_width/2 * P.screen.pixperdeg; P.stim.cue_center_position_1_y-P.stim.cue_heith/2 * P.screen.pixperdeg; P.stim.cue_center_position_1_x+P.stim.cue_width/2 * P.screen.pixperdeg; P.stim.cue_center_position_1_y+P.stim.cue_heith/2 * P.screen.pixperdeg]
@@ -130,17 +130,18 @@ P.grating_tilt_tilt_clock = 350;
 P.grating_tilt_tilt_cantclock = 10;% Should be determined by a staircase
 %P.grating_tilt_contrast = 100.0;
 P.grating_tilt_aspectratio = 1.0;
-P.grating_tilt_width = 2 %(degree)
-P.grating_tilt_height = 2 %(degree)
-P.grating_tilt_width_pix = P.grating_tilt_width * P.screen.pixperdeg %(pix)
-P.grating_tilt_height_pix = P.grating_tilt_height * P.screen.pixperdeg %(pix)
+P.grating_tilt_width = 100 %2 %(degree)
+P.grating_tilt_height = 100 %2 %(degree)
+%P.grating_tilt_width_pix = P.grating_tilt_width * P.screen.pixperdeg %(pix)
+%P.grating_tilt_height_pix = P.grating_tilt_height * P.screen.pixperdeg %(pix)
 
 % Gratings positions
-P.radius = 6 %(degree); % Distance between the center of the screen and the grating
+P.radius = 180  %6 %(degree); % Distance between the center of the screen and the grating
 P.angles_right = [350 10 30 50 70]; % Angles in degree for the right grating 
 P.angles_left = [190 170 150 130 110]; % Angles in degree for the left grating 
 
-P.radius = P.radius * P.screen.pixperdeg
+
+%P.radius = P.radius * P.screen.pixperdeg
 position_right_x_1 = P.screen.cx + P.radius*cos(P.angles_right(1)*pi/180) ;
 position_right_x_2 = P.screen.cx + P.radius*cos(P.angles_right(2)*pi/180) ;
 position_right_x_3 = P.screen.cx + P.radius*cos(P.angles_right(3)*pi/180) ;
