@@ -127,7 +127,7 @@ P.grating_tilt_phase = 0;
 P.grating_tilt_sc = 10.0;
 P.grating_tilt_freq = 0.1;
 P.grating_tilt_tilt_clock = 0
-P.grating_tilt_tilt_cantclock = 0;% Should be determined by a staircase
+P.grating_tilt_tilt_cantclock = 358;% Should be determined by a staircase
 P.grating_tilt_contrast = 15;
 P.grating_tilt_aspectratio = 1.0;
 P.grating_tilt_width = 100 %2 %(degree)
@@ -137,8 +137,8 @@ P.grating_tilt_height = 100 %2 %(degree)
 
 % Gratings positions
 P.radius = 180  %6 %(degree); % Distance between the center of the screen and the grating
-P.angles_right = [1 23 45 67 89]; % Angles in degree for the right grating 
-P.angles_left = [91 113 135 157 179]; % Angles in degree for the left grating 
+P.angles_right = [350 10 30 50 70]; % Angles in degree for the right grating 
+P.angles_left = [190 170 150 130 110]; % Angles in degree for the left grating 
 
 
 %P.radius = P.radius * P.screen.pixperdeg
@@ -205,11 +205,12 @@ P.rects_left = [P.rects_left_1 P.rects_left_2 P.rects_left_3 P.rects_left_4 P.re
 
 P.paradigm_blank = 0.500;
 P.paradigm_precue = 0.120;
-P.paradigm_delay_between_cue_and_stim = 2.500;
+P.paradigm_delay = 2.500;
 P.paradigm_detection = 0.100;
+P.paradigm_delay2 = 0.500
 P.paradigm_tilt = 0.200;
 P.paradigm_responscue = 0.120;
-P.paradigm_delay_before_question = 0.500;
+P.paradigm_delay = 0.500;
 P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
 P.paradigm_ITI = 2.000;
 

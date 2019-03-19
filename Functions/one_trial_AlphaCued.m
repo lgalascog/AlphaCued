@@ -55,7 +55,7 @@ end
 % --------------------------------------------------------
 my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color,  INFO.P.screen.pixperdeg)
 Screen('Flip', myWindow);
-WaitSecs(INFO.P.paradigm_delay)
+WaitSecs(INFO.P.paradigm_delay_between_cue_and_stim)
 
 % --------------------------------------------------------
 % probe target
@@ -111,7 +111,7 @@ WaitSecs(INFO.P.paradigm_tilt)
 % --------------------------------------------------------
 my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
 Screen('Flip', myWindow);
-WaitSecs(INFO.P.paradigm_delay)
+WaitSecs(INFO.P.paradigm_delay_before_question)
 
 % --------------------------------------------------------
 % questions
