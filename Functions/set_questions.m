@@ -3,7 +3,8 @@ function [responseKeyRight, responseKeyLeft, responseKeyAttention,RTRight,RTLeft
 
 % Question about detection of the noisi gabor
 if INFO.T(itrial).questions == 1
-    Detection_gabor_left = DrawFormattedText(myWindow, INFO.P.text_detection_left, 'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
+    Detection_gabor_left = DrawFormattedText(myWindow, INFO.P.text_detection_left,...
+        'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
     Screen('Flip', myWindow);
     startSecs1 = GetSecs;
     
@@ -23,7 +24,8 @@ if INFO.T(itrial).questions == 1
     end
     WaitSecs(0.5);
     
-    Detection_gabor_right = DrawFormattedText(myWindow, INFO.P.text_detection_right, 'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
+    Detection_gabor_right = DrawFormattedText(myWindow, INFO.P.text_detection_right,...
+        'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
     Screen('Flip', myWindow);
     startSecs2 = GetSecs;
     
@@ -43,7 +45,8 @@ if INFO.T(itrial).questions == 1
     end
    
 else % If right before left INFO.T.pre_cue = 2
-    Detection_gabor_right = DrawFormattedText(myWindow, INFO.P.text_detection_right, 'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
+    Detection_gabor_right = DrawFormattedText(myWindow, INFO.P.text_detection_right,...
+        'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
     Screen('Flip', myWindow);
     startSecs1 = GetSecs;
     RestrictKeysForKbCheck([KbName('UpArrow'), KbName('DownArrow'), KbName('Q')]);
@@ -62,7 +65,8 @@ else % If right before left INFO.T.pre_cue = 2
     end
     
     WaitSecs(0.5);
-    Detection_gabor_left = DrawFormattedText(myWindow, INFO.P.text_detection_left, 'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
+    Detection_gabor_left = DrawFormattedText(myWindow, INFO.P.text_detection_left,...
+    'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
     Screen('Flip', myWindow);
     startSecs2 = GetSecs;
     
@@ -84,7 +88,8 @@ end
 WaitSecs(0.5);
 
 % Question for the tilted Gabor
-Tilt_gabor = DrawFormattedText(myWindow, INFO.P.text_tilt, 'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
+Tilt_gabor = DrawFormattedText(myWindow, INFO.P.text_tilt, 'center',...
+    INFO.P.screen.cy-100, [255, 255, 255, 255]);
 Screen('Flip', myWindow);
 startSecs3 = GetSecs;
 RestrictKeysForKbCheck([KbName('RightArrow'), KbName('LeftArrow'), KbName('Q')]);

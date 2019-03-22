@@ -29,7 +29,9 @@ end
 % --------------------------------------------------------
 % Prestimulus interval
 % --------------------------------------------------------
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
+my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,... 
+   INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
+   INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
 Screen('Flip', myWindow);
 WaitSecs(INFO.P.paradigm_blank)
 
@@ -53,7 +55,9 @@ end
 % --------------------------------------------------------
 % Delay
 % --------------------------------------------------------
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color,  INFO.P.screen.pixperdeg)
+my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
+   INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
+   INFO.P.stim.background_color,  INFO.P.screen.pixperdeg)
 Screen('Flip', myWindow);
 WaitSecs(INFO.P.paradigm_delay_between_cue_and_stim)
 
@@ -63,7 +67,9 @@ WaitSecs(INFO.P.paradigm_delay_between_cue_and_stim)
 set_probe_target(myWindow,INFO,itrial)
 WaitSecs(INFO.P.paradigm_detection)
 
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
+my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
+   INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
+   INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
 Screen('Flip', myWindow);
 %WaitSecs(INFO.P.paradigm_delay2)
 
@@ -94,9 +100,8 @@ end
 % --------------------------------------------------------
 % attention target
 % --------------------------------------------------------
-% round(INFO.P.grating_tilt_width_pix)
-% round(INFO.P.grating_tilt_height_pix)
-gabortex = CreateProceduralGabor(myWindow, INFO.P.grating_tilt_width,INFO.P.grating_tilt_height, [], [0.5 0.5 0.5 0.0]);
+gabortex = CreateProceduralGabor(myWindow, INFO.P.grating_tilt_width_pix,...
+    INFO.P.grating_tilt_height_pix, [], [0.5 0.5 0.5 0.0]);
 set_attention_target(myWindow,gabortex,INFO,itrial)
 WaitSecs(INFO.P.paradigm_tilt)
 
@@ -109,7 +114,9 @@ WaitSecs(INFO.P.paradigm_tilt)
 % --------------------------------------------------------
 % delay
 % --------------------------------------------------------
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
+my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
+    INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
+    INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
 Screen('Flip', myWindow);
 WaitSecs(INFO.P.paradigm_delay_before_question)
 
@@ -138,7 +145,9 @@ WaitSecs(INFO.P.paradigm_ITI/2)
 % --------------------------------------------------------
 % End of the trial
 % --------------------------------------------------------
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy, INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color, INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
+my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
+    INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
+    INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
 Screen('Flip', myWindow);
 WaitSecs(INFO.P.paradigm_ITI/2)
 

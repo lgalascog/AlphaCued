@@ -46,7 +46,7 @@ switch computername
         thescreen = max(Screen('Screens'));
         myres = Screen('Resolution', thescreen);
         
-        P.screen.screen_num   = 0 %thescreen;%max(nscreens); 0 is you have only one screen (like a laptop) 1 or 2 if you have multiple screens one is usually the matlab screen
+        P.screen.screen_num   = thescreen;%max(nscreens); 0 is you have only one screen (like a laptop) 1 or 2 if you have multiple screens one is usually the matlab screen
         P.screen.width        = myres.width;
         P.screen.height       = myres.height;
         P.screen.rate         = myres.hz;
@@ -67,7 +67,9 @@ end
 %  Calculate size of a pixel in visual angles.
 % ------------------------------------------------------------------------
 P.screen.cx = round(P.screen.width/2); % x coordinate of screen center
+P.CenterX = P.screen.cx %
 P.screen.cy = round(P.screen.height/2); % y coordinate of screen center
+P.CenterY = P.screen.cy %
 [P.screen.pixperdeg, P.screen.degperpix] = VisAng(P);
 P.screen.pixperdeg = mean(P.screen.pixperdeg);
 P.screen.degperpix = mean(P.screen.degperpix);
@@ -79,7 +81,7 @@ P.paradigm.n_trials = 1; %Je sais pas du tout ce que ça veut dire donc c'est pas
 P.paradigm.pre_cue = 2;
 P.paradigm.probes = 4;
 P.paradigm.attention = 4;
-P.paradigm.response_cue = 2;
+P.paradigm.response_cue = 42;
 P.paradigm.questions = 2;
 
 %% ------------------------------------------------------------------------
@@ -98,6 +100,7 @@ P.TriggerStopRecording  = 251;
 % ------------------------------------------------------------------------
 
 P.stim.background_color = [128 128 128];
+P.BgColor = P.stim.background_color %
 P.stim.fixation_square_color = [255 255 255]; 
 P.stim.fixation_size = 0.3 %(degree)
 
@@ -106,10 +109,16 @@ P.stim.cue_width = 1.3 %(degree)
 P.stim.cue_heith = 0.2 %(degree)
 P.stim.cue_center_position_1_x = P.screen.cx-100
 P.stim.cue_center_position_1_y = P.screen.cy
-P.stim.cue_rects_1 = [P.stim.cue_center_position_1_x-P.stim.cue_width/2 * P.screen.pixperdeg; P.stim.cue_center_position_1_y-P.stim.cue_heith/2 * P.screen.pixperdeg; P.stim.cue_center_position_1_x+P.stim.cue_width/2 * P.screen.pixperdeg; P.stim.cue_center_position_1_y+P.stim.cue_heith/2 * P.screen.pixperdeg]
+P.stim.cue_rects_1 = [P.stim.cue_center_position_1_x-P.stim.cue_width/2* P.screen.pixperdeg;...
+    P.stim.cue_center_position_1_y-P.stim.cue_heith/2* P.screen.pixperdeg;...
+    P.stim.cue_center_position_1_x+P.stim.cue_width/2* P.screen.pixperdeg;...
+    P.stim.cue_center_position_1_y+P.stim.cue_heith/2* P.screen.pixperdeg]
 P.stim.cue_center_position_2_x = P.screen.cx+100
 P.stim.cue_center_position_2_y = P.screen.cy
-P.stim.cue_rects_2 = [P.stim.cue_center_position_2_x-P.stim.cue_width/2 * P.screen.pixperdeg; P.stim.cue_center_position_2_y-P.stim.cue_heith/2 * P.screen.pixperdeg; P.stim.cue_center_position_2_x+P.stim.cue_width/2* P.screen.pixperdeg; P.stim.cue_center_position_2_y+P.stim.cue_heith/2 * P.screen.pixperdeg]
+P.stim.cue_rects_2 = [P.stim.cue_center_position_2_x-P.stim.cue_width/2* P.screen.pixperdeg;...
+    P.stim.cue_center_position_2_y-P.stim.cue_heith/2* P.screen.pixperdeg;...
+    P.stim.cue_center_position_2_x+P.stim.cue_width/2* P.screen.pixperdeg;...
+    P.stim.cue_center_position_2_y+P.stim.cue_heith/2 * P.screen.pixperdeg]
 
 
 P.text_detection_right = 'Right?';
@@ -118,7 +127,8 @@ P.text_tilt = 'The grating was clockwise or counterclockwise?';
 
 
 % Detection task (probe)
-P.circle_detection_size = 20 % 0.5 * P.screen.pixperdeg %(degree)
+P.circle_detection_size = 0.43 %(degree)
+P.circle_detection_size_pix = round(P.circle_detection_size * P.screen.pixperdeg) %(pix) 
 
 
 % Gratings tilt discrimination task (attention)
@@ -126,22 +136,22 @@ P.circle_detection_size = 20 % 0.5 * P.screen.pixperdeg %(degree)
 P.grating_tilt_phase = 0;
 P.grating_tilt_sc = 10.0;
 P.grating_tilt_freq = 0.1;
-P.grating_tilt_tilt_clock = 0
-P.grating_tilt_tilt_cantclock = 0;% Should be determined by a staircase
+P.grating_tilt_tilt_clock = 350
+P.grating_tilt_tilt_cantclock = 10;% Should be determined by a staircase
 P.grating_tilt_contrast = 15;
 P.grating_tilt_aspectratio = 1.0;
-P.grating_tilt_width = 100 %2 %(degree)
-P.grating_tilt_height = 100 %2 %(degree)
-%P.grating_tilt_width_pix = P.grating_tilt_width * P.screen.pixperdeg %(pix)
-%P.grating_tilt_height_pix = P.grating_tilt_height * P.screen.pixperdeg %(pix)
+P.grating_tilt_width = 2 %(degree)
+P.grating_tilt_height = 2 %(degree)
+P.grating_tilt_width_pix = 100 %round(P.grating_tilt_width * P.screen.pixperdeg) %(pix)
+P.grating_tilt_height_pix = 100 %round(P.grating_tilt_height * P.screen.pixperdeg) %(pix)
 
 % Gratings positions
-P.radius = 180  %6 %(degree); % Distance between the center of the screen and the grating
+P.radius = 4 %(degree); % Distance between the center of the screen and the grating
 P.angles_right = [1 23 45 67 89]; % Angles in degree for the right grating 
 P.angles_left = [91 113 135 157 179]; % Angles in degree for the left grating 
 
 
-%P.radius = P.radius * P.screen.pixperdeg
+P.radius = P.radius * P.screen.pixperdeg
 position_right_x_1 = P.screen.cx + P.radius*cos(P.angles_right(1)*pi/180) ;
 position_right_x_2 = P.screen.cx + P.radius*cos(P.angles_right(2)*pi/180) ;
 position_right_x_3 = P.screen.cx + P.radius*cos(P.angles_right(3)*pi/180) ;
@@ -183,17 +193,47 @@ P.center_right = [P.center_right_1 P.center_right_2 P.center_right_3 P.center_ri
 P.center_left = [P.center_left_1 P.center_left_2 P.center_left_3 P.center_left_4 P.center_left_5];
 
 % Coordinates
-P.rects_right_1 = [position_right_x_1-P.grating_tilt_width/2;position_right_y_1-P.grating_tilt_height/2;position_right_x_1+P.grating_tilt_width/2;position_right_y_1+P.grating_tilt_height/2];
-P.rects_right_2 = [position_right_x_2-P.grating_tilt_width/2;position_right_y_2-P.grating_tilt_height/2;position_right_x_2+P.grating_tilt_width/2;position_right_y_2+P.grating_tilt_height/2];
-P.rects_right_3 = [position_right_x_3-P.grating_tilt_width/2;position_right_y_3-P.grating_tilt_height/2;position_right_x_3+P.grating_tilt_width/2;position_right_y_3+P.grating_tilt_height/2];
-P.rects_right_4 = [position_right_x_4-P.grating_tilt_width/2;position_right_y_4-P.grating_tilt_height/2;position_right_x_4+P.grating_tilt_width/2;position_right_y_4+P.grating_tilt_height/2];
-P.rects_right_5 = [position_right_x_5-P.grating_tilt_width/2;position_right_y_5-P.grating_tilt_height/2;position_right_x_5+P.grating_tilt_width/2;position_right_y_5+P.grating_tilt_height/2];
+P.rects_right_1 = [position_right_x_1-P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_right_y_1-P.grating_tilt_height/2* P.screen.pixperdeg;...
+    position_right_x_1+P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_right_y_1+P.grating_tilt_height/2* P.screen.pixperdeg];
+P.rects_right_2 = [position_right_x_2-P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_right_y_2-P.grating_tilt_height/2* P.screen.pixperdeg;...
+    position_right_x_2+P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_right_y_2+P.grating_tilt_height/2* P.screen.pixperdeg];
+P.rects_right_3 = [position_right_x_3-P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_right_y_3-P.grating_tilt_height/2* P.screen.pixperdeg;...
+    position_right_x_3+P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_right_y_3+P.grating_tilt_height/2* P.screen.pixperdeg];
+P.rects_right_4 = [position_right_x_4-P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_right_y_4-P.grating_tilt_height/2* P.screen.pixperdeg;...
+    position_right_x_4+P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_right_y_4+P.grating_tilt_height/2* P.screen.pixperdeg];
+P.rects_right_5 = [position_right_x_5-P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_right_y_5-P.grating_tilt_height/2* P.screen.pixperdeg;...
+    position_right_x_5+P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_right_y_5+P.grating_tilt_height/2* P.screen.pixperdeg];
 
-P.rects_left_1 = [position_left_x_1-P.grating_tilt_width/2;position_left_y_1-P.grating_tilt_height/2;position_left_x_1+P.grating_tilt_width/2;position_left_y_1+P.grating_tilt_height/2];
-P.rects_left_2 = [position_left_x_2-P.grating_tilt_width/2;position_left_y_2-P.grating_tilt_height/2;position_left_x_2+P.grating_tilt_width/2;position_left_y_2+P.grating_tilt_height/2];
-P.rects_left_3 = [position_left_x_3-P.grating_tilt_width/2;position_left_y_3-P.grating_tilt_height/2;position_left_x_3+P.grating_tilt_width/2;position_left_y_3+P.grating_tilt_height/2];
-P.rects_left_4 = [position_left_x_4-P.grating_tilt_width/2;position_left_y_4-P.grating_tilt_height/2;position_left_x_4+P.grating_tilt_width/2;position_left_y_4+P.grating_tilt_height/2];
-P.rects_left_5 = [position_left_x_5-P.grating_tilt_width/2;position_left_y_5-P.grating_tilt_height/2;position_left_x_5+P.grating_tilt_width/2;position_left_y_5+P.grating_tilt_height/2];
+P.rects_left_1 = [position_left_x_1-P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_left_y_1-P.grating_tilt_height/2* P.screen.pixperdeg;...
+    position_left_x_1+P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_left_y_1+P.grating_tilt_height/2* P.screen.pixperdeg];
+P.rects_left_2 = [position_left_x_2-P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_left_y_2-P.grating_tilt_height/2* P.screen.pixperdeg;...
+    position_left_x_2+P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_left_y_2+P.grating_tilt_height/2* P.screen.pixperdeg];
+P.rects_left_3 = [position_left_x_3-P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_left_y_3-P.grating_tilt_height/2* P.screen.pixperdeg;...
+    position_left_x_3+P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_left_y_3+P.grating_tilt_height/2* P.screen.pixperdeg];
+P.rects_left_4 = [position_left_x_4-P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_left_y_4-P.grating_tilt_height/2* P.screen.pixperdeg;...
+    position_left_x_4+P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_left_y_4+P.grating_tilt_height/2* P.screen.pixperdeg];
+P.rects_left_5 = [position_left_x_5-P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_left_y_5-P.grating_tilt_height/2* P.screen.pixperdeg;...
+    position_left_x_5+P.grating_tilt_width/2* P.screen.pixperdeg;...
+    position_left_y_5+P.grating_tilt_height/2* P.screen.pixperdeg];
 
 P.rects_right = [P.rects_right_1 P.rects_right_2 P.rects_right_3 P.rects_right_4 P.rects_right_5];
 P.rects_left = [P.rects_left_1 P.rects_left_2 P.rects_left_3 P.rects_left_4 P.rects_left_5];
