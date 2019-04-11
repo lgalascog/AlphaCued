@@ -96,13 +96,16 @@ for itrial = 1:length(INFO.T)
     % Get Quest's recommendation for a contrast value.
     % Yes/No detection task
     INFO.T(itrial).Contrast_probes = 10^QuestQuantile(INFO.Q(1));
-    if INFO.T(itrial).Contrast_probes > 1
+    if INFO.T(itrial).Contrast_probes > 1;
         INFO.T(itrial).Contrast_probes = 1;
     end
     % 2AFC discrimination task
     INFO.T(itrial).Contrast_attention = 10^QuestQuantile(INFO.Q(2));
-    if INFO.T(itrial).Contrast_attention > 1
-       INFO.T(itrial).Contrast_attention = 1;
+    if INFO.T(itrial).Contrast_attention > deg2rad(45);
+       INFO.T(itrial).Contrast_attention = deg2rad(45);
+    end
+    if INFO.T(itrial).Contrast_attention < deg2rad(1);
+        INFO.T(itrial).Contrast_attention = deg2rad(1);
     end
     
     [INFO, isQuit] = one_trial_AlphaCued(myWindow,INFO, itrial);

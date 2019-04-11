@@ -17,6 +17,7 @@ switch computername
         P.screen.size         = [28.8 16.2]; %screen size in centimeters.
         P.screen.viewdist     = 55; % distance between subject and monitor
         
+        P.setup.isPad         = 0 
         P.setup.isEYEtrack    = 0;        
         P.setup.isEEG         = 0;
         P.setup.skipsync      = 1;
@@ -35,6 +36,7 @@ switch computername
         P.screen.size         = [36 27]; %screen size in centimeters.
         P.screen.viewdist     = 55; % distance between subject and monitor
         
+        P.setup.isPad         = 1
         P.setup.isEYEtrack    = 0;           
         P.setup.isEEG         = 0;
         P.setup.skipsync      = 1;
@@ -53,6 +55,7 @@ switch computername
         P.screen.size         = [36 27]; %screen size in centimeters.
         P.screen.viewdist     = 55; % distance between subject and monitor
         
+        P.setup.isPad         = 0
         P.setup.isEYEtrack    = 0;           
         P.setup.isEEG         = 0;
         P.setup.skipsync      = 1;
@@ -84,6 +87,20 @@ P.paradigm.attention = 4;
 P.paradigm.response_cue = 42;
 P.paradigm.questions = 2;
 
+
+%% -----------------------------------------------------------------------
+% Parameters of the procedure & timing
+%  -----------------------------------------------------------------------
+
+P.paradigm_blank = 0.500;
+P.paradigm_precue = 0.120;
+P.paradigm_delay_between_cue_and_stim = 2.500;
+P.paradigm_detection = 0.100;
+P.paradigm_tilt = 0.200;
+P.paradigm_delay_before_question = 0.500;
+P.paradigm_ITI = 2.000;
+
+
 %% ------------------------------------------------------------------------
 % Eyetracking parameters
 %% ------------------------------------------------------------------------
@@ -99,183 +116,96 @@ P.TriggerStopRecording  = 251;
 % Parameters of the display and stimuli
 % ------------------------------------------------------------------------
 
+% Background
 P.stim.background_color = [128 128 128];
-P.BgColor = P.stim.background_color %
-P.stim.fixation_square_color = [255 255 255]; 
-P.stim.fixation_size = 0.3 %(degree)
+P.BgColor = P.stim.background_color;
 
+%Fixation square
+P.stim.fixation_square_color = [255 255 255]; 
+P.stim.fixation_size = 0.3; %(degree)
+
+%Cue
 P.stim.cue_color = [255 255 255];
 P.stim.cue_width = 1.3 %(degree)
 P.stim.cue_heith = 0.2 %(degree)
-P.stim.cue_center_position_1_x = P.screen.cx-100
-P.stim.cue_center_position_1_y = P.screen.cy
+P.stim.cue_center_position_1_x = P.screen.cx-100;
+P.stim.cue_center_position_1_y = P.screen.cy;
 P.stim.cue_rects_1 = [P.stim.cue_center_position_1_x-P.stim.cue_width/2* P.screen.pixperdeg;...
     P.stim.cue_center_position_1_y-P.stim.cue_heith/2* P.screen.pixperdeg;...
     P.stim.cue_center_position_1_x+P.stim.cue_width/2* P.screen.pixperdeg;...
-    P.stim.cue_center_position_1_y+P.stim.cue_heith/2* P.screen.pixperdeg]
-P.stim.cue_center_position_2_x = P.screen.cx+100
-P.stim.cue_center_position_2_y = P.screen.cy
+    P.stim.cue_center_position_1_y+P.stim.cue_heith/2* P.screen.pixperdeg];
+P.stim.cue_center_position_2_x = P.screen.cx+100;
+P.stim.cue_center_position_2_y = P.screen.cy;
 P.stim.cue_rects_2 = [P.stim.cue_center_position_2_x-P.stim.cue_width/2* P.screen.pixperdeg;...
     P.stim.cue_center_position_2_y-P.stim.cue_heith/2* P.screen.pixperdeg;...
     P.stim.cue_center_position_2_x+P.stim.cue_width/2* P.screen.pixperdeg;...
-    P.stim.cue_center_position_2_y+P.stim.cue_heith/2 * P.screen.pixperdeg]
-
-
-P.text_detection_right = 'Right?';
-P.text_detection_left = 'Left?';
-P.text_tilt = 'The grating was clockwise or counterclockwise?';
+    P.stim.cue_center_position_2_y+P.stim.cue_heith/2 * P.screen.pixperdeg];
 
 
 % Detection task (probe)
-P.circle_detection_size = 0.43 %(degree)
-P.circle_detection_size_pix = round(P.circle_detection_size * P.screen.pixperdeg) %(pix) 
+P.circle_detection_size = 0.4 %(degree)
+P.circle_detection_size_pix = round(P.circle_detection_size * P.screen.pixperdeg); %(pix) 
 
 
 % Gratings tilt discrimination task (attention)
-%P.grating_tilt_res = 1*[323 323];
 P.grating_tilt_phase = 0;
 P.grating_tilt_sc = 10.0;
 P.grating_tilt_freq = 0.1;
-P.grating_tilt_tilt_clock = 350
+P.grating_tilt_tilt_clock = 350;
 P.grating_tilt_tilt_cantclock = 10;% Should be determined by a staircase
 P.grating_tilt_contrast = 15;
 P.grating_tilt_aspectratio = 1.0;
 P.grating_tilt_width = 2 %(degree)
 P.grating_tilt_height = 2 %(degree)
-P.grating_tilt_width_pix = 100 %round(P.grating_tilt_width * P.screen.pixperdeg) %(pix)
-P.grating_tilt_height_pix = 100 %round(P.grating_tilt_height * P.screen.pixperdeg) %(pix)
+P.grating_tilt_width_pix = round(P.grating_tilt_width * P.screen.pixperdeg) %(pix)
+P.grating_tilt_height_pix = round(P.grating_tilt_height * P.screen.pixperdeg) %(pix)
 
-% Gratings positions
-P.radius = 4 %(degree); % Distance between the center of the screen and the grating
-P.angles_right = [1 23 45 67 89]; % Angles in degree for the right grating 
-P.angles_left = [91 113 135 157 179]; % Angles in degree for the left grating 
+% Stimuli position
+P.n_positions = 5;
+P.radius_deg = 4; %(degree); % Distance between the center of the screen and the grating
+P.radius_px = P.radius_deg * P.screen.pixperdeg; %pix
 
-
-P.radius = P.radius * P.screen.pixperdeg
-position_right_x_1 = P.screen.cx + P.radius*cos(P.angles_right(1)*pi/180) ;
-position_right_x_2 = P.screen.cx + P.radius*cos(P.angles_right(2)*pi/180) ;
-position_right_x_3 = P.screen.cx + P.radius*cos(P.angles_right(3)*pi/180) ;
-position_right_x_4 = P.screen.cx + P.radius*cos(P.angles_right(4)*pi/180) ;
-position_right_x_5 = P.screen.cx + P.radius*cos(P.angles_right(5)*pi/180) ;
-
-position_right_y_1 = P.screen.cy + P.radius*sin(P.angles_right(1)*pi/180) ;
-position_right_y_2 = P.screen.cy + P.radius*sin(P.angles_right(2)*pi/180) ;
-position_right_y_3 = P.screen.cy + P.radius*sin(P.angles_right(3)*pi/180) ;
-position_right_y_4 = P.screen.cy + P.radius*sin(P.angles_right(4)*pi/180) ;
-position_right_y_5 = P.screen.cy + P.radius*sin(P.angles_right(5)*pi/180) ;
-
-
-position_left_x_1 = P.screen.cx + P.radius*cos(P.angles_left(1)*pi/180) ;
-position_left_x_2 = P.screen.cx + P.radius*cos(P.angles_left(2)*pi/180) ;
-position_left_x_3 = P.screen.cx + P.radius*cos(P.angles_left(3)*pi/180) ;
-position_left_x_4 = P.screen.cx + P.radius*cos(P.angles_left(4)*pi/180) ;
-position_left_x_5 = P.screen.cx + P.radius*cos(P.angles_left(5)*pi/180) ;
-
-position_left_y_1 = P.screen.cy + P.radius*sin(P.angles_left(1)*pi/180) ;
-position_left_y_2 = P.screen.cy + P.radius*sin(P.angles_left(2)*pi/180) ;
-position_left_y_3 = P.screen.cy + P.radius*sin(P.angles_left(3)*pi/180) ;
-position_left_y_4 = P.screen.cy + P.radius*sin(P.angles_left(4)*pi/180) ;
-position_left_y_5 = P.screen.cy + P.radius*sin(P.angles_left(5)*pi/180) ; 
-
-P.center_right_1 = [position_right_x_1;position_right_y_1];
-P.center_right_2 = [position_right_x_2;position_right_y_2];
-P.center_right_3 = [position_right_x_3;position_right_y_3];
-P.center_right_4 = [position_right_x_4;position_right_y_4];
-P.center_right_5 = [position_right_x_5;position_right_y_5];
-
-P.center_left_1 = [position_left_x_1;position_left_y_1];
-P.center_left_2 = [position_left_x_2;position_left_y_2];
-P.center_left_3 = [position_left_x_3;position_left_y_3];
-P.center_left_4 = [position_left_x_4;position_left_y_4];
-P.center_left_5 = [position_left_x_5;position_left_y_5];
-
-P.center_right = [P.center_right_1 P.center_right_2 P.center_right_3 P.center_right_4 P.center_right_5];
-P.center_left = [P.center_left_1 P.center_left_2 P.center_left_3 P.center_left_4 P.center_left_5];
-
-% Coordinates
-P.rects_right_1 = [position_right_x_1-P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_right_y_1-P.grating_tilt_height/2* P.screen.pixperdeg;...
-    position_right_x_1+P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_right_y_1+P.grating_tilt_height/2* P.screen.pixperdeg];
-P.rects_right_2 = [position_right_x_2-P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_right_y_2-P.grating_tilt_height/2* P.screen.pixperdeg;...
-    position_right_x_2+P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_right_y_2+P.grating_tilt_height/2* P.screen.pixperdeg];
-P.rects_right_3 = [position_right_x_3-P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_right_y_3-P.grating_tilt_height/2* P.screen.pixperdeg;...
-    position_right_x_3+P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_right_y_3+P.grating_tilt_height/2* P.screen.pixperdeg];
-P.rects_right_4 = [position_right_x_4-P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_right_y_4-P.grating_tilt_height/2* P.screen.pixperdeg;...
-    position_right_x_4+P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_right_y_4+P.grating_tilt_height/2* P.screen.pixperdeg];
-P.rects_right_5 = [position_right_x_5-P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_right_y_5-P.grating_tilt_height/2* P.screen.pixperdeg;...
-    position_right_x_5+P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_right_y_5+P.grating_tilt_height/2* P.screen.pixperdeg];
-
-P.rects_left_1 = [position_left_x_1-P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_left_y_1-P.grating_tilt_height/2* P.screen.pixperdeg;...
-    position_left_x_1+P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_left_y_1+P.grating_tilt_height/2* P.screen.pixperdeg];
-P.rects_left_2 = [position_left_x_2-P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_left_y_2-P.grating_tilt_height/2* P.screen.pixperdeg;...
-    position_left_x_2+P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_left_y_2+P.grating_tilt_height/2* P.screen.pixperdeg];
-P.rects_left_3 = [position_left_x_3-P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_left_y_3-P.grating_tilt_height/2* P.screen.pixperdeg;...
-    position_left_x_3+P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_left_y_3+P.grating_tilt_height/2* P.screen.pixperdeg];
-P.rects_left_4 = [position_left_x_4-P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_left_y_4-P.grating_tilt_height/2* P.screen.pixperdeg;...
-    position_left_x_4+P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_left_y_4+P.grating_tilt_height/2* P.screen.pixperdeg];
-P.rects_left_5 = [position_left_x_5-P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_left_y_5-P.grating_tilt_height/2* P.screen.pixperdeg;...
-    position_left_x_5+P.grating_tilt_width/2* P.screen.pixperdeg;...
-    position_left_y_5+P.grating_tilt_height/2* P.screen.pixperdeg];
-
-P.rects_right = [P.rects_right_1 P.rects_right_2 P.rects_right_3 P.rects_right_4 P.rects_right_5];
-P.rects_left = [P.rects_left_1 P.rects_left_2 P.rects_left_3 P.rects_left_4 P.rects_left_5];
-
-
-%% -----------------------------------------------------------------------
-% Parameters of the procedure & timing
-%  -----------------------------------------------------------------------
-
-P.paradigm_blank = 0.500;
-P.paradigm_precue = 0.120;
-P.paradigm_delay_between_cue_and_stim = 2.500;
-P.paradigm_detection = 0.100;
-P.paradigm_tilt = 0.200;
-P.paradigm_responscue = 0.120;
-P.paradigm_delay_before_question = 0.500;
-P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
-P.paradigm_ITI = 2.000;
-
-% P.paradigm_blank = 1
-% P.paradigm_precue =2
-% P.paradigm_delay = 0
-% P.paradigm_detection = 3
-% P.paradigm_tilt =0.5
-% P.paradigm_responscue = 3
-% P.paradigm_delay = 1
-% P.paradigm_response = 1 %valeur test  %waitforbuttonpress;
-% P.paradigm_ITI = 1
+P.angles(1,:) = linspace(91, 179, P.n_positions);
+P.angles(2,:) = linspace(1, 89, P.n_positions);
+for ipos = 1:P.n_positions
+    for iside = 1:2        
+        P.position(iside, ipos, 1) = P.screen.cx + P.radius_px*cosd(P.angles(iside, ipos)) ;
+        P.position(iside, ipos, 2) = P.screen.cy + P.radius_px*sind(P.angles(iside, ipos)) ;
+    end
+end
 
 %% ------------------------------------------------------------------------
-%  Define relevant buttons
+%  Text
 %  ------------------------------------------------------------------------
-KbName('UnifyKeyNames');
-P.keys.lkey = KbName('LeftArrow');
-P.keys.rkey = KbName('RightArrow');
-P.keys.yes = KbName('Y');
-P.keys.no = KbName('N');
 
-P.location_right_probes = []
-P.location_left_probes = []
-P.location_right_attention = []
-P.location_left_attention = []
+P.text_instruction_cue = 'In a moment, a rectangle will appear on the screen. \n This shape gives you the place where you need to focus your attention. \n If the rectangle appears on the right side, you have to pay attention to the right side of the screen. \n If it appears on the left, you have to pay attention to the left. \n Take care to never move your eyes, during the trials, your gaze must remain fixed on the cross in center of the screen.';
+P.text_instruction_circle = {'Then, circles will appear on the lower screen'...
+    'One white circle can apear on each side of the screen'...
+    'You have to remember where the circles appear? On the right, on the left or both? '};
+P.text_instruction_gabor = {'Then, a gabor will appear on the right OR on the left side of the screen.'...
+    '80% of the time, the gabor will appear where you have to pay attention.'...
+    'That is why it is important to pay attention to the previously indicated location.'...
+    'This gabor will be tilted to the right or to the left.'...
+    'You have to remember the orientation of the gabor. To the right or to the left'};
+P.text_instruction_report_left = {'At the end, you will have to report your responses'...
+    'If you saw a circle on the left side of the screen: Press the up button of the left cross'...
+    'If you did not see a circle on the left side of the screen: Press the down button of the left cross'};
+P.text_instruction_report_left = {...
+    'If you saw a circle on the right side of the screen: Press the Y button on the right side of the gamepad'...
+    'If you did not see a circle on the rifgt side of the screen: Press the A button on the right side of the gamepad'};
+P.text_instruction_report_tilt = {...
+    'If the gabor was tilted to the left, press the LB button'...
+    'If the gabor was tilted to the right, press the RB button'};
+    
+    
+P.text_questions = '?';
+
+
+%% ------------------------------------------------------------------------
+%  Define gamepad buttons
+%  ------------------------------------------------------------------------
+joy = HebiJoystick(1);
+P.setup.padh = joy;
 
 % ------------------------------------------------------------------------
 % Parameters of the Quest
@@ -283,7 +213,7 @@ P.location_left_attention = []
 % Three parameters:
 % 1: detection yes/no
 % 2: discrimination 2AFC
-P.Quest_Guess      = log10([0.35 0.35]);
+P.Quest_Guess      = log10([0.35 0.3491]); %second value in radians
 P.Quest_Std        = [3 3];       % a priori standard deviation of the guess. manual suggests to be generous here
 P.Quest_pThreshold = [0.5 0.85];  % threshold criterior for response = 1
 P.Quest_beta       = [3.5 3.5];   % slope of psychometric function

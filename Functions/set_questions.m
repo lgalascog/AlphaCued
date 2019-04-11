@@ -1,111 +1,37 @@
-function [responseKeyRight, responseKeyLeft, responseKeyAttention,RTRight,RTLeft,RTAttention,INFO] = set_questions(myWindow, INFO, itrial, isQuit)
+function [pressedButts,INFO] = set_questions(myWindow, INFO, itrial, isQuit)
 % Set the questions on the screen
 
 % Question about detection of the noisi gabor
-if INFO.T(itrial).questions == 1
-    Detection_gabor_left = DrawFormattedText(myWindow, INFO.P.text_detection_left,...
-        'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
-    Screen('Flip', myWindow);
-    startSecs1 = GetSecs;
-    
-    RestrictKeysForKbCheck([KbName('UpArrow'), KbName('DownArrow'), KbName('Q')]);
-    keyIsDown1 = 0;
-    while keyIsDown1 == 0
-        [keyIsDown1, timeSecs1, keyCode1 ] = KbCheck;
-        keyName1 = KbName(keyCode1)
-        responseKeyLeft = keyName1
-        RTLeft =  timeSecs1 - startSecs1
-        if keyCode1(KbName('Q'))
-            isQuit = 1;
-        end
-        if isQuit==1
-            CloseAndCleanup(INFO.P)
-        end
-    end
-    WaitSecs(0.5);
-    
-    Detection_gabor_right = DrawFormattedText(myWindow, INFO.P.text_detection_right,...
-        'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
-    Screen('Flip', myWindow);
-    startSecs2 = GetSecs;
-    
-    RestrictKeysForKbCheck([KbName('UpArrow'), KbName('DownArrow'), KbName('Q')]);
-    keyIsDown2 = 0;
-    while keyIsDown2 == 0
-        [keyIsDown2, timeSecs2, keyCode2 ] = KbCheck;
-        keyName2 = KbName(keyCode2)
-        responseKeyRight = keyName2
-        RTRight =  timeSecs2 - startSecs2
-        if keyCode2(KbName('Q'))
-            isQuit = 1;
-        end
-        if isQuit==1
-            CloseAndCleanup(INFO.P)
-        end
-    end
-   
-else % If right before left INFO.T.pre_cue = 2
-    Detection_gabor_right = DrawFormattedText(myWindow, INFO.P.text_detection_right,...
-        'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
-    Screen('Flip', myWindow);
-    startSecs1 = GetSecs;
-    RestrictKeysForKbCheck([KbName('UpArrow'), KbName('DownArrow'), KbName('Q')]);
-    keyIsDown1 = 0;
-    while keyIsDown1 == 0
-        [keyIsDown1, timeSecs1, keyCode1 ] = KbCheck;
-        keyName1 = KbName(keyCode1)
-        responseKeyRight = keyName1
-        RTRight =  timeSecs1 - startSecs1
-        if keyCode1(KbName('Q'))
-            isQuit = 1;
-        end
-        if isQuit==1
-            CloseAndCleanup(INFO.P)
-        end
-    end
-    
-    WaitSecs(0.5);
-    Detection_gabor_left = DrawFormattedText(myWindow, INFO.P.text_detection_left,...
+Detection_gabor_left = DrawFormattedText(myWindow, INFO.P.text_questions,...
     'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
-    Screen('Flip', myWindow);
-    startSecs2 = GetSecs;
-    
-    RestrictKeysForKbCheck([KbName('UpArrow'), KbName('DownArrow'), KbName('Q')]);
-    keyIsDown2 = 0;
-    while keyIsDown2 == 0
-        [keyIsDown2, timeSecs2, keyCode2 ] = KbCheck;
-        keyName2 = KbName(keyCode2)
-        responseKeyLeft = keyName2
-        RTLeft =  timeSecs2 - startSecs2
-        if keyCode2(KbName('Q'))
-            isQuit = 1;
-        end
-        if isQuit==1
-            CloseAndCleanup(INFO.P)
-        end
-    end
-end
-WaitSecs(0.5);
-
-% Question for the tilted Gabor
-Tilt_gabor = DrawFormattedText(myWindow, INFO.P.text_tilt, 'center',...
-    INFO.P.screen.cy-100, [255, 255, 255, 255]);
 Screen('Flip', myWindow);
-startSecs3 = GetSecs;
-RestrictKeysForKbCheck([KbName('RightArrow'), KbName('LeftArrow'), KbName('Q')]);
-keyIsDown3 = 0;
-
-while keyIsDown3 == 0
-    [keyIsDown3, timeSecs3, keyCode3 ] = KbCheck;
-    keyName3 = KbName(keyCode3)
-    responseKeyAttention = keyName3
-    RTAttention =  timeSecs3 - startSecs3
-    if keyCode3(KbName('Q'))
-        isQuit = 1;
+Report = 0
+pressedButts = {};
+padnames = {'A', 'B', 'X', 'Y', 'LB', 'RB'};
+while Report < 3
+    [~, timeSecs, keyCode] = KbCheck;
+    pressed = button(INFO.P.setup.padh);
+    povspressed = pov(INFO.P.setup.padh);
+    if any(pressed)
+        Report = Report + 1;
+        pressedButts{Report} = padnames{find(pressed)};
+        while any(button(INFO.P.setup.padh)) | pov(INFO.P.setup.padh) ~= -1
+            %wait for release
+        end
     end
-      
-    if isQuit==1
-        CloseAndCleanup(INFO.P)
+    if pov(INFO.P.setup.padh) ~= -1
+        Report = Report + 1;
+        pressedButts{Report} = povspressed;
+        while any(button(INFO.P.setup.padh)) | pov(INFO.P.setup.padh) ~= -1
+            %wait for release
+        end
     end
 end
-
+if keyCode(KbName('Q'))
+    isQuit = 1;
+    Report = 4
+end
+if isQuit==1
+    CloseAndCleanup(INFO.P)
+end
+    
