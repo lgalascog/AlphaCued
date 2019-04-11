@@ -1,0 +1,17 @@
+clear
+close all
+addpath('./Functions');
+
+name  ='test2';
+
+INFO.name              = name;
+INFO.logfilename       = ['Alpha_Cued_Lateralization/Logfiles/' name '_Logfile.mat'];
+INFO.P = get_parameters;
+
+itrial = 1
+T(itrial).pre_cue = 1 ;
+T(itrial).probes_position_right = 1;
+T(itrial).probes = 1;
+T(itrial).attention_position = 3;
+T(itrial).validity = ivalidity;
+T(itrial).orientation = iorientation;
