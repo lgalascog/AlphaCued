@@ -94,14 +94,18 @@ P.paradigm.questions = 2;
 
 P.paradigm_blank = 0.500;
 P.paradigm_precue_train1 = 2;
+P.paradigm_precue_train2 = 1;
 P.paradigm_precue = 0.120;
 P.paradigm_delay_between_cue_and_stim = 2.500;
 P.paradigm_detection_train1 = 2;
+P.paradigm_detection_train2 = 1;
 P.paradigm_detection = 0.100;
 P.paradigm_tilt_train1 = 2;
+P.paradigm_tilt_train2 = 1.5;
 P.paradigm_tilt = 0.200;
 P.paradigm_delay_before_question = 0.500;
 P.paradigm_ITI = 2.000;
+P.paradigm_break = 30;
 
 
 %% ------------------------------------------------------------------------
@@ -180,15 +184,21 @@ end
 %% ------------------------------------------------------------------------
 %  Text
 %  ------------------------------------------------------------------------
-
-P.text_instruction_cue = 'In a moment, a rectangle will appear on the screen. \n This shape gives you the place where you need to focus your attention. \n If the rectangle appears on the right side, you have to pay attention to the right side of the screen. \n If it appears on the left, you have to pay attention to the left. \n Take care to never move your eyes, during the trials, your gaze must remain fixed on the cross in center of the screen.\n Press the spacebar to continue.';
-P.text_instruction_circle = 'Then, circles will appear on the lower part of the screen \n One white circle can appear on each side of the screen \n You have to remember where the circles appear. On the right, on the left or both? \n Press the spacebar to continue';
-P.text_instruction_gabor = 'Then, a gabor will appear on the right OR on the left side of the screen. \n 80% of the time, the gabor will appear where you have to pay attention. \n That is why it is important to pay attention to the previously indicated location. \n This gabor will be tilted to the right or to the left. \n You have to remember the orientation of the gabor. To the right or to the left \n Press the spacebar to continue.';
+P.text_break = 'Break of 30 sec. You can move your head from the chinrest'
+P.text_restart = 'Press B to restart'
+P.text_instruction_cue = 'In a moment, a rectangle will appear on the screen. \n This shape gives you the place where you need to focus your attention. \n If the rectangle appears on the right side, you have to pay attention to the right side of the screen. \n If it appears on the left, you have to pay attention to the left. \n Take care to never move your eyes, during the trials, your gaze must remain fixed on the cross in center of the screen.\n Press B to continue.';
+P.text_instruction_circle = 'Then, circles will appear on the lower part of the screen \n One white circle can appear on each side of the screen \n You have to remember where the circles appear. On the right, on the left or both? \n Press B to continue';
+P.text_instruction_gabor = 'Then, a gabor will appear on the right OR on the left side of the screen. \n 80% of the time, the gabor will appear where you have to pay attention. \n That is why it is important to pay attention to the previously indicated location. \n This gabor will be tilted to the right or to the left. \n You have to remember the orientation of the gabor. To the right or to the left \n Press B to continue.';
 P.text_instruction_report_left = 'At the end, you will have to report your responses. \n If you saw a circle on the left side of the screen: Press the up button of the left cross \n If you did not see a circle on the left side of the screen: Press the down button of the left cross.';
 P.text_instruction_report_right = 'If you saw a circle on the right side of the screen: Press the Y button on the right side of the gamepad \n If you did not see a circle on the rifgt side of the screen: Press the A button on the right side of the gamepad.';
 P.text_instruction_report_tilt = 'If the gabor was tilted to the left: press the LB button. \n If the gabor was tilted to the right: press the RB button.';
-    
-    
+P.text_instruction_feddback = 'If your responses was correct, the cross will turn green, if not, the cross will turn red. \n Press B to continue.'   
+P.text_instruction_feddback_left = 'Was there a circle on the left ?'
+P.text_instruction_feddback_right = 'Was there a circle on the right ?'
+P.text_instruction_feddback_tilt = 'In which direction the Gabor was tilted ?'
+
+
+
 P.text_questions = '?';
 
 

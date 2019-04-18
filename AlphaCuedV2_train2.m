@@ -13,7 +13,7 @@ INFO.P = get_parameters;
 % Define what do do on each trial.
 % ------------------------------------------------------------------------
 INFO = define_trials_AlphaCued(INFO);
-
+INFO.T = INFO.T(1:10)
 % ------------------------------------------------------------------------
 % Initiate Quest.
 % ------------------------------------------------------------------------        
@@ -108,7 +108,7 @@ for itrial = 1:length(INFO.T)
         INFO.T(itrial).Contrast_attention = deg2rad(1);
     end
     
-    [INFO, isQuit] = one_trial_AlphaCued(myWindow,INFO, itrial);
+    [INFO, isQuit] = one_trial_train2(myWindow,INFO, itrial);
    
     % Update Quest
     % Yes/No detection task

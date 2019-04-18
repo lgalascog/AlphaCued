@@ -32,12 +32,9 @@ Screen('Resolution', INFO.P.screen.screen_num, INFO.P.screen.width, ...
     INFO.P.screen.screen_num, INFO.P.stim.background_color);
 
 Priority(MaxPriority(myWindow));
-
-if INFO.P.setup.useCLUT
-    addpath('./CLUT');
-    load(INFO.P.setup.CLUTfile);
-    Screen('LoadNormalizedGammaTable',myWindow,inverseCLUT);
-end
+%HideCursor
 
 [INFO] = one_trial_train1(myWindow,INFO,itrial,isQuit);
 
+Screen('CloseAll');
+ShowCursor;

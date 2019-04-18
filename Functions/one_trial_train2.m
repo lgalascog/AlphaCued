@@ -1,4 +1,4 @@
-function [INFO, isQuit] = one_trial_AlphaCued(myWindow, INFO, itrial)
+function [INFO, isQuit] = one_trial_train2(myWindow, INFO, itrial)
 
 
 isQuit=0;
@@ -40,7 +40,7 @@ WaitSecs(INFO.P.paradigm_blank);
 % Precue
 % --------------------------------------------------------
 set_pre_cue(myWindow,INFO, itrial);
-WaitSecs(INFO.P.paradigm_precue);
+WaitSecs(INFO.P.paradigm_precue_train2);
 
 % send trigger to EEG
 if INFO.P.setup.isEYEtrack
@@ -65,13 +65,13 @@ WaitSecs(INFO.P.paradigm_delay_between_cue_and_stim);
 % probe target
 % --------------------------------------------------------
 set_probe_target(myWindow,INFO,itrial);
-WaitSecs(INFO.P.paradigm_detection);
+WaitSecs(INFO.P.paradigm_detection_train2);
 
 my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
    INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
    INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
 Screen('Flip', myWindow);
-%WaitSecs(INFO.P.paradigm_delay2)
+
 
 if INFO.T(itrial).probes == 1
     Trigger2 = 22;
@@ -103,7 +103,7 @@ end
 gabortex = CreateProceduralGabor(myWindow, INFO.P.grating_tilt_width_pix,...
     INFO.P.grating_tilt_height_pix, [], [0.5 0.5 0.5 0.0]);
 set_attention_target(myWindow,gabortex,INFO,itrial);
-WaitSecs(INFO.P.paradigm_tilt);
+WaitSecs(INFO.P.paradigm_tilt_train2);
 
 % % --------------------------------------------------------
 % % response cue + Delay
@@ -172,29 +172,4 @@ if EyeIsLost ==1
     Eyelink('Message', 'SYNCTIME');
 end
 
-% --------------------------------------------------------
-% Break after 20 trials
-% --------------------------------------------------------
 
-division = itrial/20
-if round(division) == division
-    Break = DrawFormattedText(myWindow, INFO.P.text_break,...
-        'center', INFO.P.screen.cy-500, [255, 255, 255, 255], [],[],[], 2);
-    my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
-        INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
-        INFO.P.stim.background_color,  INFO.P.screen.pixperdeg);
-    Screen('Flip', myWindow);
-    WaitSecs(INFO.P.paradigm_break);
-    Report1 = 1
-    while Report1 == 0
-        restart = DrawFormattedText(myWindow, INFO.P.text_restart,...
-            'center', INFO.P.screen.cy-500, [255, 255, 255, 255], [],[],[], 2);
-        my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
-            INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
-            INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
-        Screen('Flip', myWindow);
-        if button(INFO.P.setup.padh,2) == 1
-            Report1 = 1
-        end
-    end
-end

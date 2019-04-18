@@ -11,8 +11,8 @@ for irepeat = 1 :INFO.P.paradigm.n_trials; %???
             for iposition_probes_left = 1: INFO.P.n_positions;
                 for iprobes = 1 :INFO.P.paradigm.probes;
                     for iposition_attention = 1: INFO.P.n_positions;
-                        for ivalidity = [1 1 1 1 1 1 1 2 2 2];
-                            for iorientation = [1 2];
+%                         for ivalidity = [1 1 1 1 1 1 1 2 2 2];
+%                             for iorientation = [1 2];
                                 
                                 if iposition_probes_right == iposition_attention
                                     continue
@@ -47,8 +47,8 @@ for irepeat = 1 :INFO.P.paradigm.n_trials; %???
                     end
                 end
             end
-        end
-    end
+%         end
+%     end
 end
 
 
