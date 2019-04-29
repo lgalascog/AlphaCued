@@ -12,7 +12,7 @@ INFO.P = get_parameters;
 %% -----------------------------------------------------------------------
 % Define what do do on each trial.
 % ------------------------------------------------------------------------
-INFO = define_trials_AlphaCued(INFO);
+[INFO] = define_what_to_do(INFO)
 INFO.T = INFO.T(1:10)
 % ------------------------------------------------------------------------
 % Initiate Quest.

@@ -20,6 +20,7 @@ INFO.T(itrial).orientation = 2;
 INFO.T(itrial).Contrast_probes = 1
 INFO.T(itrial).Contrast_attention = 0.75
 isQuit = 0
+
 %% -----------------------------------------------------------------------
 % Open the display and set priority.
 % ------------------------------------------------------------------------

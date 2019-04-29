@@ -2,18 +2,30 @@ clear
 close all
 addpath('./Functions');
 
-name  ='test2';
+name  ='Laurie1003';
 
 INFO.name              = name;
 INFO.logfilename       = ['Alpha_Cued_Lateralization/Logfiles/' name '_Logfile.mat'];
 INFO.P = get_parameters;
 
+switch name
+    case 'test'
+        isQuit = 0;
+        % logfile will be automatically overwritten 
+    otherwise
+        isQuit = test_logfile(INFO);
+end
+
+if isQuit
+    CloseAndCleanup(INFO.P)
+    return
+end
 
 %% -----------------------------------------------------------------------
 % Define what do do on each trial.
 % ------------------------------------------------------------------------
-INFO = define_trials_AlphaCued(INFO);
-
+[INFO] = define_what_to_do(INFO)   
+    
 % ------------------------------------------------------------------------
 % Initiate Quest.
 % ------------------------------------------------------------------------        
@@ -91,7 +103,7 @@ end
 %%----------------------------------------------------------------------
 % Run across trials.
 %----------------------------------------------------------------------
-HideCursor
+%HideCursor
 for itrial = 1:length(INFO.T)      
     % Get Quest's recommendation for a contrast value.
     % Yes/No detection task
@@ -137,7 +149,7 @@ for itrial = 1:length(INFO.T)
     INFO.T(itrial).ThresholdEstimate = QuestMean(INFO.Q(2));
     INFO.T(itrial).ThresholdSD       = QuestSd(INFO.Q(2));
     
-    
+    INFO.ntrials = itrial;
     save(INFO.logfilename, 'INFO');
 
     
@@ -149,5 +161,8 @@ if INFO.P.setup.isEYEtrack
     EyelinkStop(INFO.P);
 end
 
-Screen('CloseAll');
-ShowCursor;
+WaitSecs(2);
+CloseAndCleanup(INFO.P)
+sca
+fprintf('\nDONE!\n\n');
+

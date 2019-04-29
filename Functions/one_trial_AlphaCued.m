@@ -62,16 +62,13 @@ Screen('Flip', myWindow);
 WaitSecs(INFO.P.paradigm_delay_between_cue_and_stim);
 
 % --------------------------------------------------------
-% probe target
+% Stimuli
 % --------------------------------------------------------
-set_probe_target(myWindow,INFO,itrial);
-WaitSecs(INFO.P.paradigm_detection);
+gabortex = CreateProceduralGabor(myWindow, INFO.P.grating_tilt_width_pix,...
+INFO.P.grating_tilt_height_pix, [], [0.5 0.5 0.5 0.0]);
+[INFO] = set_probe_target(myWindow,INFO,itrial,gabortex);
+WaitSecs(INFO.P.paradigm_stim);
 
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
-   INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
-   INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
-Screen('Flip', myWindow);
-%WaitSecs(INFO.P.paradigm_delay2)
 
 if INFO.T(itrial).probes == 1
     Trigger2 = 22;
@@ -97,19 +94,7 @@ if INFO.P.setup.isEYEtrack
     SendTrigger(Trigger2, P.TriggerDuration);
     SendTrigger(Trigger3, P.TriggerDuration);
 end
-% --------------------------------------------------------
-% attention target
-% --------------------------------------------------------
-gabortex = CreateProceduralGabor(myWindow, INFO.P.grating_tilt_width_pix,...
-    INFO.P.grating_tilt_height_pix, [], [0.5 0.5 0.5 0.0]);
-set_attention_target(myWindow,gabortex,INFO,itrial);
-WaitSecs(INFO.P.paradigm_tilt);
 
-% % --------------------------------------------------------
-% % response cue + Delay
-% % --------------------------------------------------------
-% set_response_cue(myWindow, INFO, itrial)
-% WaitSecs(INFO.P.paradigm_responscue+INFO.P.paradigm_delay)
 
 % --------------------------------------------------------
 % delay
@@ -129,21 +114,27 @@ INFO.T(itrial).button_pressed = pressedButts;
 
 
 if find([pressedButts{:}] == 0);
-    INFO.T(itrial).button_probes_left = 1;
+    INFO.T(itrial).button_probes_left = 'U'; %left up pressed
+elseif find([pressedButts{:}] == 180);
+    INFO.T(itrial).button_probes_left = 'D'; %left down pressed
 else
-    INFO.T(itrial).button_probes_left = 0;
+    INFO.T(itrial).button_probes_left = 'N';
 end
 
 if find(strcmp(pressedButts,'Y' ));
-    INFO.T(itrial).button_probes_right = 1;
+    INFO.T(itrial).button_probes_right = 'U'; %right up pressed
+elseif find(strcmp(pressedButts,'A' ));
+    INFO.T(itrial).button_probes_right = 'D'; %right down pressed
 else
-    INFO.T(itrial).button_probes_right = 0;
+    INFO.T(itrial).button_probes_right = 'N';
 end
 
 if find(strcmp(pressedButts,'RB' ));
-    INFO.T(itrial).button_attention = 1; %Tilted to the right
+    INFO.T(itrial).button_attention = 'R'; %Tilted to the right
+elseif find(strcmp(pressedButts,'LB' ));
+    INFO.T(itrial).button_attention = 'L'; %Tilted to the left
 else
-    INFO.T(itrial).button_attention = 0; %Tilted to the left
+    INFO.T(itrial).button_attention = 'N';
 end
 
 
@@ -185,7 +176,7 @@ if round(division) == division
         INFO.P.stim.background_color,  INFO.P.screen.pixperdeg);
     Screen('Flip', myWindow);
     WaitSecs(INFO.P.paradigm_break);
-    Report1 = 1
+    Report1 = 0
     while Report1 == 0
         restart = DrawFormattedText(myWindow, INFO.P.text_restart,...
             'center', INFO.P.screen.cy-500, [255, 255, 255, 255], [],[],[], 2);
@@ -196,5 +187,9 @@ if round(division) == division
         if button(INFO.P.setup.padh,2) == 1
             Report1 = 1
         end
+    end
+    if INFO.P.setup.isEYEtrack
+        EyelinkRecalibration(P);
+        Eyelink('Message', 'SYNCTIME');
     end
 end

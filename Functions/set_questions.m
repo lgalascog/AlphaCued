@@ -3,12 +3,15 @@ function [pressedButts,INFO] = set_questions(myWindow, INFO, itrial, isQuit)
 
 % Question about detection of the noisi gabor
 Detection_gabor_left = DrawFormattedText(myWindow, INFO.P.text_questions,...
-    'center', INFO.P.screen.cy-100, [255, 255, 255, 255]);
+    'center', INFO.P.screen.cy, [255, 255, 255, 255]);
 Screen('Flip', myWindow);
 Report = 0
 pressedButts = {};
 padnames = {'A', 'B', 'X', 'Y', 'LB', 'RB'};
-while Report < 3
+while Report < 3    
+    if button(INFO.P.setup.padh,8) == 1
+        CloseAndCleanup(INFO.P)
+    end
     [~, timeSecs, keyCode] = KbCheck;
     pressed = button(INFO.P.setup.padh);
     povspressed = pov(INFO.P.setup.padh);
@@ -26,12 +29,5 @@ while Report < 3
             %wait for release
         end
     end
-end
-if keyCode(KbName('Q'))
-    isQuit = 1;
-    Report = 4
-end
-if isQuit==1
-    CloseAndCleanup(INFO.P)
 end
     

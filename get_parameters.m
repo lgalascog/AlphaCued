@@ -96,15 +96,12 @@ P.paradigm_blank = 0.500;
 P.paradigm_precue_train1 = 2;
 P.paradigm_precue_train2 = 1;
 P.paradigm_precue = 0.120;
-P.paradigm_delay_between_cue_and_stim = 2.500;
-P.paradigm_detection_train1 = 2;
-P.paradigm_detection_train2 = 1;
-P.paradigm_detection = 0.100;
-P.paradigm_tilt_train1 = 2;
-P.paradigm_tilt_train2 = 1.5;
-P.paradigm_tilt = 0.200;
+P.paradigm_delay_between_cue_and_stim = 1.500;
+P.paradigm_stim_train1 = 2;
+P.paradigm_stim_train2 = 1;
+P.paradigm_stim = 0.150;
 P.paradigm_delay_before_question = 0.500;
-P.paradigm_ITI = 2.000;
+P.paradigm_ITI = 1.000;
 P.paradigm_break = 30;
 
 
@@ -133,20 +130,18 @@ P.stim.fixation_size = 0.3; %(degree)
 
 %Cue
 P.stim.cue_color = [255 255 255];
-P.stim.cue_width = 1.3 %(degree)
-P.stim.cue_heith = 0.2 %(degree)
-P.stim.cue_center_position_1_x = P.screen.cx-100;
-P.stim.cue_center_position_1_y = P.screen.cy;
-P.stim.cue_rects_1 = [P.stim.cue_center_position_1_x-P.stim.cue_width/2* P.screen.pixperdeg;...
-    P.stim.cue_center_position_1_y-P.stim.cue_heith/2* P.screen.pixperdeg;...
-    P.stim.cue_center_position_1_x+P.stim.cue_width/2* P.screen.pixperdeg;...
-    P.stim.cue_center_position_1_y+P.stim.cue_heith/2* P.screen.pixperdeg];
-P.stim.cue_center_position_2_x = P.screen.cx+100;
-P.stim.cue_center_position_2_y = P.screen.cy;
-P.stim.cue_rects_2 = [P.stim.cue_center_position_2_x-P.stim.cue_width/2* P.screen.pixperdeg;...
-    P.stim.cue_center_position_2_y-P.stim.cue_heith/2* P.screen.pixperdeg;...
-    P.stim.cue_center_position_2_x+P.stim.cue_width/2* P.screen.pixperdeg;...
-    P.stim.cue_center_position_2_y+P.stim.cue_heith/2 * P.screen.pixperdeg];
+P.stim.cue_RIGHT_xPosStart = P.CenterX + 0.2 * P.screen.pixperdeg
+P.stim.cue_RIGHT_yPosStart = P.CenterY + 0.2 * P.screen.pixperdeg
+P.stim.cue_RIGHT_xPosEnd = P.CenterX + 1 * P.screen.pixperdeg
+P.stim.cue_RIGHT_yPosEnd = P.CenterY + 1 * P.screen.pixperdeg
+
+P.stim.cue_LEFT_xPosStart = P.CenterX - 0.2 * P.screen.pixperdeg
+P.stim.cue_LEFT_yPosStart = P.CenterY + 0.2 * P.screen.pixperdeg
+P.stim.cue_LEFT_xPosEnd = P.CenterX - 1 * P.screen.pixperdeg
+P.stim.cue_LEFT_yPosEnd = P.CenterY + 1 * P.screen.pixperdeg
+
+P.stim.cue_width = 0.1
+P.stim.cue_width_pix = P.stim.cue_width * P.screen.pixperdeg
 
 
 % Detection task (probe)
@@ -172,8 +167,8 @@ P.n_positions = 5;
 P.radius_deg = 4; %(degree); % Distance between the center of the screen and the grating
 P.radius_px = P.radius_deg * P.screen.pixperdeg; %pix
 
-P.angles(1,:) = linspace(91, 179, P.n_positions);
-P.angles(2,:) = linspace(1, 89, P.n_positions);
+P.angles(1,:) = linspace(92, 178, P.n_positions);
+P.angles(2,:) = linspace(2, 88, P.n_positions);
 for ipos = 1:P.n_positions
     for iside = 1:2        
         P.position(iside, ipos, 1) = P.screen.cx + P.radius_px*cosd(P.angles(iside, ipos)) ;
@@ -187,8 +182,8 @@ end
 P.text_break = 'Break of 30 sec. You can move your head from the chinrest'
 P.text_restart = 'Press B to restart'
 P.text_instruction_cue = 'In a moment, a rectangle will appear on the screen. \n This shape gives you the place where you need to focus your attention. \n If the rectangle appears on the right side, you have to pay attention to the right side of the screen. \n If it appears on the left, you have to pay attention to the left. \n Take care to never move your eyes, during the trials, your gaze must remain fixed on the cross in center of the screen.\n Press B to continue.';
-P.text_instruction_circle = 'Then, circles will appear on the lower part of the screen \n One white circle can appear on each side of the screen \n You have to remember where the circles appear. On the right, on the left or both? \n Press B to continue';
-P.text_instruction_gabor = 'Then, a gabor will appear on the right OR on the left side of the screen. \n 80% of the time, the gabor will appear where you have to pay attention. \n That is why it is important to pay attention to the previously indicated location. \n This gabor will be tilted to the right or to the left. \n You have to remember the orientation of the gabor. To the right or to the left \n Press B to continue.';
+P.text_instruction_circle = 'Then, circles will appear on the lower part of the screen \n One white circle can appear on each side of the screen \n You have to remember where the circles appear. On the right, on the left or both? \n';
+P.text_instruction_gabor = 'At the same time, a gabor will appear on the right OR on the left side of the screen. \n 80% of the time, the gabor will appear where you have to pay attention. \n That is why it is important to pay attention to the previously indicated location. \n This gabor will be tilted to the right or to the left. \n You have to remember the orientation of the gabor. To the right or to the left \n Press B to continue.';
 P.text_instruction_report_left = 'At the end, you will have to report your responses. \n If you saw a circle on the left side of the screen: Press the up button of the left cross \n If you did not see a circle on the left side of the screen: Press the down button of the left cross.';
 P.text_instruction_report_right = 'If you saw a circle on the right side of the screen: Press the Y button on the right side of the gamepad \n If you did not see a circle on the rifgt side of the screen: Press the A button on the right side of the gamepad.';
 P.text_instruction_report_tilt = 'If the gabor was tilted to the left: press the LB button. \n If the gabor was tilted to the right: press the RB button.';
@@ -196,7 +191,7 @@ P.text_instruction_feddback = 'If your responses was correct, the cross will tur
 P.text_instruction_feddback_left = 'Was there a circle on the left ?'
 P.text_instruction_feddback_right = 'Was there a circle on the right ?'
 P.text_instruction_feddback_tilt = 'In which direction the Gabor was tilted ?'
-
+P.text_instruction_train2 ='Now you are going to carry out 10 slow trials \n It is the same task. \n Please remember that you can give your response in any order you want when the ? appears'
 
 
 P.text_questions = '?';

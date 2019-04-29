@@ -62,16 +62,12 @@ Screen('Flip', myWindow);
 WaitSecs(INFO.P.paradigm_delay_between_cue_and_stim);
 
 % --------------------------------------------------------
-% probe target
+% Stimuli
 % --------------------------------------------------------
-set_probe_target(myWindow,INFO,itrial);
-WaitSecs(INFO.P.paradigm_detection_train2);
-
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
-   INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
-   INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
-Screen('Flip', myWindow);
-
+gabortex = CreateProceduralGabor(myWindow, INFO.P.grating_tilt_width_pix,...
+INFO.P.grating_tilt_height_pix, [], [0.5 0.5 0.5 0.0]);
+set_probe_target(myWindow,INFO,itrial,gabortex);
+WaitSecs(INFO.P.paradigm_stim_train2);
 
 if INFO.T(itrial).probes == 1
     Trigger2 = 22;
@@ -97,19 +93,7 @@ if INFO.P.setup.isEYEtrack
     SendTrigger(Trigger2, P.TriggerDuration);
     SendTrigger(Trigger3, P.TriggerDuration);
 end
-% --------------------------------------------------------
-% attention target
-% --------------------------------------------------------
-gabortex = CreateProceduralGabor(myWindow, INFO.P.grating_tilt_width_pix,...
-    INFO.P.grating_tilt_height_pix, [], [0.5 0.5 0.5 0.0]);
-set_attention_target(myWindow,gabortex,INFO,itrial);
-WaitSecs(INFO.P.paradigm_tilt_train2);
 
-% % --------------------------------------------------------
-% % response cue + Delay
-% % --------------------------------------------------------
-% set_response_cue(myWindow, INFO, itrial)
-% WaitSecs(INFO.P.paradigm_responscue+INFO.P.paradigm_delay)
 
 % --------------------------------------------------------
 % delay

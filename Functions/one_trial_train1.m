@@ -17,11 +17,14 @@ while Report1 == 0
     end
 end  
 
-Screen ('FillRect', myWindow, INFO.P.stim.cue_color, INFO.P.stim.cue_rects_2);
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
-    INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
-    INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
-Screen('Flip', myWindow);
+Screen('Drawline', myWindow, INFO.P.stim.cue_color,...
+        INFO.P.stim.cue_RIGHT_xPosStart,INFO.P.stim.cue_RIGHT_yPosStart,...
+        INFO.P.stim.cue_RIGHT_xPosEnd,INFO.P.stim.cue_RIGHT_yPosEnd,...
+        INFO.P.stim.cue_width_pix);
+    my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
+        INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
+        INFO.P.stim.background_color, INFO.P.screen.pixperdeg)
+    Screen('Flip', myWindow);
 WaitSecs(INFO.P.paradigm_precue_train1);
 
 % --------------------------------------------------------
@@ -34,12 +37,14 @@ Screen('Flip', myWindow);
 WaitSecs(INFO.P.paradigm_delay_between_cue_and_stim);
 
 % --------------------------------------------------------
-% probe target
+% Stimuli
 % --------------------------------------------------------
 Report2 = 0
 while Report2 == 0
     instructions = DrawFormattedText(myWindow, INFO.P.text_instruction_circle,...
         'center', INFO.P.screen.cy-500, [255, 255, 255, 255], [],[],[], 2);
+    instructions = DrawFormattedText(myWindow, INFO.P.text_instruction_gabor,...
+    'center', INFO.P.screen.cy-300, [255, 255, 255, 255], [],[],[], 2);
     my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
         INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
         INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
@@ -49,32 +54,12 @@ while Report2 == 0
     end
 end
 
-set_probe_target(myWindow,INFO, itrial) ;
-
-WaitSecs(INFO.P.paradigm_detection_train1);
-
-
-
-% --------------------------------------------------------
-% attention target
-% --------------------------------------------------------
-Report3 = 0
-while Report3 == 0
-instructions = DrawFormattedText(myWindow, INFO.P.text_instruction_gabor,...
-    'center', INFO.P.screen.cy-500, [255, 255, 255, 255], [],[],[], 2);
-my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,... 
-   INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
-   INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
-Screen('Flip', myWindow);
-    if button(INFO.P.setup.padh,2) == 1
-        Report3 = 1
-    end
-end
-
 gabortex = CreateProceduralGabor(myWindow, INFO.P.grating_tilt_width_pix,...
     INFO.P.grating_tilt_height_pix, [], [0.5 0.5 0.5 0.0]);
-set_attention_target(myWindow,gabortex,INFO,itrial);
-WaitSecs(INFO.P.paradigm_precue_train1);
+set_probe_target(myWindow,INFO, itrial, gabortex) ;
+
+WaitSecs(INFO.P.paradigm_stim_train1);
+
 
 % --------------------------------------------------------
 % delay

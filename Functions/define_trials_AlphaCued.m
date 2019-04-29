@@ -1,4 +1,4 @@
-function INFO = define_trials_AlphaCued(INFO)
+function INFO = define_trials_AlphaCued(INFO, Validity)
 % 2 pre-cue
 % 4 probes
 % 2 attention targets with 2 orientations for each : 4
@@ -11,48 +11,70 @@ for irepeat = 1 :INFO.P.paradigm.n_trials; %???
             for iposition_probes_left = 1: INFO.P.n_positions;
                 for iprobes = 1 :INFO.P.paradigm.probes;
                     for iposition_attention = 1: INFO.P.n_positions;
-%                         for ivalidity = [1 1 1 1 1 1 1 2 2 2];
-%                             for iorientation = [1 2];
-                                
-                                if iposition_probes_right == iposition_attention
-                                    continue
-                                end
-                                if iposition_probes_left == iposition_attention
-                                    continue
-                                end
-                                itrial = itrial + 1;
-                                
-                                
-                                T(itrial).pre_cue = ipre_cue ;% 50% trials precue left and 50% right
-                                T(itrial).probes_position_right = iposition_probes_right;
-                                T(itrial).probes_position_left = iposition_probes_left;
-                                T(itrial).probes = iprobes;
-                                T(itrial).attention_position = iposition_attention;
-                                T(itrial).validity = ivalidity;
-                                T(itrial).orientation = iorientation;
-                                
-                                T(itrial).Contrast_probes = [];
-                                T(itrial).Contrast_attention = [];
-                                T(itrial).button_pressed = [];
-                                T(itrial).button_probes_right = [];
-                                T(itrial).button_probes_left = [];
-                                T(itrial).button_attention = [];
-                                T(itrial).Correct_probes_right = [];
-                                T(itrial).Correct_probes_left = [];
-                                T(itrial).Correct_attention = [];
-                                
-                                T(itrial).GazeHasMovedOrEyeIsLost = [];
-                            end
+                        
+                        if iposition_probes_right == iposition_attention
+                            continue
                         end
+                        if iposition_probes_left == iposition_attention
+                            continue
+                        end
+                        itrial = itrial + 1;
+                        
+                        if Validity == 1
+                            TValid(itrial).pre_cue = ipre_cue ;% 50% trials precue left and 50% right
+                            TValid(itrial).probes_position_right = iposition_probes_right;
+                            TValid(itrial).probes_position_left = iposition_probes_left;
+                            TValid(itrial).probes = iprobes;
+                            TValid(itrial).attention_position = iposition_attention;
+                            
+                            TValid(itrial).validity = [];
+                            TValid(itrial).orientation = [];
+                            TValid(itrial).Contrast_probes = [];
+                            TValid(itrial).Contrast_attention = [];
+                            TValid(itrial).button_pressed = [];
+                            TValid(itrial).button_probes_right = [];
+                            TValid(itrial).button_probes_left = [];
+                            TValid(itrial).button_attention = [];
+                            TValid(itrial).Correct_probes_right = [];
+                            TValid(itrial).Correct_probes_left = [];
+                            TValid(itrial).Correct_attention = [];
+                            TValid(itrial).Probes_right = [];
+                            TValid(itrial).Probes_left = [];
+                            
+                            TValid(itrial).GazeHasMovedOrEyeIsLost = [];
+                        elseif Validity == 2
+                            TInvalid(itrial).pre_cue = ipre_cue ;% 50% trials precue left and 50% right
+                            TInvalid(itrial).probes_position_right = iposition_probes_right;
+                            TInvalid(itrial).probes_position_left = iposition_probes_left;
+                            TInvalid(itrial).probes = iprobes;
+                            TInvalid(itrial).attention_position = iposition_attention;
+                            
+                            TInvalid(itrial).validity = [];
+                            TInvalid(itrial).orientation = [];
+                            TInvalid(itrial).Contrast_probes = [];
+                            TInvalid(itrial).Contrast_attention = [];
+                            TInvalid(itrial).button_pressed = [];
+                            TInvalid(itrial).button_probes_right = [];
+                            TInvalid(itrial).button_probes_left = [];
+                            TInvalid(itrial).button_attention = [];
+                            TInvalid(itrial).Correct_probes_right = [];
+                            TInvalid(itrial).Correct_probes_left = [];
+                            TInvalid(itrial).Correct_attention = [];
+                            TInvalid(itrial).Probes_right = [];
+                            TInvalid(itrial).Probes_left = [];
+                            
+                            TInvalid(itrial).GazeHasMovedOrEyeIsLost = [];
+                        end      
                     end
                 end
             end
-%         end
-%     end
+        end
+    end
 end
 
-
-INFO.T = Shuffle(T);
-
-
+if Validity == 1
+    INFO.TValid = Shuffle(TValid);
+elseif Validity == 2
+    INFO.TInvalid = Shuffle(TInvalid);
+end
 %% Done.
