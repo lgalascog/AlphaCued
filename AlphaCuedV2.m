@@ -2,7 +2,7 @@ clear
 close all
 addpath('./Functions');
 
-name  ='Laurie1003';
+name  ='Laurie1004';
 
 INFO.name              = name;
 INFO.logfilename       = ['Alpha_Cued_Lateralization/Logfiles/' name '_Logfile.mat'];

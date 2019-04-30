@@ -61,6 +61,25 @@ switch computername
         P.setup.skipsync      = 1;
         P.setup.useCLUT       = 0;
         P.setup.CLUTfile      = 'inverse_CLUT 26 April 2012, 16-48.mat';
+        
+    otherwise
+        
+        thescreen = max(Screen('Screens'));
+        myres = Screen('Resolution', thescreen);
+        
+        P.screen.screen_num   = thescreen;%max(nscreens); 0 is you have only one screen (like a laptop) 1 or 2 if you have multiple screens one is usually the matlab screen
+        P.screen.width        = myres.width;
+        P.screen.height       = myres.height;
+        P.screen.rate         = myres.hz;
+        P.screen.size         = [??]; %screen size in centimeters.
+        P.screen.viewdist     = ??; % distance between subject and monitor
+        
+        P.setup.isPad         = 1;
+        P.setup.isEYEtrack    = 0;           
+        P.setup.isEEG         = 0;
+        P.setup.skipsync      = 1;
+        P.setup.useCLUT       = 0;
+        P.setup.CLUTfile      = 'inverse_CLUT 26 April 2012, 16-48.mat';
 end
 
 
@@ -145,7 +164,7 @@ P.stim.cue_width_pix = P.stim.cue_width * P.screen.pixperdeg
 
 
 % Detection task (probe)
-P.circle_detection_size = 0.4 %(degree)
+P.circle_detection_size = 0.3 %(degree)
 P.circle_detection_size_pix = round(P.circle_detection_size * P.screen.pixperdeg); %(pix) 
 
 
