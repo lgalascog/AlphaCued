@@ -1,29 +1,40 @@
 function [INFO, isQuit] = one_trial_AlphaCued(myWindow, INFO, itrial)
-
-
-isQuit=0;
 % Run one trial
+isQuit=0;
+EyeHasMoved = 0;
+EyeIsLost = 0;
+
+% Triggers
+cue_dir = INFO.T(itrial).pre_cue;
+
+if INFO.T(itrial).probes == 1 || INFO.T(itrial).probes == 3
+    right_probes = 1;
+else
+    right_probes = 2;
+end
+
+if INFO.T(itrial).probes == 2 || INFO.T(itrial).probes == 3
+    left_probes = 1;
+else 
+    left_probes = 2;
+end
+
+Trigg = sub2ind([2,2,2],cue_dir,left_probes,right_probes);
+
 
 % Recalibration
 if INFO.P.setup.isEYEtrack && itrial~=1; %
-    EyelinkRecalibration(P);
+    EyelinkRecalibration(INFO.P);
     Eyelink('Message', 'SYNCTIME');
 end
 
+% Send onset triggers
 if INFO.P.setup.isEYEtrack
-    Eyelink('Message', 'TrialID %d', itrial);
+    EyeLinkMessage1 = ['TrialID', itrial] ;
+    EyelinkSendTabMsg(EyeLinkMessage1, Trigg + 10)
 end
-
-EyeHasMoved = 0;
-EyeIsLost = 0;
-% put last trial at end of block and note that something was
-% wrong
-if INFO.P.setup.isEYEtrack
-    if EyeHasMoved == 1 || EyeIsLost == 1
-        INFO.T.GazeHasMovedOrEyeIsLost = 1;
-        EyeHasMoved = 0;
-        EyeIsLost = 0;
-    end
+if INFO.P.setup.isEEG
+    SendTrigger(Trigg + 10, INFO.P.TriggerDuration);
 end
 
 % --------------------------------------------------------
@@ -40,17 +51,27 @@ WaitSecs(INFO.P.paradigm_blank);
 % Precue
 % --------------------------------------------------------
 set_pre_cue(myWindow,INFO, itrial);
-WaitSecs(INFO.P.paradigm_precue);
-
-% send trigger to EEG
 if INFO.P.setup.isEYEtrack
-    EyeLinkMessage = 'Cue';
-    Eyelink('Message', EyeLinkMessage, itrial);
-    Trigger  = 10 + INFO.T(itrial).pre_cue;
-    SendTrigger(Trigger, P.TriggerDuration);
+    EyeLinkMessage2 = 'Cue';
+    EyelinkSendTabMsg(EyeLinkMessage2, Trigg + 20) % remember to modisy the order, if needed
+%     Eyelink('Message', EyeLinkMessage, itrial);    
+    %Ad while loop
     % check if gaze position is within boudaries
-    [~,~,EyeHasMoved] = EyelinkGetGaze(P,1);
+    [~,~,EyeHasMoved] = EyelinkGetGaze(INFO.P.E);
 end
+
+if INFO.P.setup.isEEG
+    SendTrigger(Trigg + 20, INFO.P.TriggerDuration);
+end
+
+if INFO.P.setup.isEYEtrack
+    if EyeHasMoved == 1 || EyeIsLost == 1
+        INFO.T.GazeHasMovedOrEyeIsLost = 1;
+        EyeHasMoved = 0;
+        EyeIsLost = 0;
+    end
+end
+WaitSecs(INFO.P.paradigm_precue);
 
 % --------------------------------------------------------
 % Delay
@@ -67,35 +88,26 @@ WaitSecs(INFO.P.paradigm_delay_between_cue_and_stim);
 gabortex = CreateProceduralGabor(myWindow, INFO.P.grating_tilt_width_pix,...
 INFO.P.grating_tilt_height_pix, [], [0.5 0.5 0.5 0.0]);
 [INFO] = set_probe_target(myWindow,INFO,itrial,gabortex);
-WaitSecs(INFO.P.paradigm_stim);
 
-
-if INFO.T(itrial).probes == 1
-    Trigger2 = 22;
-    Trigger3 = 31;
-end
-if INFO.T(itrial).probes == 2
-    Trigger2 = 21;
-    Trigger3 = 32;
-end
-if INFO.T(itrial).probes == 3
-    Trigger2 = 21;
-    Trigger3 = 31;
-end
-if INFO.T(itrial).probes == 4
-    Trigger2 = 22;
-    Trigger3 = 32;
-end
-
-% send trigger to EEG
+% send stim triggers
 if INFO.P.setup.isEYEtrack
-    EyeLinkMessage = 'Probes ';
-    Eyelink('Message', EyeLinkMessage, itrial);
-    SendTrigger(Trigger2, P.TriggerDuration);
-    SendTrigger(Trigger3, P.TriggerDuration);
+    EyeLinkMessage3 =  'Probes + gabor';
+    EyelinkSendTabMsg(EyeLinkMessage3, Trigg + 30)
 end
 
+if INFO.P.setup.isEEG
+    SendTrigger(Trigg + 30, INFO.P.TriggerDuration);
+end
 
+if INFO.P.setup.isEYEtrack
+    if EyeHasMoved == 1 || EyeIsLost == 1
+        INFO.T.GazeHasMovedOrEyeIsLost = 1;
+        EyeHasMoved = 0;
+        EyeIsLost = 0;
+    end
+end
+
+WaitSecs(INFO.P.paradigm_stim);
 % --------------------------------------------------------
 % delay
 % --------------------------------------------------------
@@ -108,7 +120,7 @@ WaitSecs(INFO.P.paradigm_delay_before_question);
 % --------------------------------------------------------
 % questions
 % --------------------------------------------------------
-[pressedButts, INFO] = set_questions(myWindow, INFO, itrial, isQuit);
+[pressedButts, INFO,isQuit] = set_questions(myWindow, INFO, itrial, isQuit);
 
 INFO.T(itrial).button_pressed = pressedButts;
 
@@ -158,16 +170,40 @@ my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
 Screen('Flip', myWindow);
 WaitSecs(INFO.P.paradigm_ITI/2);
 
-if EyeIsLost ==1
-    EyelinkRecalibration(P);
+% send offset triggers
+if INFO.P.setup.isEYEtrack
+    EyeLinkMessage4 =  'offset';
+    EyelinkSendTabMsg(EyeLinkMessage3, Trigg + 40)
+    % check if gaze position is within boudaries
+    [~,~,EyeHasMoved] = EyelinkGetGaze(INFO.P.E);
+end
+if INFO.P.setup.isEEG
+    SendTrigger(Trigg + 40, INFO.P.TriggerDuration);
+end
+
+if INFO.P.setup.isEYEtrack
+    if EyeHasMoved == 1 || EyeIsLost == 1
+        INFO.T.GazeHasMovedOrEyeIsLost = 1;
+        EyeHasMoved = 0;
+        EyeIsLost = 0;
+    end
+end
+
+if EyeIsLost == 1
+    EyelinkRecalibration(INFO.P.E);
     Eyelink('Message', 'SYNCTIME');
 end
+
+% added by eb 03-May-2019
+% since the textures might occupy a lot of memory cumulatively, better to
+% close them at each trial ending
+Screen('Close', gabortex);
 
 % --------------------------------------------------------
 % Break after 20 trials
 % --------------------------------------------------------
 
-division = itrial/20
+division = itrial/20;
 if round(division) == division
     Break = DrawFormattedText(myWindow, INFO.P.text_break,...
         'center', INFO.P.screen.cy-500, [255, 255, 255, 255], [],[],[], 2);
@@ -176,7 +212,7 @@ if round(division) == division
         INFO.P.stim.background_color,  INFO.P.screen.pixperdeg);
     Screen('Flip', myWindow);
     WaitSecs(INFO.P.paradigm_break);
-    Report1 = 0
+    Report1 = 0;
     while Report1 == 0
         restart = DrawFormattedText(myWindow, INFO.P.text_restart,...
             'center', INFO.P.screen.cy-500, [255, 255, 255, 255], [],[],[], 2);
@@ -185,11 +221,11 @@ if round(division) == division
             INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
         Screen('Flip', myWindow);
         if button(INFO.P.setup.padh,2) == 1
-            Report1 = 1
+            Report1 = 1;
         end
     end
     if INFO.P.setup.isEYEtrack
-        EyelinkRecalibration(P);
+        EyelinkRecalibration(INFO.P.E);
         Eyelink('Message', 'SYNCTIME');
     end
 end

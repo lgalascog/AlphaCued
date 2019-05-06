@@ -1,6 +1,6 @@
 function [INFO] = feedback_train1(myWindow, INFO, itrial)
 
-Report4 = 0
+Report4 = 0;
 while Report4 == 0
    response = DrawFormattedText(myWindow, INFO.P.text_instruction_feddback,...
         'center', INFO.P.screen.cy-500, [255, 255, 255, 255], [],[],[], 2);
@@ -9,7 +9,7 @@ while Report4 == 0
         INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
     Screen('Flip', myWindow);
     if button(INFO.P.setup.padh,2) == 1
-        Report4 = 1
+        Report4 = 1;
     end
 end
 

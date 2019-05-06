@@ -5,7 +5,7 @@ IsQuit = 0;
 if exist(INFO.logfilename)
     disp('#######################################')
     disp('#######################################')
-    asktext = ['File exists: ', INFO.logfilename, '! Overwrite [y/n]?\n'];
+    asktext = ['File exists: ', INFO.logfilename, '! Continue [y/n]?\n'];
 
     
     answer = 0;

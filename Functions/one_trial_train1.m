@@ -4,7 +4,7 @@ function [INFO, isQuit] = one_trial_train1(myWindow, INFO, itrial,isQuit)
 % --------------------------------------------------------
 % Instructions cue
 % --------------------------------------------------------
-Report1 = 0
+Report1 = 0;
 while Report1 == 0
     instructions = DrawFormattedText(myWindow, INFO.P.text_instruction_cue,...
         'center', INFO.P.screen.cy-500, [255, 255, 255, 255], [],[],[], 2);
@@ -13,7 +13,7 @@ while Report1 == 0
         INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
     Screen('Flip', myWindow);
     if button(INFO.P.setup.padh,2) == 1
-        Report1 = 1
+        Report1 = 1;
     end
 end  
 
@@ -39,7 +39,7 @@ WaitSecs(INFO.P.paradigm_delay_between_cue_and_stim);
 % --------------------------------------------------------
 % Stimuli
 % --------------------------------------------------------
-Report2 = 0
+Report2 = 0;
 while Report2 == 0
     instructions = DrawFormattedText(myWindow, INFO.P.text_instruction_circle,...
         'center', INFO.P.screen.cy-500, [255, 255, 255, 255], [],[],[], 2);
@@ -50,7 +50,7 @@ while Report2 == 0
         INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
     Screen('Flip', myWindow);
     if button(INFO.P.setup.padh,2) == 1
-        Report2 = 1
+        Report2 = 1;
     end
 end
 
