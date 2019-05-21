@@ -1,6 +1,6 @@
 function INFO = define_trials_AlphaCued(INFO, Validity)
 % 2 pre-cue
-% 4 probes
+% 5 probes
 % 2 attention targets with 2 orientations for each : 4
 % 2 response-cue
 % 2 possible questions sequences

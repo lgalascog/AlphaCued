@@ -35,7 +35,7 @@ elseif session == 2
     path = './Logfiles';
     file = [name '_Logfile.mat'];
     load(fullfile(path, file));
-    trials_run = 12:length(INFO.T);
+    trials_run = 501:length(INFO.T);
     %trials_run = 988:length(INFO.T);
     %trials_run = 300:500;
 end 
@@ -176,7 +176,7 @@ for itrial = trials_run
         break
     else
         INFO.ntrials = itrial;
-        save(INFO.logfilename, 'INFO', '-v7.3');
+        save(INFO.logfilename, 'INFO');
     end
 
     
