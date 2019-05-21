@@ -44,3 +44,4 @@ if d2*ppd>6.9
     warning('off',msgid);%just show for the first fixation point
 end
 Screen('FillOval', window, fillcolor, [x-d2/2 * ppd, y-d2/2 * ppd, x+d2/2 * ppd, y+d2/2 * ppd], d2 * ppd);
+Screen('DrawingFinished', window);

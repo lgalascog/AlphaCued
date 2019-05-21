@@ -41,7 +41,7 @@ for irepeat = 1 :INFO.P.paradigm.n_trials; %???
                             TValid(itrial).Probes_right = [];
                             TValid(itrial).Probes_left = [];
                             
-                            TValid(itrial).GazeHasMovedOrEyeIsLost = [];
+                            TValid(itrial).GazeHasMovedOrEyeIsLost = 0;
                         elseif Validity == 2
                             TInvalid(itrial).pre_cue = ipre_cue ;% 50% trials precue left and 50% right
                             TInvalid(itrial).probes_position_right = iposition_probes_right;
@@ -63,7 +63,7 @@ for irepeat = 1 :INFO.P.paradigm.n_trials; %???
                             TInvalid(itrial).Probes_right = [];
                             TInvalid(itrial).Probes_left = [];
                             
-                            TInvalid(itrial).GazeHasMovedOrEyeIsLost = [];
+                            TInvalid(itrial).GazeHasMovedOrEyeIsLost = 0;
                         end      
                     end
                 end

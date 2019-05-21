@@ -1,5 +1,8 @@
-function [pressedButts,INFO,isQuit] = set_questions(myWindow, INFO, itrial, isQuit)
+
+function [pressedButts, INFO, isQuit, joy] = set_questions(myWindow, INFO, itrial, isQuit)
 % Set the questions on the screen
+joy = HebiJoystick(1);
+
 
 % Question about detection of the noisi gabor
 Detection_gabor_left = DrawFormattedText(myWindow, INFO.P.text_questions,...
@@ -7,22 +10,23 @@ Detection_gabor_left = DrawFormattedText(myWindow, INFO.P.text_questions,...
 Screen('Flip', myWindow);
 Report = 0;
 pressedButts = {};
-padnames = {'A', 'B', 'X', 'Y', 'LB', 'RB'};
+padnames = {'X', 'A', 'B', 'Y', 'LB', 'RB'};
+% Office: padnames = {'A', 'B', 'X', 'Y', 'LB', 'RB'};
 while Report < 3    
 %     [~, timeSecs, keyCode] = KbCheck;
-    pressed = button(INFO.P.setup.padh);
-    povspressed = pov(INFO.P.setup.padh);
+    pressed = button(joy);
+    povspressed = pov(joy);
     if any(pressed)
         Report = Report + 1;
         pressedButts{Report} = padnames{find(pressed)};
-        while any(button(INFO.P.setup.padh)) | pov(INFO.P.setup.padh) ~= -1
+        while any(button(joy)) | pov(joy) ~= -1
             %wait for release
         end
     end
-    if pov(INFO.P.setup.padh) ~= -1
+    if pov(joy) ~= -1
         Report = Report + 1;
         pressedButts{Report} = povspressed;
-        while any(button(INFO.P.setup.padh)) | pov(INFO.P.setup.padh) ~= -1
+        while any(button(joy)) | pov(joy) ~= -1
             %wait for release
         end
     end

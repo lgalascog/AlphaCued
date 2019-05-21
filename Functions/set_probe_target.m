@@ -317,4 +317,5 @@ elseif INFO.T(itrial).probes == 4
         end
     end
 end
-Screen('Flip', myWindow);
+% Screen('Flip', myWindow);
+Screen('DrawingFinished', myWindow);
