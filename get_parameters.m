@@ -1,9 +1,10 @@
-function [P] = get_parameters;
+function [P] = get_parameters
 
 %% ------------------------------------------------------------------------
 % Set the computer-specific parameters.
 %  ------------------------------------------------------------------------
-computername = getenv('COMPUTERNAME');
+% computername = getenv('COMPUTERNAME');
+% computername = 'STIMULATION';   % ADDED EB 03-May-2019 dummy variable to circumvent getenv issue
 switch computername
     case 'LAURIE'
         
@@ -17,12 +18,13 @@ switch computername
         P.screen.size         = [28.8 16.2]; %screen size in centimeters.
         P.screen.viewdist     = 55; % distance between subject and monitor
         
-        P.setup.isPad         = 0 
-        P.setup.isEYEtrack    = 0;        
+        P.setup.isPad         = 0; 
+        P.setup.isEYEtrack    = 1;        
         P.setup.isEEG         = 0;
         P.setup.skipsync      = 1;
         P.setup.useCLUT       = 0;
         P.setup.CLUTfile      = 'inverse_CLUT 26 April 2012, 16-48.mat';
+        
         
     case 'BUSCH03'
         
@@ -36,7 +38,7 @@ switch computername
         P.screen.size         = [36 27]; %screen size in centimeters.
         P.screen.viewdist     = 55; % distance between subject and monitor
         
-        P.setup.isPad         = 1
+        P.setup.isPad         = 1;
         P.setup.isEYEtrack    = 0;           
         P.setup.isEEG         = 0;
         P.setup.skipsync      = 1;
@@ -55,14 +57,14 @@ switch computername
         P.screen.size         = [36 27]; %screen size in centimeters.
         P.screen.viewdist     = 55; % distance between subject and monitor
         
-        P.setup.isPad         = 0
+        P.setup.isPad         = 0;
         P.setup.isEYEtrack    = 0;           
         P.setup.isEEG         = 0;
         P.setup.skipsync      = 1;
         P.setup.useCLUT       = 0;
         P.setup.CLUTfile      = 'inverse_CLUT 26 April 2012, 16-48.mat';
         
-    otherwise
+    case 'buschstim'   
         
         thescreen = max(Screen('Screens'));
         myres = Screen('Resolution', thescreen);
@@ -71,15 +73,17 @@ switch computername
         P.screen.width        = myres.width;
         P.screen.height       = myres.height;
         P.screen.rate         = myres.hz;
-        P.screen.size         = [??]; %screen size in centimeters.
-        P.screen.viewdist     = ??; % distance between subject and monitor
+        P.screen.size         = [52.2 29.4]; %screen size in centimeters.
+        P.screen.viewdist     = 86; % distance between subject and monitor
         
         P.setup.isPad         = 1;
-        P.setup.isEYEtrack    = 0;           
+        P.setup.isEYEtrack    = 1;           
         P.setup.isEEG         = 0;
-        P.setup.skipsync      = 1;
-        P.setup.useCLUT       = 0;
-        P.setup.CLUTfile      = 'inverse_CLUT 26 April 2012, 16-48.mat';
+        P.setup.skipsync      = 0;
+        P.setup.useCLUT       = 1;
+        P.setup.CLUTfile      = '/home/busch/Documents/MATLAB/wm_utilities/ViewPixx/inverse_CLUT_2019-02-05.mat';
+        
+        
 end
 
 
@@ -89,9 +93,9 @@ end
 %  Calculate size of a pixel in visual angles.
 % ------------------------------------------------------------------------
 P.screen.cx = round(P.screen.width/2); % x coordinate of screen center
-P.CenterX = P.screen.cx %
+P.CenterX = P.screen.cx; %
 P.screen.cy = round(P.screen.height/2); % y coordinate of screen center
-P.CenterY = P.screen.cy %
+P.CenterY = P.screen.cy; %
 [P.screen.pixperdeg, P.screen.degperpix] = VisAng(P);
 P.screen.pixperdeg = mean(P.screen.pixperdeg);
 P.screen.degperpix = mean(P.screen.degperpix);
@@ -99,7 +103,7 @@ P.screen.degperpix = mean(P.screen.degperpix);
 %% ------------------------------------------------------------------------
 % Paradigm : number of possibilities per stimulis
 %% ------------------------------------------------------------------------
-P.paradigm.n_trials = 1; %Je sais pas du tout ce que ça veut dire donc c'est pas la bonne valeur !
+P.paradigm.n_trials = 1; %Je sais pas du tout ce que ï¿½a veut dire donc c'est pas la bonne valeur !
 P.paradigm.pre_cue = 2;
 P.paradigm.probes = 4;
 P.paradigm.attention = 4;
@@ -127,7 +131,7 @@ P.paradigm_break = 30;
 %% ------------------------------------------------------------------------
 % Eyetracking parameters
 %% ------------------------------------------------------------------------
-P.WaitAfterButtonPress = 0.500
+P.WaitAfterButtonPress = 0.500;
 
 P.TriggerDuration       = 0.005;
 P.TriggerStartRecording = 250;
@@ -149,22 +153,22 @@ P.stim.fixation_size = 0.3; %(degree)
 
 %Cue
 P.stim.cue_color = [255 255 255];
-P.stim.cue_RIGHT_xPosStart = P.CenterX + 0.2 * P.screen.pixperdeg
-P.stim.cue_RIGHT_yPosStart = P.CenterY + 0.2 * P.screen.pixperdeg
-P.stim.cue_RIGHT_xPosEnd = P.CenterX + 1 * P.screen.pixperdeg
-P.stim.cue_RIGHT_yPosEnd = P.CenterY + 1 * P.screen.pixperdeg
+P.stim.cue_RIGHT_xPosStart = P.CenterX + 0.2 * P.screen.pixperdeg;
+P.stim.cue_RIGHT_yPosStart = P.CenterY + 0.2 * P.screen.pixperdeg;
+P.stim.cue_RIGHT_xPosEnd = P.CenterX + 1 * P.screen.pixperdeg;
+P.stim.cue_RIGHT_yPosEnd = P.CenterY + 1 * P.screen.pixperdeg;
 
-P.stim.cue_LEFT_xPosStart = P.CenterX - 0.2 * P.screen.pixperdeg
-P.stim.cue_LEFT_yPosStart = P.CenterY + 0.2 * P.screen.pixperdeg
-P.stim.cue_LEFT_xPosEnd = P.CenterX - 1 * P.screen.pixperdeg
-P.stim.cue_LEFT_yPosEnd = P.CenterY + 1 * P.screen.pixperdeg
+P.stim.cue_LEFT_xPosStart = P.CenterX - 0.2 * P.screen.pixperdeg;
+P.stim.cue_LEFT_yPosStart = P.CenterY + 0.2 * P.screen.pixperdeg;
+P.stim.cue_LEFT_xPosEnd = P.CenterX - 1 * P.screen.pixperdeg;
+P.stim.cue_LEFT_yPosEnd = P.CenterY + 1 * P.screen.pixperdeg;
 
-P.stim.cue_width = 0.1
-P.stim.cue_width_pix = P.stim.cue_width * P.screen.pixperdeg
+P.stim.cue_width = 0.1;
+P.stim.cue_width_pix = P.stim.cue_width * P.screen.pixperdeg;
 
 
 % Detection task (probe)
-P.circle_detection_size = 0.3 %(degree)
+P.circle_detection_size = 0.3; %(degree)
 P.circle_detection_size_pix = round(P.circle_detection_size * P.screen.pixperdeg); %(pix) 
 
 
@@ -176,18 +180,18 @@ P.grating_tilt_tilt_clock = 350;
 P.grating_tilt_tilt_cantclock = 10;% Should be determined by a staircase
 P.grating_tilt_contrast = 15;
 P.grating_tilt_aspectratio = 1.0;
-P.grating_tilt_width = 2 %(degree)
-P.grating_tilt_height = 2 %(degree)
-P.grating_tilt_width_pix = round(P.grating_tilt_width * P.screen.pixperdeg) %(pix)
-P.grating_tilt_height_pix = round(P.grating_tilt_height * P.screen.pixperdeg) %(pix)
+P.grating_tilt_width = 2; %(degree)
+P.grating_tilt_height = 2; %(degree)
+P.grating_tilt_width_pix = round(P.grating_tilt_width * P.screen.pixperdeg); %(pix)
+P.grating_tilt_height_pix = round(P.grating_tilt_height * P.screen.pixperdeg); %(pix)
 
 % Stimuli position
 P.n_positions = 5;
 P.radius_deg = 4; %(degree); % Distance between the center of the screen and the grating
 P.radius_px = P.radius_deg * P.screen.pixperdeg; %pix
 
-P.angles(1,:) = linspace(92, 178, P.n_positions);
-P.angles(2,:) = linspace(2, 88, P.n_positions);
+P.angles(1,:) = linspace(98, 172, P.n_positions);
+P.angles(2,:) = linspace(8, 82, P.n_positions);
 for ipos = 1:P.n_positions
     for iside = 1:2        
         P.position(iside, ipos, 1) = P.screen.cx + P.radius_px*cosd(P.angles(iside, ipos)) ;
@@ -198,19 +202,19 @@ end
 %% ------------------------------------------------------------------------
 %  Text
 %  ------------------------------------------------------------------------
-P.text_break = 'Break of 30 sec. You can move your head from the chinrest'
-P.text_restart = 'Press B to restart'
+P.text_break = 'Break of 30 sec. You can move your head from the chinrest';
+P.text_restart = 'Press B to restart';
 P.text_instruction_cue = 'In a moment, a rectangle will appear on the screen. \n This shape gives you the place where you need to focus your attention. \n If the rectangle appears on the right side, you have to pay attention to the right side of the screen. \n If it appears on the left, you have to pay attention to the left. \n Take care to never move your eyes, during the trials, your gaze must remain fixed on the cross in center of the screen.\n Press B to continue.';
 P.text_instruction_circle = 'Then, circles will appear on the lower part of the screen \n One white circle can appear on each side of the screen \n You have to remember where the circles appear. On the right, on the left or both? \n';
 P.text_instruction_gabor = 'At the same time, a gabor will appear on the right OR on the left side of the screen. \n 80% of the time, the gabor will appear where you have to pay attention. \n That is why it is important to pay attention to the previously indicated location. \n This gabor will be tilted to the right or to the left. \n You have to remember the orientation of the gabor. To the right or to the left \n Press B to continue.';
 P.text_instruction_report_left = 'At the end, you will have to report your responses. \n If you saw a circle on the left side of the screen: Press the up button of the left cross \n If you did not see a circle on the left side of the screen: Press the down button of the left cross.';
 P.text_instruction_report_right = 'If you saw a circle on the right side of the screen: Press the Y button on the right side of the gamepad \n If you did not see a circle on the rifgt side of the screen: Press the A button on the right side of the gamepad.';
 P.text_instruction_report_tilt = 'If the gabor was tilted to the left: press the LB button. \n If the gabor was tilted to the right: press the RB button.';
-P.text_instruction_feddback = 'If your responses was correct, the cross will turn green, if not, the cross will turn red. \n Press B to continue.'   
-P.text_instruction_feddback_left = 'Was there a circle on the left ?'
-P.text_instruction_feddback_right = 'Was there a circle on the right ?'
-P.text_instruction_feddback_tilt = 'In which direction the Gabor was tilted ?'
-P.text_instruction_train2 ='Now you are going to carry out 10 slow trials \n It is the same task. \n Please remember that you can give your response in any order you want when the ? appears'
+P.text_instruction_feddback = 'If your responses was correct, the cross will turn green, if not, the cross will turn red. \n Press B to continue.';
+P.text_instruction_feddback_left = 'Was there a circle on the left ?';
+P.text_instruction_feddback_right = 'Was there a circle on the right ?';
+P.text_instruction_feddback_tilt = 'In which direction the Gabor was tilted ?';
+P.text_instruction_train2 ='Now you are going to carry out 10 slow trials \n It is the same task. \n Please remember that you can give your response in any order you want when the ? appears';
 
 
 P.text_questions = '?';
@@ -219,8 +223,9 @@ P.text_questions = '?';
 %% ------------------------------------------------------------------------
 %  Define gamepad buttons
 %  ------------------------------------------------------------------------
-joy = HebiJoystick(1);
-P.setup.padh = joy;
+% joy = HebiJoystick(1);
+% P.setup.padh = joy;
+P.keys.esc = KbName('q'); % added eb 03-May-2019
 
 % ------------------------------------------------------------------------
 % Parameters of the Quest
@@ -234,4 +239,29 @@ P.Quest_pThreshold = [0.5 0.85];  % threshold criterior for response = 1
 P.Quest_beta       = [3.5 3.5];   % slope of psychometric function
 P.Quest_delta      = [0.05 0.05]; % p of response = 0 for visible stimuli
 P.Quest_gamma      = [0 0.5];     % chance level (for invisible stimuli)
+
+% -------------------------------------------------------------------------
+% Parameters for Eyetracking  //added by eb 03-May-2019
+% -------------------------------------------------------------------------
+
+% creates P.ET, a substructure with fields readable by Wanja's function EyelinkStart
+
+%% definition of eyelink-specific substructure
+
+P.E.myWidth = P.screen.width;
+P.E.myHeight = P.screen.height;
+P.E.BgColor = P.stim.background_color;
+% P.E.EDFdir = out_path_eye;
+P.E.gui = 0;
+P.E.pixperdeg = P.screen.pixperdeg;
+
+% here put other parameters for gaze control function called during the
+% experiment, like the confidence area etc
+P.E.gcntrl.ignblnk = 1;
+P.E.gcntrl.ovrsmplbvr = 0; %% double check
+P.E.CenterX = P.screen.cx;
+P.E.CenterY = P.screen.cy;
+P.E.FixLenDeg = 2;
+P.E.IgnoreBlinks = 1
+% P.E.durationfixation = P.paradigm_precue + P.paradigm_delay_between_cue_and_stim + P.paradigm_stim
 

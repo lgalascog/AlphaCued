@@ -1,13 +1,16 @@
-clear
-close all
-addpath('./Functions');
-addpath('./matlab-input-1.2/hebi'); % added eb 03-May-2019
+function AlphaCuedV2(INFO, session, name)
+% clear
+% close all
+% addpath('./Functions');
+% addpath('./matlab-input-1.2/hebi'); % added eb 03-May-2019
+% 
+% name  ='99LT';
+% 
+% INFO.name              = name;
+% INFO.logfilename       = ['./Logfiles/' name '_Logfile.mat'];
+% INFO.P = get_parameters;
 
-name  ='99LT';
 
-INFO.name              = name;
-INFO.logfilename       = ['./Logfiles/' name '_Logfile.mat'];
-INFO.P = get_parameters;
 
 switch name
     case 'test'
@@ -23,9 +26,21 @@ if isQuit
 end
 
 %% -----------------------------------------------------------------------
-% Define what do do on each trial.
+% Define what do do on each trial/session
 % ------------------------------------------------------------------------
-[INFO] = define_what_to_do(INFO);  
+if session == 1
+    [INFO] = define_what_to_do(INFO);
+    trials_run = 1:500;
+elseif session == 2
+    path = './Logfiles';
+    file = [name '_Logfile.mat'];
+    load(fullfile(path, file));
+    trials_run = 501:length(INFO.T);
+    %trials_run = 988:length(INFO.T);
+    trials_run = 300:500;
+end 
+
+%[INFO] = define_what_to_do(INFO);  
     
 % ------------------------------------------------------------------------
 % Initiate Quest.
@@ -66,8 +81,10 @@ Screen('Preference', 'SkipSyncTests', INFO.P.setup.skipsync);
 
 Priority(MaxPriority(myWindow));
 
+INFO.P.setup.ITI = Screen('GetFlipInterval',myWindow)
+
 if INFO.P.setup.useCLUT
-    addpath('./CLUT');
+    %addpath('/home/busch/Documents/MATLAB/wm_utilities/ViewPixx/inverse_CLUT_2019-02-05.mat');
     load(INFO.P.setup.CLUTfile);
     Screen('LoadNormalizedGammaTable',myWindow,inverseCLUT);
 end
@@ -94,21 +111,22 @@ end
 % Initialize EyeTracker (incl. calibrate) & EEG
 % -----------------------------------------------------------------------
 
-if INFO.P.setup.isEEG
-    OpenTriggerPort;
-end
+% if INFO.P.setup.isEEG
+%     OpenTriggerPort;
+% end
 
 if INFO.P.setup.isEYEtrack
+    % OpenTriggerPort;
     % launch devices
     SendTrigger(INFO.P.TriggerStartRecording,INFO.P.TriggerDuration);
-    [INFO.P.E,myWindow] = EyelinkStart(INFO.P.E, myWindow, ['AI_' name '.edf']);
+    [INFO.P.E,myWindow] = EyelinkStart(INFO.P.E, myWindow, ['AI_' name '5.edf']);
 end
 
 %%----------------------------------------------------------------------
 % Run across trials.
 %----------------------------------------------------------------------
 %HideCursor
-for itrial = 1:length(INFO.T)      
+for itrial = trials_run   
     % Get Quest's recommendation for a contrast value.
     % Yes/No detection task
     INFO.T(itrial).Contrast_probes = 10^QuestQuantile(INFO.Q(1));
@@ -168,6 +186,7 @@ end
 
 if INFO.P.setup.isEYEtrack
     EyelinkStop(INFO.P.E);
+    SendTrigger(INFO.P.TriggerStopRecording,INFO.P.TriggerDuration);
 end
 
 WaitSecs(2);

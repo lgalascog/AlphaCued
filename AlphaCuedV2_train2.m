@@ -1,12 +1,13 @@
-clear
-close all
-addpath('./Functions');
-
-name  ='test2';
-
-INFO.name              = name;
-INFO.logfilename       = ['Alpha_Cued_Lateralization/Logfiles/' name '_Logfile.mat'];
-INFO.P = get_parameters;
+function AlphaCuedV2_train2(INFO,name)
+% clear
+% close all
+% addpath('./Functions');
+% 
+% name  ='test2';
+% 
+% INFO.name              = name;
+% INFO.logfilename       = ['Alpha_Cued_Lateralization/Logfiles/' name '_Logfile.mat'];
+% INFO.P = get_parameters;
 
 
 %% -----------------------------------------------------------------------
@@ -42,16 +43,21 @@ INFO.Q(2) = QuestRecompute(INFO.Q(2));
 % ------------------------------------------------------------------------
 PsychDefaultSetup(1);
 Screen('Preference', 'SkipSyncTests', INFO.P.setup.skipsync);
-Screen('Resolution', INFO.P.screen.screen_num, INFO.P.screen.width, ...
-    INFO.P.screen.height, INFO.P.screen.rate);
+% Screen('Resolution', INFO.P.screen.screen_num, INFO.P.screen.width, ...
+%     INFO.P.screen.height, INFO.P.screen.rate);    % commented by eb
+%     03-May-2019: "Resolution" command seems to have been called twice.
+%     The second time should be related to a change in the parameters (?)
+%     when the parameters are the same this might result in an error (??)
 
 [myWindow, windowRect] = PsychImaging('Openwindow', ...
     INFO.P.screen.screen_num, INFO.P.stim.background_color);
 
 Priority(MaxPriority(myWindow));
 
+INFO.P.setup.ITI = Screen('GetFlipInterval',myWindow)
+
 if INFO.P.setup.useCLUT
-    addpath('./CLUT');
+    %addpath('/home/busch/Documents/MATLAB/wm_utilities/ViewPixx/inverse_CLUT_2019-02-05.mat');
     load(INFO.P.setup.CLUTfile);
     Screen('LoadNormalizedGammaTable',myWindow,inverseCLUT);
 end
@@ -69,7 +75,7 @@ if INFO.P.setup.isEYEtrack
     %RestrictKeysForKbCheck(P.Exp.ButtonsExperiment);
     keyIsDown = 0;
     while keyIsDown == 0
-        [keyIsDown, EndRT, keyCode] = KbCheck(0);
+        [keyIsDown, EndRT, keyCode] = KbCheck(); % try not to specify device in use and collect evidence from any device
     end
     WaitSecs(INFO.P.WaitAfterButtonPress);
 end
@@ -78,21 +84,22 @@ end
 % Initialize EyeTracker (incl. calibrate) & EEG
 % -----------------------------------------------------------------------
 
-if INFO.P.setup.isEEG
-    OpenTriggerPort;
-end
+% if INFO.P.setup.isEEG
+%     OpenTriggerPort;
+% end
 
 if INFO.P.setup.isEYEtrack
+    % OpenTriggerPort;
     % launch devices
     SendTrigger(INFO.P.TriggerStartRecording,INFO.P.TriggerDuration);
-    [INFO,myWindow] = EyelinkStart(INFO, myWindow, ['AI_' name '.edf']);
+    [INFO.P.E,myWindow] = EyelinkStart(INFO.P.E, myWindow, ['AI_' name '.edf']);
 end
 
 %%----------------------------------------------------------------------
 % Run across trials.
 %----------------------------------------------------------------------
-HideCursor
-for itrial = 1:length(INFO.T)      
+%HideCursor
+for itrial = 1:length(INFO.T)
     % Get Quest's recommendation for a contrast value.
     % Yes/No detection task
     INFO.T(itrial).Contrast_probes = 10^QuestQuantile(INFO.Q(1));
@@ -137,8 +144,13 @@ for itrial = 1:length(INFO.T)
     INFO.T(itrial).ThresholdEstimate = QuestMean(INFO.Q(2));
     INFO.T(itrial).ThresholdSD       = QuestSd(INFO.Q(2));
     
-    
-    save(INFO.logfilename, 'INFO');
+    if isQuit
+        CloseAndCleanup(INFO.P);
+        break
+    else
+        INFO.ntrials = itrial;
+        save(INFO.logfilename, 'INFO');
+    end
 
     
 
@@ -146,8 +158,11 @@ for itrial = 1:length(INFO.T)
 end
 
 if INFO.P.setup.isEYEtrack
-    EyelinkStop(INFO.P);
+    EyelinkStop(INFO.P.E);
+    SendTrigger(INFO.P.TriggerStopRecording,INFO.P.TriggerDuration);
 end
 
-Screen('CloseAll');
-ShowCursor;
+WaitSecs(2);
+CloseAndCleanup(INFO.P )
+sca
+fprintf('\nDONE!\n\n');
