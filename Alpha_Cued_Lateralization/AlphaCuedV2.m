@@ -10,6 +10,11 @@ function AlphaCuedV2(INFO, session, name)
 % INFO.logfilename       = ['./Logfiles/' name '_Logfile.mat'];
 % INFO.P = get_parameters;
 
+% determine provisional backup folder
+backupfolder = fullfile('C:\Users\galas\Documents', 'backup');
+if ~isdir(backupfolder)
+    mkdir(backupfolder)
+end
 
 
 switch name
@@ -81,7 +86,7 @@ Screen('Preference', 'SkipSyncTests', INFO.P.setup.skipsync);
 
 Priority(MaxPriority(myWindow));
 
-INFO.P.setup.ITI = Screen('GetFlipInterval',myWindow)
+INFO.P.setup.ITI = Screen('GetFlipInterval',myWindow);
 
 if INFO.P.setup.useCLUT
     %addpath('/home/busch/Documents/MATLAB/wm_utilities/ViewPixx/inverse_CLUT_2019-02-05.mat');
@@ -132,6 +137,9 @@ for itrial = trials_run
     INFO.T(itrial).Contrast_probes = 10^QuestQuantile(INFO.Q(1));
     if INFO.T(itrial).Contrast_probes > 1;
         INFO.T(itrial).Contrast_probes = 1;
+        
+        warning('contrast value above maximum') % added by eb 21-05
+        
     end
     % 2AFC discrimination task
     INFO.T(itrial).Contrast_attention = 10^QuestQuantile(INFO.Q(2));
@@ -178,10 +186,13 @@ for itrial = trials_run
         INFO.ntrials = itrial;
         save(INFO.logfilename, 'INFO');
     end
-
     
-
-
+    % added for backup purposes ...
+    if mod(itrial, 50) == 0
+        bfilename = [name datestr(now, 30) '.mat'];
+        save(fullfile(backupfolder, bfilename), 'INFO')
+    end
+    
 end
 
 if INFO.P.setup.isEYEtrack

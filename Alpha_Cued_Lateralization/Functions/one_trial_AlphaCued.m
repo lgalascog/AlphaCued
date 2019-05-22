@@ -5,7 +5,7 @@ isQuit=0;
 % EyeIsLost = 0;
 
 if itrial == 1
-    [INFO] = normalized_timing(INFO, itrial);
+    [INFO] = normalized_timing(INFO);
 end
 
 % Triggers
@@ -27,10 +27,10 @@ Trigg = sub2ind([2,2,2],cue_dir,left_probes,right_probes);
 
 
 % Recalibration si perte depuis 3 essais a corriger
-% if INFO.P.setup.isEYEtrack && itrial > 3 && INFO.T(itrial-3).GazeHasMovedOrEyeIsLost == 1 && INFO.T(itrial-2).GazeHasMovedOrEyeIsLost == 1 && INFO.T(itrial-1).GazeHasMovedOrEyeIsLost
-%     EyelinkRecalibration(INFO.P.E);
-%     Eyelink('Message', 'SYNCTIME');
-% end
+if INFO.P.setup.isEYEtrack && itrial > 3 && INFO.T(itrial-3).GazeHasMovedOrEyeIsLost == 1 && INFO.T(itrial-2).GazeHasMovedOrEyeIsLost == 1 && INFO.T(itrial-1).GazeHasMovedOrEyeIsLost
+    EyelinkRecalibration(INFO.P.E);
+    Eyelink('Message', 'SYNCTIME');
+end
 
 % Send onset triggers
 if INFO.P.setup.isEYEtrack
@@ -250,6 +250,7 @@ end
 % since the textures might occupy a lot of memory cumulatively, better to
 % close them at each trial ending
 Screen('Close', gabortex);
+close(joy)
 
 % --------------------------------------------------------
 % Break after 20 trials
@@ -257,6 +258,7 @@ Screen('Close', gabortex);
 
 division = itrial/20;
 if round(division) == division
+    joy2 = HebiJoystick(1);
     DrawFormattedText(myWindow, INFO.P.text_break,...
         'center', INFO.P.screen.cy-500, [255, 255, 255, 255], [],[],[], 2);
     my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
@@ -272,7 +274,7 @@ if round(division) == division
             INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
             INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
         Screen('Flip', myWindow);
-        if button(joy,3) == 1 %office: button(joy,2) == 1
+        if button(joy2,3) == 1 %office: button(joy,2) == 1
             Report1 = 1;
         end
     end
@@ -280,5 +282,5 @@ if round(division) == division
         EyelinkRecalibration(INFO.P.E);
         Eyelink('Message', 'SYNCTIME');
     end
-    close(joy)
+    close(joy2)
 end
