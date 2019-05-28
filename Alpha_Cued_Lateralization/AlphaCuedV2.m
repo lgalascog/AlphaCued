@@ -41,8 +41,6 @@ elseif session == 2
     file = [name '_Logfile.mat'];
     load(fullfile(path, file));
     trials_run = 501:length(INFO.T);
-    %trials_run = 988:length(INFO.T);
-    %trials_run = 300:500;
 end 
 
 %[INFO] = define_what_to_do(INFO);  
@@ -87,6 +85,7 @@ Screen('Preference', 'SkipSyncTests', INFO.P.setup.skipsync);
 Priority(MaxPriority(myWindow));
 
 INFO.P.setup.ITI = Screen('GetFlipInterval',myWindow);
+joy = HebiJoystick(1);  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% readded on 27 may eb
 
 if INFO.P.setup.useCLUT
     %addpath('/home/busch/Documents/MATLAB/wm_utilities/ViewPixx/inverse_CLUT_2019-02-05.mat');
@@ -150,7 +149,7 @@ for itrial = trials_run
         INFO.T(itrial).Contrast_attention = deg2rad(1);
     end
     
-    [INFO, isQuit] = one_trial_AlphaCued(myWindow,INFO, itrial);
+    [INFO, isQuit] = one_trial_AlphaCued(myWindow,INFO, itrial, joy);
    
     % Update Quest
     % Yes/No detection task
@@ -182,13 +181,14 @@ for itrial = trials_run
     if isQuit
         CloseAndCleanup(INFO.P);
         break
-    else
-        INFO.ntrials = itrial;
-        save(INFO.logfilename, 'INFO');
+%     else
+%         INFO.ntrials = itrial;
+%         save(INFO.logfilename, 'INFO'); Try to not save at each trial but
+%         only every 20 trials
     end
     
     % added for backup purposes ...
-    if mod(itrial, 50) == 0
+    if mod(itrial, 100) == 0
         bfilename = [name datestr(now, 30) '.mat'];
         save(fullfile(backupfolder, bfilename), 'INFO')
     end

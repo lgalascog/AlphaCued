@@ -1,7 +1,7 @@
 
-function [pressedButts, INFO, isQuit, joy] = set_questions(myWindow, INFO, itrial, isQuit)
+function [pressedButts, INFO, isQuit, joy] = set_questions(myWindow, INFO, isQuit,joy)
 % Set the questions on the screen
-joy = HebiJoystick(1);
+%joy = HebiJoystick(1);
 
 
 % Question about detection of the noisi gabor
@@ -16,6 +16,7 @@ while Report < 3
 %     [~, timeSecs, keyCode] = KbCheck;
     pressed = button(joy);
     povspressed = pov(joy);
+%     axes = read(joy);
     if any(pressed)
         Report = Report + 1;
         pressedButts{Report} = padnames{find(pressed)};
@@ -23,13 +24,22 @@ while Report < 3
             %wait for release
         end
     end
-    if pov(joy) ~= -1
+    if pov(joy) ~= -1   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% if hebijoystick
         Report = Report + 1;
         pressedButts{Report} = povspressed;
         while any(button(joy)) | pov(joy) ~= -1
             %wait for release
         end
     end
+    
+%     if axes(6) ~= 0   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% if vrjoystick
+%         Report = Report + 1;
+%         pressedButts{Report} = axes;
+%         while any(button(joy)) | read(joy) ~= -1
+%             %wait for release
+%         end
+%     end
+    
     [keyIsDown,secs,keyCode] = KbCheck;
     if keyIsDown
         if keyCode(INFO.P.keys.esc)

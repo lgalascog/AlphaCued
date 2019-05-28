@@ -7,12 +7,20 @@ function Master_Alpha_Cued(Block, sess)
 % clear
 % close all
 addpath('./Functions');
-addpath('./matlab-input-1.2/hebi'); % added eb 03-May-2019
+% addpath(genpath('matlab-input-1.2')); % added eb 03-May-2019  % commented 27-May
+addpath(genpath('./Functions/hebi')); % added eb 27 May to resemble ROSA's call
 
-name  ='02NB'; %
+
+name  ='03EB'; %
 
 INFO.name              = name;
-INFO.logfilename       = ['./Logfiles/' name '_Logfile.mat'];
+
+Logfile = fullfile('/home/busch/Documents/Laurie', 'Logfile');
+if ~isdir(Logfile)
+    mkdir(Logfile)
+end
+
+INFO.logfilename       = [Logfile '/' name '_Logfile.mat'];
 INFO.P = get_parameters;
 
 if strcmp(Block, 'Train1')

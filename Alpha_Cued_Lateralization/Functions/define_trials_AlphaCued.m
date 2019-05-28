@@ -41,6 +41,14 @@ for irepeat = 1 :INFO.P.paradigm.n_trials; %???
                             TValid(itrial).Probes_right = [];
                             TValid(itrial).Probes_left = [];
                             
+                            %Flips timing
+                            TValid(itrial).vbl_fixation = [];
+                            TValid(itrial).vbl_cue = [];
+                            TValid(itrial).vbl_delay1 = [];
+                            TValid(itrial).vbl_target = [];
+                            TValid(itrial).vbl_delay2 = [];
+                            TValid(itrial).vbl_feedback = [];
+                            
                             TValid(itrial).GazeHasMovedOrEyeIsLost = 0;
                         elseif Validity == 2
                             TInvalid(itrial).pre_cue = ipre_cue ;% 50% trials precue left and 50% right
@@ -62,6 +70,14 @@ for irepeat = 1 :INFO.P.paradigm.n_trials; %???
                             TInvalid(itrial).Correct_attention = [];
                             TInvalid(itrial).Probes_right = [];
                             TInvalid(itrial).Probes_left = [];
+                            
+                            %Flips timing
+                            TInvalid(itrial).vbl_fixation = [];
+                            TInvalid(itrial).vbl_cue = [];
+                            TInvalid(itrial).vbl_delay1 = [];
+                            TInvalid(itrial).vbl_target = [];
+                            TInvalid(itrial).vbl_delay2 = [];
+                            TInvalid(itrial).vbl_feedback = [];
                             
                             TInvalid(itrial).GazeHasMovedOrEyeIsLost = 0;
                         end      

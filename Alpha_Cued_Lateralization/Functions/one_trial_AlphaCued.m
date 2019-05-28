@@ -1,8 +1,10 @@
-function [INFO, isQuit] = one_trial_AlphaCued(myWindow, INFO, itrial)
+function [INFO, isQuit] = one_trial_AlphaCued(myWindow, INFO, itrial, joy)
 % Run one trial
 isQuit=0;
 % EyeHasMoved = 0;
 % EyeIsLost = 0;
+% joy = HebiJoystick(1);
+% joy = vrjoystick(1);
 
 if itrial == 1
     [INFO] = normalized_timing(INFO);
@@ -51,7 +53,7 @@ my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
    INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
 
 % Flip pre_stim
-vbl_fixation = Screen('Flip',myWindow,INFO.P.paradigm_blank_norm-.5*INFO.P.setup.ITI);
+INFO.T(itrial).vbl_fixation = Screen('Flip',myWindow,INFO.P.paradigm_blank_norm-.5*INFO.P.setup.ITI);
 
 % Screen('Flip', myWindow, INFO.P.paradigm_blank_norm-.5*INFO.P.setup.ITI);
 % WaitSecs(INFO.P.paradigm_blank);
@@ -73,7 +75,7 @@ if INFO.P.setup.isEYEtrack
 end
 
 % Flip Cue
-vbl_cue = Screen('Flip', myWindow, vbl_fixation + INFO.P.paradigm_precue_norm-.5*INFO.P.setup.ITI);
+INFO.T(itrial).vbl_cue = Screen('Flip', myWindow, INFO.T(itrial).vbl_fixation + INFO.P.paradigm_precue_norm-.5*INFO.P.setup.ITI);
 
 % Send triggers cue
 if INFO.P.setup.isEYEtrack
@@ -112,7 +114,7 @@ if INFO.P.setup.isEYEtrack
 end
 
 % Flip blank screen
-vbl_delay1 = Screen('Flip', myWindow,  vbl_cue + INFO.P.paradigm_delay_between_cue_and_stim_norm-.5*INFO.P.setup.ITI);
+INFO.T(itrial).vbl_delay1 = Screen('Flip', myWindow,  INFO.T(itrial).vbl_cue + INFO.P.paradigm_delay_between_cue_and_stim_norm-.5*INFO.P.setup.ITI);
 
 if INFO.P.setup.isEYEtrack
     if hsmvd == 1
@@ -142,7 +144,7 @@ if INFO.P.setup.isEYEtrack
 end
 
 % Flip target
-vbl_target = Screen('Flip', myWindow, vbl_delay1  + INFO.P.paradigm_stim_norm-.5*INFO.P.setup.ITI);
+INFO.T(itrial).vbl_target = Screen('Flip', myWindow, INFO.T(itrial).vbl_delay1  + INFO.P.paradigm_stim_norm-.5*INFO.P.setup.ITI);
 
 % Send stim triggers
 if INFO.P.setup.isEYEtrack
@@ -168,24 +170,33 @@ end
 my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
     INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
     INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
-vbl_delay2 = Screen('Flip', myWindow, vbl_target + INFO.P.paradigm_delay_before_question_norm-.5*INFO.P.setup.ITI);
+INFO.T(itrial).vbl_delay2 = Screen('Flip', myWindow, INFO.T(itrial).vbl_target + INFO.P.paradigm_delay_before_question_norm-.5*INFO.P.setup.ITI);
 %WaitSecs(INFO.P.paradigm_delay_before_question);
 
 % --------------------------------------------------------
 % questions
 % --------------------------------------------------------
-[pressedButts, INFO, isQuit, joy] = set_questions(myWindow, INFO, itrial, isQuit);
+[pressedButts, INFO, isQuit, joy] = set_questions(myWindow, INFO, isQuit,joy);
+% close(joy)  %%%%%%%%%%%%%%%%%%%%%%%%%%%% commented 27 may eb
 
 INFO.T(itrial).button_pressed = pressedButts;
 
 
-if find([pressedButts{:}] == 0)
+if find([pressedButts{:}] == 0)  %%%%%%%%%%%%%%%%%%%%%%%%%%% if hebijoystick
     INFO.T(itrial).button_probes_left = 'U'; %left up pressed
 elseif find([pressedButts{:}] == 180)
     INFO.T(itrial).button_probes_left = 'D'; %left down pressed
 else
     INFO.T(itrial).button_probes_left = 'N';
 end
+
+% if find([pressedButts{:}] == -1)  %%%%%%%%%%%%%%%%%%%%%%%%%%% if vrjoystick
+%     INFO.T(itrial).button_probes_left = 'U'; %left up pressed
+% elseif find([pressedButts{:}] == 1)
+%     INFO.T(itrial).button_probes_left = 'D'; %left down pressed
+% else
+%     INFO.T(itrial).button_probes_left = 'N';
+% end
 
 if find(strcmp(pressedButts,'Y' ))
     INFO.T(itrial).button_probes_right = 'U'; %right up pressed
@@ -213,7 +224,7 @@ INFO.T(itrial).Correct_attention = Correct_attention;
 % Color feedback
 % --------------------------------------------------------
 color_feedback(myWindow, INFO, itrial);
-vbl_feedback = Screen('Flip', myWindow, vbl_delay2 + (INFO.P.paradigm_ITI_norm/2)-.5*INFO.P.setup.ITI);
+INFO.T(itrial).vbl_feedback = Screen('Flip', myWindow, INFO.T(itrial).vbl_delay2 + (INFO.P.paradigm_ITI_norm/2)-.5*INFO.P.setup.ITI);
 
 % --------------------------------------------------------
 % End of the trial
@@ -221,7 +232,7 @@ vbl_feedback = Screen('Flip', myWindow, vbl_delay2 + (INFO.P.paradigm_ITI_norm/2
 my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
     INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
     INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
-Screen('Flip', myWindow, vbl_feedback + (INFO.P.paradigm_ITI_norm/2)-.5*INFO.P.setup.ITI);
+Screen('Flip', myWindow, INFO.T(itrial).vbl_feedback + (INFO.P.paradigm_ITI_norm/2)-.5*INFO.P.setup.ITI);
 %WaitSecs(INFO.P.paradigm_ITI/2-.5*INFO.P.setup.ITI);
 
 % send offset triggers
@@ -250,7 +261,7 @@ end
 % since the textures might occupy a lot of memory cumulatively, better to
 % close them at each trial ending
 Screen('Close', gabortex);
-close(joy)
+% close(joy)
 
 % --------------------------------------------------------
 % Break after 20 trials
@@ -258,7 +269,12 @@ close(joy)
 
 division = itrial/20;
 if round(division) == division
-    joy2 = HebiJoystick(1);
+    %Save the file every 20 trials
+    INFO.ntrials = itrial;
+    save(INFO.logfilename, 'INFO');
+    
+    % joy2 = HebiJoystick(1); %%%%%%%%%%%%%%%%%%%%%%%%%%%% commented 27 may eb
+    %joy2 = vrjoystick(1);
     DrawFormattedText(myWindow, INFO.P.text_break,...
         'center', INFO.P.screen.cy-500, [255, 255, 255, 255], [],[],[], 2);
     my_optimal_fixationpoint(myWindow, INFO.P.screen.cx, INFO.P.screen.cy,...
@@ -274,13 +290,15 @@ if round(division) == division
             INFO.P.stim.fixation_size, INFO.P.stim.fixation_square_color,...
             INFO.P.stim.background_color, INFO.P.screen.pixperdeg);
         Screen('Flip', myWindow);
-        if button(joy2,3) == 1 %office: button(joy,2) == 1
+               
+        if button(joy,3) == 1 %office: button(joy,2) == 1
             Report1 = 1;
         end
+        
     end
     if INFO.P.setup.isEYEtrack
         EyelinkRecalibration(INFO.P.E);
         Eyelink('Message', 'SYNCTIME');
     end
-    close(joy2)
+    % close(joy2)  %%%%%%%%%%%%%%%%%%%%%%%%%%%% commented 27 may eb
 end
