@@ -37,7 +37,7 @@ if session == 1
     [INFO] = define_what_to_do(INFO);
     trials_run = 1:500;
 elseif session == 2
-    path = './Logfiles';
+    path = '/home/busch/Documents/Laurie/Logfile';
     file = [name '_Logfile.mat'];
     load(fullfile(path, file));
     trials_run = 501:length(INFO.T);
